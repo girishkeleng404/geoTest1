@@ -13,6 +13,6 @@ app.get('/',async(req,res)=>{
     })
 })
 
-app.listen(app,()=>{
-    console.log(`Server is running on port ${app}`);
+app.listen(port,()=>{
+    console.log(`Server is running on port ${port}`);
 })
