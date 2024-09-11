@@ -4,7 +4,7 @@ const env = require('dotenv');
 
 const app = express();
 env.config();
-const port = process.env.PORT;
+const port = process.env.APP_PORT;
 
 
 app.get('/',async(req,res)=>{
