@@ -12,7 +12,7 @@ module.exports = {
       },
 
       userType: {
-        type: Sequelize.ENUM('0', '1'),
+        type: Sequelize.ENUM('0', '1','2'),
 
 
       },

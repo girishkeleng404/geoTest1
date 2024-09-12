@@ -14,7 +14,7 @@ const user = sequelize.define('user',{
     type:DataTypes.INTEGER
   },
   userType:{
-    type:DataTypes.ENUM('0','1'),
+    type:DataTypes.ENUM('0','1','2'),
     allowNull:false,
     validate:{
       notNull:{
