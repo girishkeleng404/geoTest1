@@ -1,6 +1,7 @@
 const express = require('express');
 const env = require('dotenv');
-const authRoute = require('./routes/authRoute')
+const authRoute = require('./routes/authRoute');
+const globleErrorHandler = require('./controllers/errorController');
 
 
 const app = express();
@@ -16,6 +17,15 @@ app.get('/',async(req,res)=>{
 })
 
 app.use('/api/v1/auth',authRoute);
+
+
+// app.use('*', catchAsync(async (req, res, next) => {
+//     // return next( new Error('Resource not found'))
+//     throw new AppError(`Can't find ${req.originalUrl} on this server`, 404);
+
+
+// }));
+app.use(globleErrorHandler);
 
 app.listen(port,()=>{
     console.log(`Server is running on port ${port}`);
