@@ -3,7 +3,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/databaseConfig");
 const { up } = require("../migrations/20240911163034-create-user");
-
+const bcrypt = require('bcrypt');
  
 
 const user = sequelize.define('user',{
@@ -73,10 +73,21 @@ const user = sequelize.define('user',{
       },
     }
   },
-  // confirmPassword:{
-  //   type:DataTypes.VIRTUAL,
+  confirmPassword:{
+    type:DataTypes.VIRTUAL,
+    set(value){
+      if(this.password.length < 7){
+        throw new AppError("Password must be at least 7 characters long",400);
+      }
+      if(value === this.password){
+        const hashPassword = bcrypt.hashSync(value,10);
+        this.setDataValue('password',hashPassword);
+      } else{
+        throw new AppError("Password does not match",400);
+      }
+    }
     
-  // }
+  },
   createdAt:{
     allowNull:false,
     type:DataTypes.DATE
