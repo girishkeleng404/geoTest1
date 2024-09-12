@@ -33,4 +33,14 @@ const signup = async(req,res,next)=>{
  result.token= generateToken({
     id:result.id
  })
+
+ return res.status(201).json({
+    status: 'success',
+    message: 'User created successfully',
+    data: result
+})
+}
+
+module.exports={
+    signup
 }
