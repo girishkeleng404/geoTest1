@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const user = require("../models/user");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchError");
+const bcrypt = require("bcrypt");
 
 
 const generateToken = (payload) => {
@@ -42,7 +43,29 @@ const signup = catchAsync(async (req, res, next) => {
         message: 'User created successfully',
         data: result
     })
+});
+
+
+const login = catchAsync(async(req,res,next)=>{
+    const {email, password} = req.body;
+
+    if(!email && password){
+        return next(new AppError("Please enter valid email and password", 400))
+    }
+     const result = await user.findOne({where:{email}});
+     console.log(result);
+
+     if(!result || (! await bcrypt.compare(password, result.password))){
+        return next(new AppError("Incorrect Email or password", 401))
+     }
+     const token = generateToken({id:result.id});
+     return res.json({
+        status: 'success',
+        token,
+     })
+
 })
+
 
 module.exports = {
     signup
