@@ -68,5 +68,5 @@ const login = catchAsync(async(req,res,next)=>{
 
 
 module.exports = {
-    signup
+    signup, login
 }
