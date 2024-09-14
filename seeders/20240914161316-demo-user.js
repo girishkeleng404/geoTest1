@@ -10,17 +10,18 @@ module.exports = {
     const hashPassword = bcrypt.hashSync(password,10);
 
 
-    return queryInterface.bulkInsert('Users', [
+    return queryInterface.bulkInsert('user', [
       {
         firstName: 'Admin',
         lastName: 'TheCreator',
-        email: 'example@example.com',
+        email: process.env.ADMIN_EMAIL,
+        password:hashPassword,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
     ]);
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('Users', null, {});
+    return queryInterface.bulkDelete('user', null, {});
   },
 };
