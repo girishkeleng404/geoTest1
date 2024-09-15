@@ -15,3 +15,12 @@
 // country.belongsTo(user, { foreignKey: 'createdBy', onDelete: 'CASCADE' });
 
 // module.exports = { user, country };
+
+module.exports = (db) => {
+    const { user, country } = db;
+  
+    // Define associations here
+    user.hasMany(country);
+    country.belongsTo(user);
+  };
+  

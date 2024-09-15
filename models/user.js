@@ -9,7 +9,7 @@ const bcrypt = require('bcrypt');
 module.exports = (sequelize)=> {
 
 
-  const User = sequelize.define('user', {
+  const user = sequelize.define('user', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -110,12 +110,11 @@ module.exports = (sequelize)=> {
   });
 
 
-   User.associate = (models)=>{
-    User.hasMany(models.country,{foreignKey:'createdBy'})
+   user.associate = (models)=>{
+    user.hasMany(models.country,{foreignKey:'createdBy'})
    }
     
-
-   return User;
+   return user;
   
 };
 
