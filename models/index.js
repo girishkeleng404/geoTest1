@@ -37,6 +37,11 @@ Object.keys(db).forEach(modelName => {
   }
 });
 
+const {user,country} = require('./associate');
+db.user= user;
+db.country = country;
+
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 

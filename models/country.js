@@ -24,7 +24,7 @@ const country= sequelize.define('country',{
     }
   },
   iso_code:{
-    type:DataTypes.STRING[2],
+    type:DataTypes.STRING(2),
     allowNull:false,
     validate:{
       notNull:{
@@ -87,7 +87,7 @@ const country= sequelize.define('country',{
     type:DataTypes.INTEGER,
     allowNull:true,
     references:{
-      model:'user',
+      model: 'user',
       key:'id'
     }
   },
@@ -108,10 +108,10 @@ const country= sequelize.define('country',{
   tableName:'country',
 })
 
-country.belongsTo(user,{
-  foreignKey:'createdBy',
-  onDelete: 'CASCADE',
-})
+// country.belongsTo(user,{
+//   foreignKey:'createdBy',
+//   onDelete: 'CASCADE',
+// })
 
 
 module.exports= country;

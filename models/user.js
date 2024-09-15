@@ -107,9 +107,10 @@ const user = sequelize.define('user',{
   modelName:'user',
 })
 
-user.hasMany(country,{foreignKey:'createdBy', 
-  onDelete: 'CASCADE',
-});
+// user.hasMany(country,{foreignKey:'createdBy', 
+//   onDelete: 'CASCADE',
+// });
+
 
 
 module.exports = user;
