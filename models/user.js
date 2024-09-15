@@ -4,6 +4,7 @@ const { DataTypes } = require("sequelize");
 const sequelize = require("../config/databaseConfig");
 const { up } = require("../migrations/20240911163034-create-user");
 const bcrypt = require('bcrypt');
+const country = require("./country");
  
 
 const user = sequelize.define('user',{
@@ -105,6 +106,10 @@ const user = sequelize.define('user',{
   freezeTableName:true,
   modelName:'user',
 })
+
+user.hasMany(country,{foreignKey:'createdBy', 
+  onDelete: 'CASCADE',
+});
 
 
 module.exports = user;

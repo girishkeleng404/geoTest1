@@ -21,7 +21,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      productImage: {
+      countryImage: {
         type: Sequelize.ARRAY(Sequelize.STRING),
         allowNull: false,
       },
