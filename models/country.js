@@ -8,7 +8,7 @@ const sequelize = require("../config/databaseConfig");
 module.exports = (sequelize)=>{
 
 
-const Country= sequelize.define('country',{
+const country= sequelize.define('country',{
   id:{
     allowNull:false,
     autoIncrement:true,
@@ -115,12 +115,12 @@ const Country= sequelize.define('country',{
 
 
 
-Country.associate = (models)=>{
-  Country.belongsTo(models.user, {foreignKey: 'createdBy', });
+country.associate = (models)=>{
+  country.belongsTo(models.user, {foreignKey: 'createdBy', });
 }
 
 
-return Country;
+return country;
 
  
 }

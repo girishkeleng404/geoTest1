@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const {User} = require("../models");
+const {user} = require("../models");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchError");
 const bcrypt = require("bcrypt");
@@ -14,10 +14,10 @@ const generateToken = (payload) => {
 const signup = catchAsync(async (req, res, next) => {
     const body = req.body;
 
-    if (!['1', '2'].includes(body.userType)) {
+    if (!['0','1', '2'].includes(body.userType)) {
         throw new Error("Please enter a valid user type", 400)
     }
-    const newUser = await User.create({
+    const newUser = await user.create({
         userType: body.userType,
         firstName: body.firstName,
         lastName: body.lastName,
@@ -67,6 +67,28 @@ const login = catchAsync(async(req,res,next)=>{
 })
 
 
+const authentication = catchAsync(async(req,res,next)=>{
+    let idToken="";
+
+    if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
+        idToken = req.headers.authorization.split(" ")[1];
+    } 
+     
+    if(!idToken){
+        return next(new AppError("You are not logged in", 401));
+    }
+
+    jwt.verify(idToken,process.env.JWT_SECRET_KEY,(err,decoded)=>{
+        if(err){
+            return next(new AppError("Invalid token", 400));
+        } 
+        req.user = decoded;
+        next();
+    });
+
+});
+
+
 module.exports = {
-    signup, login
+    signup, login, authentication
 }

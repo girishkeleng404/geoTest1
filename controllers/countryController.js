@@ -1,6 +1,6 @@
 const catchAsync = require('../utils/catchError');
 const user = require('../models/user');
-const country = require('../models/country');
+const {country} = require('../models');
 const AppError = require("../utils/appError");
 
 

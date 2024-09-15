@@ -11,7 +11,7 @@ const AppError = require("../utils/appError");
 module.exports = (sequelize, DataTypes)=> {
 
 
-  const User = sequelize.define('user', {
+  const user = sequelize.define('user', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -112,11 +112,11 @@ module.exports = (sequelize, DataTypes)=> {
   });
 
 
-   User.associate = (models)=>{
-    User.hasMany(models.country,{foreignKey:'createdBy'})
+   user.associate = (models)=>{
+    user.hasMany(models.country,{foreignKey:'createdBy'})
    }
     
-   return User;
+   return user;
   
 };
 
