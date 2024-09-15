@@ -12,6 +12,9 @@ const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.js')[env];
  
 const db = {};
+// db.user = require('./user')(Sequelize, Sequelize.DataTypes);
+
+
 
 let sequelize;
 if (config.use_env_variable) {
@@ -43,11 +46,12 @@ Object.keys(db).forEach(modelName => {
   }
 });
 
+
 // const {user,country} = require('./associate');
 // db.user= user;
 // db.country = country;
 
-
+db.User = require('./user')(sequelize, Sequelize.DataTypes);
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 

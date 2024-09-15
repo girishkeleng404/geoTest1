@@ -2,6 +2,9 @@ const catchAsync = require('../utils/catchError');
 const user = require('../models/user');
 const country = require('../models/country');
 const AppError = require("../utils/appError");
+
+
+
 const createCountry = catchAsync(async(req,res,next)=>{
     const body = req.body;
      const userId = req.user.id;
@@ -27,3 +30,6 @@ const createCountry = catchAsync(async(req,res,next)=>{
      });
 
 });
+
+
+module.exports = createCountry;

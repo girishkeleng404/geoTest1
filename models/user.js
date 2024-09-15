@@ -3,13 +3,15 @@
 const { DataTypes } = require("sequelize");
 // const sequelize = require("../config/databaseConfig"); 
 const bcrypt = require('bcrypt');
+const AppError = require("../utils/appError");
+
  
 
 
-module.exports = (sequelize)=> {
+module.exports = (sequelize, DataTypes)=> {
 
 
-  const user = sequelize.define('user', {
+  const User = sequelize.define('user', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -110,11 +112,11 @@ module.exports = (sequelize)=> {
   });
 
 
-   user.associate = (models)=>{
-    user.hasMany(models.country,{foreignKey:'createdBy'})
+   User.associate = (models)=>{
+    User.hasMany(models.country,{foreignKey:'createdBy'})
    }
     
-   return user;
+   return User;
   
 };
 

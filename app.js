@@ -1,6 +1,7 @@
 const express = require('express');
 const env = require('dotenv');
 const authRoute = require('./routes/authRoute');
+const countryRoute = require('./routes/countryRoute')
 const globleErrorHandler = require('./controllers/errorController');
 
 
@@ -19,7 +20,7 @@ app.get('/',async(req,res)=>{
 
 app.use('/api/v1/auth',authRoute);
 
-
+app.use('/api/v1/country',countryRoute);
 
 
 

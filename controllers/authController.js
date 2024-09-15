@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const user = require("../models/user");
+const {User} = require("../models");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchError");
 const bcrypt = require("bcrypt");
@@ -17,7 +17,7 @@ const signup = catchAsync(async (req, res, next) => {
     if (!['1', '2'].includes(body.userType)) {
         throw new Error("Please enter a valid user type", 400)
     }
-    const newUser = await user.create({
+    const newUser = await User.create({
         userType: body.userType,
         firstName: body.firstName,
         lastName: body.lastName,
