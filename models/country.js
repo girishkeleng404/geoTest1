@@ -1,5 +1,6 @@
 'use strict';
 
+const { DataTypes } = require("sequelize");
 const sequelize = require("../config/databaseConfig");
 const user = require("./user");
 
@@ -8,10 +9,10 @@ const country= sequelize.define('country',{
     allowNull:false,
     autoIncrement:true,
     primaryKey:true,
-    type:sequelize.Sequelize.INTEGER
+    type:DataTypes.INTEGER
   },
   name:{
-    type:sequelize.Sequelize.STRING,
+    type:DataTypes.STRING,
     allowNull:false,
     validate:{
       notNull:{
@@ -23,7 +24,7 @@ const country= sequelize.define('country',{
     }
   },
   iso_code:{
-    type:sequelize.Sequelize.STRING[2],
+    type:DataTypes.STRING[2],
     allowNull:false,
     validate:{
       notNull:{
@@ -35,7 +36,7 @@ const country= sequelize.define('country',{
     }
   },
   capital:{
-    type:sequelize.Sequelize.STRING,
+    type:DataTypes.STRING,
     allowNull:false,
     validate:{
       notNull:{
@@ -47,7 +48,7 @@ const country= sequelize.define('country',{
     }
   },
   countryImage:{
-    type:sequelize.Sequelize.ARRAY(sequelize.Sequelize.STRING),
+    type:DataTypes.ARRAY(DataTypes.STRING),
     allowNull:false,
     validate:{
       notNull:{
@@ -59,7 +60,7 @@ const country= sequelize.define('country',{
     }
   },
   coastline_km:{
-    type:sequelize.Sequelize.FLOAT,
+    type:DataTypes.FLOAT,
     allowNull:false,
     validate:{
       notNull:{
@@ -71,7 +72,7 @@ const country= sequelize.define('country',{
     }
   },
   climate:{
-    type:sequelize.Sequelize.TEXT,
+    type:DataTypes.TEXT,
     allowNull:false,
     validate:{
       notNull:{
@@ -83,7 +84,7 @@ const country= sequelize.define('country',{
     }
   },
   createdBy:{
-    type:sequelize.Sequelize.INTEGER,
+    type:DataTypes.INTEGER,
     allowNull:true,
     references:{
       model:'user',
@@ -92,14 +93,14 @@ const country= sequelize.define('country',{
   },
   createdAt:{
     allowNull:false,
-    type:sequelize.Sequelize.DATE
+    type:DataTypes.DATE
   },
   updatedAt:{
     allowNull:false,
-    type:sequelize.Sequelize.DATE
+    type:DataTypes.DATE
   },
   deletedAt:{
-    type:sequelize.Sequelize.DATE
+    type:DataTypes.DATE
   }
 },{
   paranoid:true,
@@ -113,4 +114,4 @@ country.belongsTo(user,{
 })
 
 
-module.exports={country}
+module.exports= country;

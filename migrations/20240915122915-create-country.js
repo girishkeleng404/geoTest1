@@ -14,7 +14,7 @@ module.exports = {
         allowNull: false,
       },
       iso_code: {
-        type: Sequelize.STRING[2],
+        type: Sequelize.STRING(2),
         allowNull: false,
       },
       capital: {
