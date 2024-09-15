@@ -17,10 +17,15 @@ app.get('/',async(req,res)=>{
 })
 
 
+app.use('/api/v1/auth',authRoute);
+
+
+
+
+
 
 
 const { sequelize } = require('./models');
-
 sequelize.sync({ force: false })  // Set force: true to drop and recreate tables, but careful with data loss.
   .then(() => {
     console.log('Database synced successfully');
@@ -30,19 +35,6 @@ sequelize.sync({ force: false })  // Set force: true to drop and recreate tables
   });
 
 
-
-
-
-
-app.use('/api/v1/auth',authRoute);
-
-
-// app.use('*', catchAsync(async (req, res, next) => {
-//     // return next( new Error('Resource not found'))
-//     throw new AppError(`Can't find ${req.originalUrl} on this server`, 404);
-
-
-// }));
 app.use(globleErrorHandler);
 
 
