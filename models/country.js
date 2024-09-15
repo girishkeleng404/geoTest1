@@ -2,9 +2,13 @@
 
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/databaseConfig");
-const user = require("./user");
+// const User = require("./user");
 
-const country= sequelize.define('country',{
+
+module.exports = (sequelize)=>{
+
+
+const Country= sequelize.define('country',{
   id:{
     allowNull:false,
     autoIncrement:true,
@@ -108,10 +112,16 @@ const country= sequelize.define('country',{
   tableName:'country',
 })
 
-// country.belongsTo(user,{
-//   foreignKey:'createdBy',
-//   onDelete: 'CASCADE',
-// })
 
 
-module.exports= country;
+
+Country.associate = (models)=>{
+  Country.belongsTo(models.user, {foreignKey: 'createdBy', });
+}
+
+
+return country;
+
+ 
+}
+ 

@@ -1,8 +1,17 @@
-const user = require('./user');
-const country = require('./country');
+// const user = require('./user');
+// const country = require('./country');
 
-// Define associations
-user.hasMany(country, { foreignKey: 'createdBy', onDelete: 'CASCADE', });
-country.belongsTo(user, { foreignKey: 'createdBy', onDelete: 'CASCADE', });
+// // Define associations
+// user.hasMany(country, { foreignKey: 'createdBy', onDelete: 'CASCADE', });
+// country.belongsTo(user, { foreignKey: 'createdBy', onDelete: 'CASCADE', });
 
-module.exports = { user, country };
+// module.exports = { user, country };
+
+
+// const { user, country } = require('./index'); // Import models from index.js
+
+// // Define associations
+// user.hasMany(country, { foreignKey: 'createdBy', onDelete: 'CASCADE' });
+// country.belongsTo(user, { foreignKey: 'createdBy', onDelete: 'CASCADE' });
+
+// module.exports = { user, country };
