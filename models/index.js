@@ -51,7 +51,7 @@ Object.keys(db).forEach(modelName => {
 // db.user= user;
 // db.country = country;
 
-db.User = require('./user')(sequelize, Sequelize.DataTypes);
+db.user = require('./user')(sequelize, Sequelize.DataTypes);
 db.country = require('./country')(sequelize, Sequelize.DataTypes);
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

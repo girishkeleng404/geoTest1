@@ -1,5 +1,5 @@
 const catchAsync = require('../utils/catchError');
-const user = require('../models/user');
+const {user} = require('../models');
 const {country} = require('../models');
 const AppError = require("../utils/appError");
 
@@ -10,8 +10,8 @@ const createCountry = catchAsync(async(req,res,next)=>{
      const userId = req.user.id;
     const userType = req.user.userType;
       
-    if(userType == '1' || userType =='2'){
-        return next(new AppError('You are not authorized to create a country',403));
+    if (userType !== '0') {
+        return next(new AppError('You are not authorized to create a country', 403));
     }
 
      const newCountry = await country.create({
