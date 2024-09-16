@@ -8,6 +8,7 @@ const AppError = require("../utils/appError");
 const createCountry = catchAsync(async(req,res,next)=>{
     const body = req.body;
      const userId = req.user.id;
+     console.log(req.user);
     const userType = req.user.userType;
       
     if (userType !== '0') {

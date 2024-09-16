@@ -35,7 +35,8 @@ const signup = catchAsync(async (req, res, next) => {
     delete result.password;
     delete result.deletedAt;
     result.token = generateToken({
-        id: result.id
+        id: result.id,
+        userType: result.userType,
     })
 
     return res.status(201).json({
@@ -78,15 +79,29 @@ const authentication = catchAsync(async(req,res,next)=>{
         return next(new AppError("You are not logged in", 401));
     }
 
-    jwt.verify(idToken,process.env.JWT_SECRET_KEY,(err,decoded)=>{
-        if(err){
-            return next(new AppError("Invalid token", 400));
-        } 
-        req.user = decoded;
-        next();
-    });
+    // jwt.verify(idToken,process.env.JWT_SECRET_KEY,(err,decoded)=>{
+    //     if(err){
+    //         return next(new AppError("Invalid token", 400));
+    //     } 
+    //     req.user = decoded;
+    //     next();
+    // });
 
+    const decoded = jwt.verify(idToken, process.env.JWT_SECRET_KEY);
+    // Fetch user from database
+    const currentUser = await user.findByPk(decoded.id);
+    if(!currentUser){
+        return next(new AppError("The user does not exist", 400));
+    }
+    // Attach userType to req.user
+    req.user = {
+        id:currentUser.id,
+        userType:currentUser.userType,
+    }
+
+    next();
 });
+
 
 
 module.exports = {
