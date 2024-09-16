@@ -2,6 +2,7 @@ const catchAsync = require('../utils/catchError');
 const {user} = require('../models');
 const {country} = require('../models');
 const AppError = require("../utils/appError");
+const { where } = require('sequelize');
 
 
 
@@ -42,6 +43,22 @@ const getAllCountry = catchAsync(async(req,res,next)=>{
    })
 
 
+});
+
+
+const getByIso = catchAsync(async(req,res,next)=>{
+   const iso = req.params.id;
+   console.log(iso);
+   const result = await country.findOne({where:{iso_code:iso}});
+
+   if(!result){
+      return next(new AppError('No country found',404))
+   }
+
+   res.status(200).json({
+      message:'success',
+      data:result
+   })
 })
 
-module.exports = {createCountry, getAllCountry};
+module.exports = {createCountry, getAllCountry, getByIso};
