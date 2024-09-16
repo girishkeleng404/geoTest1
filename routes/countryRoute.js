@@ -9,7 +9,7 @@ router.route('/getAll')
 .get(authentication,getAllCountry);
 
 
-router.route('/:id').get(authentication,getByIso);
+router.route('/:iso').get(authentication,getByIso);
 
 
 module.exports = router;
