@@ -58,7 +58,24 @@ const getByIso = catchAsync(async(req,res,next)=>{
    res.status(200).json({
       message:'success',
       data:result
+   });
+});
+
+
+const getByName = catchAsync(async(req,res,next)=>{
+   const name = req.params.name;
+   const result = await country.findOne({where:{name:name}});
+   
+   if(!result){
+      return next(new AppError('No country found with name'+ name, 404));
+   }
+   
+   res.status(200).json({
+      message:'success',
+      data:result,
    })
+
 })
 
-module.exports = {createCountry, getAllCountry, getByIso};
+
+module.exports = {createCountry, getAllCountry, getByIso,  getByName };
