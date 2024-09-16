@@ -33,4 +33,15 @@ const createCountry = catchAsync(async(req,res,next)=>{
 });
 
 
-module.exports = createCountry;
+const getAllCountry = catchAsync(async(req,res,next)=>{
+   const result = await country.findAll();
+
+   res.status(200).json({
+      message:"success",
+      data:result
+   })
+
+
+})
+
+module.exports = {createCountry, getAllCountry};
