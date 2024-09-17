@@ -118,7 +118,7 @@ const country= sequelize.define('country',{
 country.associate = (models)=>{
   country.belongsTo(models.user, {foreignKey: 'createdBy', });
 
-  country.hasMany(models.historical_bg,{foreignKey:'country_id'})
+  country.hasMany(models.historical_bg,{foreignKey:'country_id',as: 'history',})
 }
 
 

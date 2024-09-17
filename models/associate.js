@@ -20,12 +20,12 @@
 
 // module.exports = { user, country };
 
-module.exports = (db) => {
-    const { user, country,historical_bg } = db;
+// module.exports = (db) => {
+//     const { user, country,historical_bg } = db;
   
-    // Define associations here
-    user.hasMany(country);
-    country.belongsTo(user);
-    country.hasMany(historical_bg)
-  };
+//     // Define associations here
+//     user.hasMany(country);
+//     country.belongsTo(user);
+//     country.hasMany(historical_bg)
+//   };
   

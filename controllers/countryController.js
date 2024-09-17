@@ -1,5 +1,5 @@
 const catchAsync = require('../utils/catchError');
-const { user } = require('../models');
+const { user, historical_bg } = require('../models');
 const { country } = require('../models');
 const AppError = require("../utils/appError");
 const { where } = require('sequelize');
@@ -27,6 +27,13 @@ const createCountry = catchAsync(async (req, res, next) => {
       createdBy: userId,
    });
 
+   if(body.background_description){
+     await historical_bg.create({
+      country_id:newCountry.id,
+      background_description:body.background_description,
+    })
+   }
+
    return res.status(201).json({
       status: 'success',
       data: newCountry
@@ -36,7 +43,16 @@ const createCountry = catchAsync(async (req, res, next) => {
 
 
 const getAllCountry = catchAsync(async (req, res, next) => {
-   const result = await country.findAll();
+   const result = await country.findAll({
+    include:[
+      {
+        model:historical_bg,
+        as: 'history', // alias for querying
+        attributes:['background_description']
+      }
+  
+    ]
+   });
 
    res.status(200).json({
       message: "success",

@@ -39,6 +39,7 @@ module.exports = (sequelize) => {
   historical_bg.associate = (models)=>{
     historical_bg.belongsTo(models.country,{
     foreignKey: 'country_id',
+    as: 'country', // alias for querying
    })
   }
    
