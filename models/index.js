@@ -53,6 +53,8 @@ Object.keys(db).forEach(modelName => {
 
 db.user = require('./user')(sequelize, Sequelize.DataTypes);
 db.country = require('./country')(sequelize, Sequelize.DataTypes);
+db.historical_bg = require('./historical_bg')(sequelize, Sequelize.DataTypes);
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 

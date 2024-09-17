@@ -1,12 +1,12 @@
 'use strict';
 
 const { DataTypes, Model } = require("sequelize");
-const { sequelize, country } = require(".");
+const { sequelize, country } = require("../config/databaseConfig");
 
 
 module.exports = (sequelize) => {
 
-  const historical_bg = sequelize.define('historical-bg', {
+  const historical_bg = sequelize.define('historical_bg', {
 
     id: {
       type: DataTypes.INTEGER,
