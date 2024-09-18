@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('age_structures', {
+    await queryInterface.createTable('age_structure', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -20,16 +20,21 @@ module.exports = {
       },
 
       age_0_14: {
-        type: Sequelize.FLOAT,
+        type: Sequelize.STRING,
         allowNull: false,
       },
 
       age_15_64: {
-        type: Sequelize.FLOAT,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       age_65_plus: {
         allowNull: false,
+        type:Sequelize.STRING,
+      },
+      estimated_year:{
+       type: Sequelize.INTEGER,
+       allowNull:true,
       },
       createdAt: {
         allowNull: false,
@@ -45,6 +50,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('age_structures');
+    await queryInterface.dropTable('age_structure');
   }
 };
