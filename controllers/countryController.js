@@ -1,8 +1,11 @@
 const catchAsync = require('../utils/catchError');
-const { user, historical_bg } = require('../models');
+const { user, historical_bg, population } = require('../models');
 const { country } = require('../models');
 const AppError = require("../utils/appError");
-const { where } = require('sequelize');
+
+
+
+
 
 
 
@@ -27,11 +30,29 @@ const createCountry = catchAsync(async (req, res, next) => {
     createdBy: userId,
   });
 
-  if (body.background_description) {
-    await historical_bg.create({
-      country_id: newCountry.id,
-      background_description: body.background_description,
-    })
+  if (body.background_description || body.total_population) {
+
+    if (body.background_description) {
+
+      await historical_bg.create({
+        country_id: newCountry.id,
+        background_description: body.background_description,
+      })
+    }
+
+    if (body.total_population) {
+      await population.create({
+        country_id: newCountry.id,
+        total_population: body.total_population,
+        male_population: body.male_population,
+        female_population: body.female_population,
+        population_estimate_year: body.population_estimate_year,
+        female_comparison_ranking: body.female_comparison_ranking,
+        male_comparison_ranking: body.male_comparison_ranking,
+        total_comparison_ranking: body.total_comparison_ranking,
+      });
+    }
+
   }
 
   const countryWithBackground = await country.findOne({
@@ -39,8 +60,12 @@ const createCountry = catchAsync(async (req, res, next) => {
     include: [
       {
         model: historical_bg,
-        as: 'histories', // Ensure this alias matches the association
+        as: 'history', // Ensure this alias matches the association
       },
+      {
+        model: population,
+        as: 'populationData'
+      }
     ],
   });
 
@@ -52,6 +77,9 @@ const createCountry = catchAsync(async (req, res, next) => {
 });
 
 
+
+
+
 const getAllCountry = catchAsync(async (req, res, next) => {
   const result = await country.findAll({
     include: [
@@ -59,6 +87,11 @@ const getAllCountry = catchAsync(async (req, res, next) => {
         model: historical_bg,
         as: 'history', // alias for querying
         attributes: ['background_description']
+      },
+      {
+        model: population,
+        as: 'populationData',
+        attributes: ['total_population','male_population', 'female_population', 'population_estimate_year', 'female_comparison_ranking', 'male_comparison_ranking','total_comparison_ranking' ]
       }
 
     ]
