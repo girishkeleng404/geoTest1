@@ -22,42 +22,39 @@ module.exports = (sequelize) => {
       }
     },
     age_0_14: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
       validate: {
         notNull: {
-          msg: "Please enter a valid age"
+          msg: "Please enter a valid age for 0-14"
         },
         notEmpty: {
-          msg: "Age cannot be empty"
+          msg: "Age cannot be empty  for 0-14"
         },
       },
     },
     age_15_64: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
       validate: {
         notNull: {
-          msg: "Please enter a valid age"
+          msg: "Please enter a valid age for 15-64"
         },
         notEmpty: {
-          msg: "Age cannot be empty"
+          msg: "Age cannot be empty for 15-64"
         },
       },
     },
     age_65_plus: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: "Please enter a valid age"
-        },
-        notEmpty: {
-          msg: "Age cannot be empty"
-        },
-      },
+      type: DataTypes.TEXT,
+      allowNull: true,
+      
     },
-
+    
+    estimated_year: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
     createdAt: {
       allowNull: false,
       type: DataTypes.DATE,

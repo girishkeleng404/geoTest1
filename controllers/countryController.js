@@ -1,7 +1,8 @@
 const catchAsync = require('../utils/catchError');
-const { user, historical_bg, population, nationality,language_religion } = require('../models');
+const { user, historical_bg, population, nationality,language_religion,age_structure } = require('../models');
 const { country } = require('../models');
 const AppError = require("../utils/appError");
+ 
  
 
 
@@ -29,7 +30,7 @@ const createCountry = catchAsync(async (req, res, next) => {
     createdBy: userId,
   });
 
-  if (body.background_description || body.total_population || body.nationality || body.languages) {
+  if (body.background_description || body.total_population || body.nationality || body.languages|| body.age_0_14) {
 
     if (body.background_description) {
 
@@ -72,6 +73,16 @@ const createCountry = catchAsync(async (req, res, next) => {
         notes:body.notes,
         religions:body. religions
       })
+    };
+
+    if(body.age_0_14){
+      await age_structure.create({
+        country_id:newCountry.id,
+        age_0_14:body.age_0_14,
+        age_15_64:body.age_15_64,
+        age_65_plus:body.age_65_plus,
+        estimated_year:body.estimated_year
+      })
     }
 
   }
@@ -95,6 +106,10 @@ const createCountry = catchAsync(async (req, res, next) => {
           {
             model: language_religion,
             as: 'language_religion'
+          },
+          {
+            model: age_structure,
+            as:'age_structure'
           }
 
         ]
@@ -139,6 +154,11 @@ const getAllCountry = catchAsync(async (req, res, next) => {
             model: language_religion,
             as: 'language_religion',
             attributes: ['languages', 'major_language_sample', 'notes', 'religions']
+          },
+          {
+            model: age_structure,
+            as: 'age_structure',
+            attributes:['age_0_14','age_15_64','age_65_plus','estimated_year']
           }
 
         ]

@@ -20,17 +20,17 @@ module.exports = {
       },
 
       age_0_14: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false,
       },
 
       age_15_64: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false,
       },
       age_65_plus: {
-        allowNull: false,
-        type:Sequelize.STRING,
+        allowNull: true,
+        type:Sequelize.TEXT,
       },
       estimated_year:{
        type: Sequelize.INTEGER,
