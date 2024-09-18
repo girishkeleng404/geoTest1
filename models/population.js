@@ -108,8 +108,13 @@ module.exports = (sequelize)=>{
     population.hasMany(models.nationality,{
       foreignKey:'country_id',
       as: 'nationality'
-    })
+    });
 
+    population.hasMany(models.language_religion,{
+      foreignKey: 'country_id',
+      as: 'language_religion'
+    });
+    
 
 
   };

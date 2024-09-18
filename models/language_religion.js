@@ -19,11 +19,27 @@ module.exports = (sequelize) => {
       references: {
         model: 'country',
         key: 'id'
+      },
+      validate:{
+        notNull:{
+          msg: "Please enter a valid country id"
+        },
+        notEmpty:{
+          msg:'Country id cannot be empty'
+        }
       }
     },
     languages: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate:{
+        notNull:{
+          msg:"Please enter a valid language"
+        },
+        notEmpty:{
+          msg: 'The language cannot be empty'
+        }
+      }
     },
     major_language_sample: {
       type: DataTypes.STRING,
@@ -38,6 +54,14 @@ module.exports = (sequelize) => {
     religions: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate:{
+        notNull:{
+          msg:"Please enter a valid religion"
+        },
+        notEmpty:{
+          msg: 'The religion cannot be empty'
+        }
+      }
     },
 
     createdAt: {
@@ -58,6 +82,14 @@ module.exports = (sequelize) => {
     tableName: 'language_religion',
   }
   )
+
+
+  language_religion.associate = (models)=>{
+    language_religion.belongsTo(models.population,{
+      foreignKey: 'country_id',
+      as: 'population'
+    })
+  }
 
 
   return language_religion;
