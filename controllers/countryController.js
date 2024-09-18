@@ -80,6 +80,9 @@ const createCountry = catchAsync(async (req, res, next) => {
 
 
 
+
+
+
 const getAllCountry = catchAsync(async (req, res, next) => {
   const result = await country.findAll({
     include: [
@@ -116,22 +119,38 @@ const getByQuery = catchAsync(async (req, res, next) => {
   let result;
   if (name) {
     result = await country.findOne({
-      where: { name: name }, include: [{
-        model: historical_bg,
-        as: 'history', // alias for querying
-        attributes: ['background_description']
-      }]
+      where: { name: name }, include: [
+        {
+          model: historical_bg,
+          as: 'history', // alias for querying
+          attributes: ['background_description']
+        },
+        {
+          model: population,
+          as: 'populationData',
+          attributes: ['total_population', 'male_population', 'female_population', 'population_estimate_year', 'female_comparison_ranking', 'male_comparison_ranking', 'total_comparison_ranking']
+        }
+  
+      ]
     });
     if (!result) {
       return next(new AppError('No country found with name ' + name, 404));
     }
   } else if (iso) {
     result = await country.findOne({
-      where: { iso_code: iso }, include: [{
-        model: historical_bg,
-        as: 'history', // alias for querying
-        attributes: ['background_description']
-      }]
+      where: { iso_code: iso }, include: [
+        {
+          model: historical_bg,
+          as: 'history', // alias for querying
+          attributes: ['background_description']
+        },
+        {
+          model: population,
+          as: 'populationData',
+          attributes: ['total_population', 'male_population', 'female_population', 'population_estimate_year', 'female_comparison_ranking', 'male_comparison_ranking', 'total_comparison_ranking']
+        }
+  
+      ]
     });
     if (!result) {
       return next(new AppError('No country found with iso code ' + iso, 404));
