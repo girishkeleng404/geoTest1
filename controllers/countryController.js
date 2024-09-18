@@ -134,6 +134,11 @@ const getAllCountry = catchAsync(async (req, res, next) => {
             model: nationality,
             as: 'nationality',
             attributes: ['nationality', 'ethnic_groups', 'population_distribution', 'demographic_profile']
+          },
+          {
+            model: language_religion,
+            as: 'language_religion',
+            attributes: ['languages', 'major_language_sample', 'notes', 'religions']
           }
 
         ]
