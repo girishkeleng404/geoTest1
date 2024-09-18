@@ -16,16 +16,46 @@ module.exports = (sequelize) => {
     },
     country_id: {
       type: DataTypes.INTEGER,
+      allowNull:false,
       references: {
         model: 'country',
         key: 'id',
       },
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
+
+      validate:{
+        notNull:{
+          msg: "Please enter a valid country id"
+        },
+        notEmpty:{
+          msg:'Country id cannot be empty'
+        }
+      }
+
     },
     background_description: {
       type: DataTypes.TEXT,
       allowNull: false,
+      validate:{
+        notNull:{
+          msg:"Please enter a valid description"
+        },
+        notEmpty:{
+          msg: 'The description cannot be empty'
+        }
+      }
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+    deletedAt: {
+      type: DataTypes.DATE,
     },
  
   },{

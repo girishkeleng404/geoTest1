@@ -91,7 +91,7 @@ const getAllCountry = catchAsync(async (req, res, next) => {
       {
         model: population,
         as: 'populationData',
-        attributes: ['total_population','male_population', 'female_population', 'population_estimate_year', 'female_comparison_ranking', 'male_comparison_ranking','total_comparison_ranking' ]
+        attributes: ['total_population', 'male_population', 'female_population', 'population_estimate_year', 'female_comparison_ranking', 'male_comparison_ranking', 'total_comparison_ranking']
       }
 
     ]
@@ -104,6 +104,9 @@ const getAllCountry = catchAsync(async (req, res, next) => {
 
 
 });
+
+
+
 
 
 

@@ -87,10 +87,9 @@ module.exports = (sequelize)=>{
       type:DataTypes.DATE,
       allowNull:false,
     },
-    deletedAt:{
-      type:DataTypes.DATE,
-      
-    },
+    deletedAt: {
+      type: DataTypes.DATE,
+    }
 
   },{
     paranoid:true,

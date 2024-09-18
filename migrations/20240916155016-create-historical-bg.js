@@ -11,12 +11,14 @@ module.exports = {
       },
       country_id:{
         type:Sequelize.INTEGER,
+        allowNull:false,
         references:{
           model: 'country',
           key: 'id',
         }
       },
       background_description: {
+        allowNull:false,
         type: Sequelize.TEXT
       },
       createdAt: {
@@ -25,6 +27,9 @@ module.exports = {
       },
       updatedAt: {
         allowNull: false,
+        type: Sequelize.DATE
+      },
+      deletedAt: {
         type: Sequelize.DATE
       }
     });
