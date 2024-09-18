@@ -9,17 +9,32 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      country_id:{
-        type:Sequelize.INTEGER,
-        references:{
-          model:'country',
-          key:'id'
+      country_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'country',
+          key: 'id'
         }
-      
       },
       languages: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
       },
+      major_language_sample: {
+        type: Sequelize.STRING,
+        allowNull: true,
+
+      },
+      notes: {
+        type: Sequelize.STRING,
+        allowNull:true,
+
+      },
+      religions:{
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -28,8 +43,8 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      deletedAt:{
-        type:Sequelize.DATE,
+      deletedAt: {
+        type: Sequelize.DATE,
       }
     });
   },
