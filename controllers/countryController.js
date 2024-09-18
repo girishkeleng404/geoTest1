@@ -2,7 +2,7 @@ const catchAsync = require('../utils/catchError');
 const { user, historical_bg, population, nationality } = require('../models');
 const { country } = require('../models');
 const AppError = require("../utils/appError");
- 
+
 
 
 
@@ -55,13 +55,13 @@ const createCountry = catchAsync(async (req, res, next) => {
     }
 
 
-    if(body.nationality){
+    if (body.nationality) {
       await nationality.create({
-        country_id:newCountry.id,
+        country_id: newCountry.id,
         nationality: body.nationality,
-        ethnic_groups:body.ethnic_groups,
+        ethnic_groups: body.ethnic_groups,
         population_distribution: body.population_distribution,
-        demographic_profile:body.demographic_profile,
+        demographic_profile: body.demographic_profile,
 
       })
     }
@@ -79,12 +79,12 @@ const createCountry = catchAsync(async (req, res, next) => {
         model: population,
         as: 'populationData',
 
-        include:[
+        include: [
           {
-              model: nationality,
-              as: 'nationallity'
+            model: nationality,
+            as: 'nationality'
           }
-         
+
         ]
       }
     ],
@@ -115,7 +115,17 @@ const getAllCountry = catchAsync(async (req, res, next) => {
       {
         model: population,
         as: 'populationData',
-        attributes: ['total_population', 'male_population', 'female_population', 'population_estimate_year', 'female_comparison_ranking', 'male_comparison_ranking', 'total_comparison_ranking']
+        attributes: ['total_population', 'male_population', 'female_population', 'population_estimate_year', 'female_comparison_ranking', 'male_comparison_ranking', 'total_comparison_ranking'],
+
+        include: [
+          {
+            model: nationality,
+            as: 'nationality',
+            attributes: ['nationality', 'ethnic_groups', 'population_distribution', 'demographic_profile']
+          }
+
+        ]
+
       }
 
     ]
@@ -151,7 +161,7 @@ const getByQuery = catchAsync(async (req, res, next) => {
           as: 'populationData',
           attributes: ['total_population', 'male_population', 'female_population', 'population_estimate_year', 'female_comparison_ranking', 'male_comparison_ranking', 'total_comparison_ranking']
         }
-  
+
       ]
     });
     if (!result) {
@@ -170,7 +180,7 @@ const getByQuery = catchAsync(async (req, res, next) => {
           as: 'populationData',
           attributes: ['total_population', 'male_population', 'female_population', 'population_estimate_year', 'female_comparison_ranking', 'male_comparison_ranking', 'total_comparison_ranking']
         }
-  
+
       ]
     });
     if (!result) {
