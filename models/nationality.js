@@ -2,6 +2,7 @@
 
 const { DataTypes } = require("sequelize");
 const { sequelize } = require(".");
+// const population = require("../models");
 
 
 
@@ -66,10 +67,19 @@ module.exports = (sequelize) => {
       type: DataTypes.DATE,
     }
 
+  },
+    {
+      paranoid: true,
+      freezeTableName: true,
+      tableName: 'nationality'
+    })
 
-  })
-
-
+    nationality.associate =(models)=>{
+      nationality.belongsTo(models.population,{
+        foreignKey:'country_id',
+        as: 'population'
+      })
+    }
 
   return nationality;
 }

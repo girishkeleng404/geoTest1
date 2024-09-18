@@ -98,10 +98,20 @@ module.exports = (sequelize)=>{
   })
   
   population.associate = (models) => {
+
     population.belongsTo(models.country, {
-      foreignKey: 'country_id',  // Fixed typo: 'foreignKey' instead of 'foreignkey'
+      foreignKey: 'country_id',   
       as: 'country',
     });
+
+    
+    population.hasMany(models.nationality,{
+      foreignKey:'country_id',
+      as: 'nationallity'
+    })
+
+
+
   };
   
 
