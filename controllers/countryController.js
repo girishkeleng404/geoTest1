@@ -8,9 +8,6 @@ const AppError = require("../utils/appError");
 
 
 
-
-
-
 const createCountry = catchAsync(async (req, res, next) => {
   const body = req.body;
   const userId = req.user.id;
@@ -100,7 +97,7 @@ const createCountry = catchAsync(async (req, res, next) => {
 
 
 
-
+// -------------------xxxx------------------------
 
 
 
@@ -141,7 +138,7 @@ const getAllCountry = catchAsync(async (req, res, next) => {
 
 
 
-
+// ----------------------xxxxxxxxx---------------------
 
 
 const getByQuery = catchAsync(async (req, res, next) => {
