@@ -1,7 +1,8 @@
 const catchAsync = require('../utils/catchError');
-const { user, historical_bg, population } = require('../models');
+const { user, historical_bg, population, nationality } = require('../models');
 const { country } = require('../models');
 const AppError = require("../utils/appError");
+ 
 
 
 
@@ -30,7 +31,7 @@ const createCountry = catchAsync(async (req, res, next) => {
     createdBy: userId,
   });
 
-  if (body.background_description || body.total_population) {
+  if (body.background_description || body.total_population || body.nationality) {
 
     if (body.background_description) {
 
@@ -53,6 +54,18 @@ const createCountry = catchAsync(async (req, res, next) => {
       });
     }
 
+
+    if(body.nationality){
+      await nationality.create({
+        country_id:newCountry.id,
+        nationality: body.nationality,
+        ethnic_groups:body.ethnic_groups,
+        population_distribution: body.population_distribution,
+        demographic_profile:body.demographic_profile,
+
+      })
+    }
+
   }
 
   const countryWithBackground = await country.findOne({
@@ -64,7 +77,15 @@ const createCountry = catchAsync(async (req, res, next) => {
       },
       {
         model: population,
-        as: 'populationData'
+        as: 'populationData',
+
+        include:[
+          {
+              model: nationality,
+              as: 'nationallity'
+          }
+         
+        ]
       }
     ],
   });
