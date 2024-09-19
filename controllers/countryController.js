@@ -1,7 +1,8 @@
 const catchAsync = require('../utils/catchError');
-const { user, historical_bg, population, nationality,language_religion,age_structure, dependency_ratio,population_rate, urbanization } = require('../models');
+const { user, historical_bg, population, nationality,language_religion,age_structure, dependency_ratio,population_rate, urbanization,sex_marriage } = require('../models');
 const { country } = require('../models');
 const AppError = require("../utils/appError");
+ 
  
  
  
@@ -32,7 +33,7 @@ const createCountry = catchAsync(async (req, res, next) => {
     createdBy: userId,
   });
 
-  if (body.background_description || body.total_population || body.nationality || body.languages|| body.age_0_14 || body.total_dependency_ratio || body.population_growth_rate || body.urban_population) {
+  if (body.background_description || body.total_population || body.nationality || body.languages|| body.age_0_14 || body.total_dependency_ratio || body.population_growth_rate || body.urban_population || body.sex_ratio) {
 
     if (body.background_description) {
 
@@ -126,6 +127,18 @@ const createCountry = catchAsync(async (req, res, next) => {
         major_urban_areas_population:body.major_urban_areas_population
 
       })
+    };
+    
+    if(body.sex_ratio){
+      await sex_marriage.create({
+        country_id:newCountry.id,
+        sex_ratio:body.sex_ratio,
+        mother_age_at_first_birth:body.mother_age_at_first_birth,
+        currently_married_womens_15to52:body.currently_married_womens_15to52,
+        women_married_by_age_15:body.women_married_by_age_15,
+        women_married_by_age_18:body.women_married_by_age_18,
+        contraceptive_prevalence_rate:body.contraceptive_prevalence_rate
+      })
     }
 
   }
@@ -165,6 +178,10 @@ const createCountry = catchAsync(async (req, res, next) => {
           {
             model: urbanization,
             as:'urbanization_Data'
+          },
+          {
+            model: sex_marriage,
+            as: 'sex_marriage_Data'
           }
 
         ]
@@ -230,6 +247,11 @@ const getAllCountry = catchAsync(async (req, res, next) => {
             model: urbanization,
             as: 'urbanization_Data',
             attributes:{exclude:['country_id','createdAt','updatedAt','deletedAt']}
+          },
+          {
+            model: sex_marriage,
+            as: 'sex_marriage_Data',
+            attributes:{exclude:['id','country_id','createdAt','updatedAt','deletedAt']}
           }
 
         ]
