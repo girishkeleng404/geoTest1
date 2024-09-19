@@ -133,7 +133,7 @@ const createCountry = catchAsync(async (req, res, next) => {
         include: [
           {
             model: population_rate,
-            as: 'pupulation_rate_Data'
+            as: 'population_rate_Data'
           },
           {
             model: nationality,
@@ -188,7 +188,8 @@ const getAllCountry = catchAsync(async (req, res, next) => {
         include: [
           {
             model: population_rate,
-            as: pupulation_rate_Data,
+            as: 'population_rate_Data',
+            attributes:['population_growth_rate','population_growth_rate_rank', 'birth_rate', 'birth_rate_rank', 'death_rate',  'death_rate_rank', 'total_fertility_rate', 'total_fertility_rate_rank', 'gross_reproduction_rate','gross_reproduction_rate_rank','obesity_rate', 'obesity_rate_rank', 'net_migration_rate', 'net_migration_rate_rank'  ]
 
           },
           {
