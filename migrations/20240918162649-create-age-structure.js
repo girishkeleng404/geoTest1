@@ -13,10 +13,9 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'population',
-          key: 'id',
+          model: 'country',
+          key: 'id'
         }
-
       },
 
       age_0_14: {
@@ -30,11 +29,11 @@ module.exports = {
       },
       age_65_plus: {
         allowNull: true,
-        type:Sequelize.TEXT,
+        type: Sequelize.TEXT,
       },
-      estimated_year:{
-       type: Sequelize.INTEGER,
-       allowNull:true,
+      estimated_year: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,

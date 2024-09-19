@@ -16,7 +16,7 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'population',
+        model: 'country',
         key: 'id'
       }
     },
@@ -64,8 +64,7 @@ module.exports = (sequelize) => {
       dependency_ratio.belongsTo(models.population, {
         foreignKey: 'country_id',
         as: 'population',
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
+    
       });
     };
 

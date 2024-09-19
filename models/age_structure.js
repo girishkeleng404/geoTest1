@@ -1,7 +1,7 @@
 'use strict';
 
 const { DataTypes } = require("sequelize");
-const { sequelize } = require(".");
+
 
 
 module.exports = (sequelize) => {
@@ -17,8 +17,16 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'population',
+        model: 'country',
         key: 'id'
+      },
+      validate:{
+        notNull:{
+          msg: "Please enter a valid country id"
+        },
+        notEmpty:{
+          msg:'Country id cannot be empty'
+        }
       }
     },
     age_0_14: {
@@ -66,7 +74,12 @@ module.exports = (sequelize) => {
     deletedAt: {
       type: DataTypes.DATE,
     }
-  });
+  },
+{
+  parnoid: true,
+  freezeTableName: true,
+  tableName: 'age_structure'
+});
 
 
   age_structures.associate = (models)=>{

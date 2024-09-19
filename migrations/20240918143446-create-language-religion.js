@@ -11,7 +11,7 @@ module.exports = {
       },
       country_id: {
         type: Sequelize.INTEGER,
-        allowNull:false,
+        allowNull: false,
         references: {
           model: 'country',
           key: 'id'
@@ -28,14 +28,14 @@ module.exports = {
       },
       notes: {
         type: Sequelize.STRING,
-        allowNull:true,
+        allowNull: true,
 
       },
-      religions:{
+      religions: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
