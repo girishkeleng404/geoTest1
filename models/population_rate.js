@@ -1,23 +1,96 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class population_rate extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
+
+const { DataTypes } = require("sequelize");
+const { sequelize } = require(".");
+
+
+module.exports =(sequelize)=>{
+  const population_rate = sequelize.define('population_rate', {
+
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER
+    },
+    country_id: {
+      type: DataTypes.INTEGER,
+      allowNull:false,
+      references:{
+        model:'country',
+        key: 'id',
+      }
+    },
+    population_growth_rate: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    population_growth_rate_rank: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    birth_rate: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    birth_rate_rank: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    death_rate: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    death_rate_rank: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+
+   total_fertility_rate: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    total_fertility_rate_rank: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    gross_reproduction_rate: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    gross_reproduction_rate_rank: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    obesity_rate: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    obesity_rate_rank: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+
+    net_migration_rate: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    net_migration_rate_rank: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+
+    createdAt: {
+      allowNull: false,
+      type: DataTypes.DATE
+    },
+    updatedAt: {
+      allowNull: false,
+      type: DataTypes.DATE
+    },
+    deletedAt:{
+      type: DataTypes.DATE,
     }
-  }
-  population_rate.init({
-    country_id: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'population_rate',
   });
-  return population_rate;
-};
+  
+}

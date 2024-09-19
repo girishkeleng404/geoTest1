@@ -19,61 +19,61 @@ module.exports = {
       },
       population_growth_rate: {
         type: Sequelize.TEXT,
-        allowNull: false,
+        allowNull: true,
       },
       population_growth_rate_rank: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       birth_rate: {
         type: Sequelize.TEXT,
-        allowNull: false,
+        allowNull: true,
       },
       birth_rate_rank: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       death_rate: {
         type: Sequelize.TEXT,
-        allowNull: false,
+        allowNull: true,
       },
       death_rate_rank: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
 
      total_fertility_rate: {
         type: Sequelize.TEXT,
-        allowNull: false,
+        allowNull: true,
       },
       total_fertility_rate_rank: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       gross_reproduction_rate: {
         type: Sequelize.TEXT,
-        allowNull: false,
+        allowNull: true,
       },
       gross_reproduction_rate_rank: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       obesity_rate: {
         type: Sequelize.TEXT,
-        allowNull: false,
+        allowNull: true,
       },
       obesity_rate_rank: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
 
       net_migration_rate: {
         type: Sequelize.TEXT,
-        allowNull: false,
+        allowNull: true,
       },
       net_migration_rate_rank: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
 
       createdAt: {
@@ -83,6 +83,9 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      deletedAt:{
+        type:Sequelize.DATE,
       }
     });
   },
