@@ -121,8 +121,14 @@ module.exports = (sequelize) => {
     })
 
   };
+   population.associate = (models) => {
+    population.hasOne(models.depandency_ratio, {
+      foreignKey: 'country_id',
+      as: 'depandency_ratio'
+    });
+  }
 
-
+  
   return population;
 
 } 
