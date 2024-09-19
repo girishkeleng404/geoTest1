@@ -132,7 +132,7 @@ module.exports = (sequelize) => {
 
     population.hasMany(models.urbanization,{
       foreignKey: 'country_id',
-      as: 'urbanization'
+      as: 'urbanization_Data'
     });
 
 

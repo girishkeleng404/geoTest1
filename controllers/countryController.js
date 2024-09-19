@@ -1,7 +1,8 @@
 const catchAsync = require('../utils/catchError');
-const { user, historical_bg, population, nationality,language_religion,age_structure, dependency_ratio,population_rate } = require('../models');
+const { user, historical_bg, population, nationality,language_religion,age_structure, dependency_ratio,population_rate, urbanization } = require('../models');
 const { country } = require('../models');
 const AppError = require("../utils/appError");
+ 
  
  
  
@@ -31,7 +32,7 @@ const createCountry = catchAsync(async (req, res, next) => {
     createdBy: userId,
   });
 
-  if (body.background_description || body.total_population || body.nationality || body.languages|| body.age_0_14 || body.total_dependency_ratio || body.population_growth_rate) {
+  if (body.background_description || body.total_population || body.nationality || body.languages|| body.age_0_14 || body.total_dependency_ratio || body.population_growth_rate || body.urban_population) {
 
     if (body.background_description) {
 
@@ -115,6 +116,16 @@ const createCountry = catchAsync(async (req, res, next) => {
         net_migration_rate_rank:body.net_migration_rate_rank
 
       })
+    };
+
+    if(body.urban_population){
+      await urbanization.create({
+        country_id:newCountry.id,
+        urban_population:body.urban_population,
+        rate_of_urbanization:body.rate_of_urbanization,
+        major_urban_areas_population:body.major_urban_areas_population
+
+      })
     }
 
   }
@@ -151,7 +162,10 @@ const createCountry = catchAsync(async (req, res, next) => {
             model: dependency_ratio,
             as:'dependency_ratio'
           },
-        
+          {
+            model: urbanization,
+            as:'urbanization_Data'
+          }
 
         ]
       }
@@ -211,6 +225,11 @@ const getAllCountry = catchAsync(async (req, res, next) => {
             model: dependency_ratio,
             as: 'dependency_ratio',
             attributes:['total_dependency_ratio','youth_dependency_ratio','elderly_dependency_ratio','potential_support_ratio','dependency_estimated_year']
+          },
+          {
+            model: urbanization,
+            as: 'urbanization_Data',
+            attributes:{exclude:['country_id','createdAt','updatedAt','deletedAt']}
           }
 
         ]
