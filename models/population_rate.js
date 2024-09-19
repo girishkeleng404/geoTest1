@@ -89,8 +89,22 @@ module.exports =(sequelize)=>{
       type: DataTypes.DATE
     },
     deletedAt:{
-      type: DataTypes.DATE,
+      type: DataTypes.DATE
     }
+  },{
+    paranoid: true,
+    freezeTableName: true,
+    tableName: 'population_rate'
   });
+
   
+  population_rate.associate =(models)=>{
+    population_rate.belongsTo(models.population,{
+      foreignKey: 'country_id',
+      as: 'population'
+    })
+  }
+
+
+  return population_rate;
 }

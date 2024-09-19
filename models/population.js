@@ -125,7 +125,15 @@ module.exports = (sequelize) => {
       as: 'dependency_ratio'
     });
 
+    population.hasMany(models.population_rate,{
+      foreignKey: 'country_id',
+      as: 'pupulation_rate_Data'
+    })
+
+
+    
   };
+
     
     
   
