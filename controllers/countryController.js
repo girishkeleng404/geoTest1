@@ -1,5 +1,5 @@
 const catchAsync = require('../utils/catchError');
-const { user, historical_bg, population, nationality,language_religion,age_structure, dependency_ratio } = require('../models');
+const { user, historical_bg, population, nationality,language_religion,age_structure, dependency_ratio,population_rate } = require('../models');
 const { country } = require('../models');
 const AppError = require("../utils/appError");
  
@@ -31,7 +31,7 @@ const createCountry = catchAsync(async (req, res, next) => {
     createdBy: userId,
   });
 
-  if (body.background_description || body.total_population || body.nationality || body.languages|| body.age_0_14 || body.total_dependency_ratio) {
+  if (body.background_description || body.total_population || body.nationality || body.languages|| body.age_0_14 || body.total_dependency_ratio || body.population_growth_rate) {
 
     if (body.background_description) {
 
@@ -94,6 +94,27 @@ const createCountry = catchAsync(async (req, res, next) => {
         potential_support_ratio:body.potential_support_ratio,
         dependency_estimated_year:body.dependency_estimated_year
       })
+    };
+    if(body.population_growth_rate){
+      
+      await population_rate.create({
+        country_id:newCountry.id,
+        population_rate: body.population_rate,
+        population_growth_rate_rank:body. population_growth_rate_rank,
+        birth_rate:body.birth_rate,
+        birth_rate_rank:body.birth_rate_rank,
+        death_rate:body.death_rate,
+        death_rate_rank:body.death_rate_rank,
+        total_fertility_rate:body.total_fertility_rate,
+        total_fertility_rate_rank:body.total_fertility_rate_rank,
+        gross_reproduction_rate:body.gross_reproduction_rate,
+        gross_reproduction_rate_rank:body.gross_reproduction_rate_rank,
+        obesity_rate:body.obesity_rate,
+        obesity_rate_rank:body.obesity_rate_rank,
+        net_migration_rate:body.net_migration_rate,
+        net_migration_rate_rank:body.net_migration_rate_rank
+
+      })
     }
 
   }
@@ -111,6 +132,10 @@ const createCountry = catchAsync(async (req, res, next) => {
 
         include: [
           {
+            model: population_rate,
+            as: 'pupulation_rate_Data'
+          },
+          {
             model: nationality,
             as: 'nationality'
           },
@@ -125,7 +150,8 @@ const createCountry = catchAsync(async (req, res, next) => {
           {
             model: dependency_ratio,
             as:'dependency_ratio'
-          }
+          },
+        
 
         ]
       }
@@ -160,6 +186,11 @@ const getAllCountry = catchAsync(async (req, res, next) => {
         attributes: ['total_population', 'male_population', 'female_population', 'population_estimate_year', 'female_comparison_ranking', 'male_comparison_ranking', 'total_comparison_ranking'],
 
         include: [
+          {
+            model: population_rate,
+            as: pupulation_rate_Data,
+
+          },
           {
             model: nationality,
             as: 'nationality',
