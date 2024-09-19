@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('depandency_ratios', {
+    await queryInterface.createTable('dependency_ratio', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -34,6 +34,10 @@ module.exports = {
         type: Sequelize.FLOAT,
         allowNull:true,
       },
+      dependency_estimated_year:{
+        type: Sequelize.INTEGER,
+        allowNull:true,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -48,6 +52,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('depandency_ratios');
+    await queryInterface.dropTable('dependency_ratio');
   }
 };

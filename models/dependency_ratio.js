@@ -5,7 +5,7 @@ const { sequelize } = require(".");
 
 
 module.exports = (sequelize) => {
-  const depandency_ratio = sequelize.define('depandency_ratio', {
+  const dependency_ratio = sequelize.define('dependency_ratio', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -37,6 +37,10 @@ module.exports = (sequelize) => {
       type: DataTypes.FLOAT,
       allowNull: true,
     },
+    dependency_estimated_year: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
     createdAt: {
       allowNull: false,
       type: DataTypes.DATE
@@ -52,12 +56,12 @@ module.exports = (sequelize) => {
     {
       paranoid: true,
       freezeTableName: true,
-      tableName: 'depandency_ratio'
+      tableName: 'dependency_ratio'
     });
 
 
-    depandency_ratio.associate = (models) => {
-      depandency_ratio.belongsTo(models.population, {
+    dependency_ratio.associate = (models) => {
+      dependency_ratio.belongsTo(models.population, {
         foreignKey: 'country_id',
         as: 'population',
         onDelete: 'CASCADE',
@@ -65,5 +69,5 @@ module.exports = (sequelize) => {
       });
     };
 
-  return depandency_ratio;
+  return dependency_ratio;
 }

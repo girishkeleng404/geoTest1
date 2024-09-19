@@ -1,7 +1,8 @@
 const catchAsync = require('../utils/catchError');
-const { user, historical_bg, population, nationality,language_religion,age_structure } = require('../models');
+const { user, historical_bg, population, nationality,language_religion,age_structure, dependency_ratio } = require('../models');
 const { country } = require('../models');
 const AppError = require("../utils/appError");
+ 
  
  
 
@@ -30,7 +31,7 @@ const createCountry = catchAsync(async (req, res, next) => {
     createdBy: userId,
   });
 
-  if (body.background_description || body.total_population || body.nationality || body.languages|| body.age_0_14) {
+  if (body.background_description || body.total_population || body.nationality || body.languages|| body.age_0_14 || body.total_dependency_ratio) {
 
     if (body.background_description) {
 
@@ -83,6 +84,16 @@ const createCountry = catchAsync(async (req, res, next) => {
         age_65_plus:body.age_65_plus,
         estimated_year:body.estimated_year
       })
+    };
+    if(body.total_dependency_ratio){
+      await dependency_ratio.create({
+        country_id:newCountry.id,
+        total_dependency_ratio:body.total_dependency_ratio,
+        youth_dependency_ratio:body.youth_dependency_ratio,
+        elderly_dependency_ratio:body.elderly_dependency_ratio,
+        potential_support_ratio:body.potential_support_ratio,
+        dependency_estimated_year:body.dependency_estimated_year
+      })
     }
 
   }
@@ -110,6 +121,10 @@ const createCountry = catchAsync(async (req, res, next) => {
           {
             model: age_structure,
             as:'age_structure'
+          },
+          {
+            model: dependency_ratio,
+            as:'dependency_ratio'
           }
 
         ]
@@ -159,6 +174,11 @@ const getAllCountry = catchAsync(async (req, res, next) => {
             model: age_structure,
             as: 'age_structure',
             attributes:['age_0_14','age_15_64','age_65_plus','estimated_year']
+          },
+          {
+            model: dependency_ratio,
+            as: 'dependency_ratio',
+            attributes:['total_dependency_ratio','youth_dependency_ratio','elderly_dependency_ratio','potential_support_ratio','dependency_estimated_year']
           }
 
         ]

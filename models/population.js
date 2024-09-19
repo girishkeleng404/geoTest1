@@ -120,15 +120,17 @@ module.exports = (sequelize) => {
       as: 'age_structure'
     })
 
-  };
-   population.associate = (models) => {
-    population.hasOne(models.depandency_ratio, {
+    population.hasMany(models.dependency_ratio, {
       foreignKey: 'country_id',
-      as: 'depandency_ratio'
+      as: 'dependency_ratio'
     });
-  }
 
+  };
+    
+    
   
+
+
   return population;
 
 } 
