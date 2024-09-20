@@ -144,12 +144,18 @@ module.exports = (sequelize) => {
       foreignKey: 'country_id',
       as: 'health_data'
     });
+
+    population.hasMany(models.education_data,{
+      foreignKey: 'country_id',
+      as: 'education_data'
+    });
+
+
+
     
   };
 
-    
-    
-  
+      
 
 
   return population;
