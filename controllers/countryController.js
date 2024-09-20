@@ -328,7 +328,7 @@ const getByQuery = catchAsync(async (req, res, next) => {
   let result;
   if (name) {
     result = await country.findOne({
-      where: { name: name }, include: [
+      where: { name: name },  include: [
         {
           model: historical_bg,
           as: 'history', // alias for querying
@@ -337,9 +337,61 @@ const getByQuery = catchAsync(async (req, res, next) => {
         {
           model: population,
           as: 'populationData',
-          attributes: ['total_population', 'male_population', 'female_population', 'population_estimate_year', 'female_comparison_ranking', 'male_comparison_ranking', 'total_comparison_ranking']
+          attributes: ['total_population', 'male_population', 'female_population', 'population_estimate_year', 'female_comparison_ranking', 'male_comparison_ranking', 'total_comparison_ranking'],
+  
+          include: [
+            {
+              model: population_rate,
+              as: 'population_rate_Data',
+              attributes:['population_growth_rate','population_growth_rate_rank', 'birth_rate', 'birth_rate_rank', 'death_rate',  'death_rate_rank', 'total_fertility_rate', 'total_fertility_rate_rank', 'gross_reproduction_rate','gross_reproduction_rate_rank','obesity_rate', 'obesity_rate_rank', 'net_migration_rate', 'net_migration_rate_rank'  ]
+  
+            },
+            {
+              model: nationality,
+              as: 'nationality',
+              attributes: ['nationality', 'ethnic_groups', 'population_distribution', 'demographic_profile']
+            },
+            {
+              model: language_religion,
+              as: 'language_religion',
+              attributes: ['languages', 'major_language_sample', 'notes', 'religions']
+            },
+            {
+              model: age_structure,
+              as: 'age_structure',
+              attributes:['age_0_14','age_15_64','age_65_plus','estimated_year']
+            },
+            {
+              model: dependency_ratio,
+              as: 'dependency_ratio',
+              attributes:['total_dependency_ratio','youth_dependency_ratio','elderly_dependency_ratio','potential_support_ratio','dependency_estimated_year']
+            },
+            {
+              model: urbanization,
+              as: 'urbanization_Data',
+              attributes:{exclude:['country_id','createdAt','updatedAt','deletedAt']}
+            },
+            {
+              model: sex_marriage,
+              as: 'sex_marriage_Data',
+              attributes:{exclude:['id','country_id','createdAt','updatedAt','deletedAt']}
+            },
+            {
+              model: health_data,
+              as: 'health_data',
+              attributes:{exclude:['id','country_id','createdAt','updatedAt','deletedAt']}
+            },
+            {
+              model: education_data,
+              as: 'education_data',
+              attributes:{exclude:['id','country_id','createdAt','updatedAt','deletedAt']}
+            }
+            
+  
+          ]
+  
         }
-
+  
       ]
     });
     if (!result) {
@@ -347,7 +399,7 @@ const getByQuery = catchAsync(async (req, res, next) => {
     }
   } else if (iso) {
     result = await country.findOne({
-      where: { iso_code: iso }, include: [
+      where: { iso_code: iso },  include: [
         {
           model: historical_bg,
           as: 'history', // alias for querying
@@ -356,9 +408,61 @@ const getByQuery = catchAsync(async (req, res, next) => {
         {
           model: population,
           as: 'populationData',
-          attributes: ['total_population', 'male_population', 'female_population', 'population_estimate_year', 'female_comparison_ranking', 'male_comparison_ranking', 'total_comparison_ranking']
+          attributes: ['total_population', 'male_population', 'female_population', 'population_estimate_year', 'female_comparison_ranking', 'male_comparison_ranking', 'total_comparison_ranking'],
+  
+          include: [
+            {
+              model: population_rate,
+              as: 'population_rate_Data',
+              attributes:['population_growth_rate','population_growth_rate_rank', 'birth_rate', 'birth_rate_rank', 'death_rate',  'death_rate_rank', 'total_fertility_rate', 'total_fertility_rate_rank', 'gross_reproduction_rate','gross_reproduction_rate_rank','obesity_rate', 'obesity_rate_rank', 'net_migration_rate', 'net_migration_rate_rank'  ]
+  
+            },
+            {
+              model: nationality,
+              as: 'nationality',
+              attributes: ['nationality', 'ethnic_groups', 'population_distribution', 'demographic_profile']
+            },
+            {
+              model: language_religion,
+              as: 'language_religion',
+              attributes: ['languages', 'major_language_sample', 'notes', 'religions']
+            },
+            {
+              model: age_structure,
+              as: 'age_structure',
+              attributes:['age_0_14','age_15_64','age_65_plus','estimated_year']
+            },
+            {
+              model: dependency_ratio,
+              as: 'dependency_ratio',
+              attributes:['total_dependency_ratio','youth_dependency_ratio','elderly_dependency_ratio','potential_support_ratio','dependency_estimated_year']
+            },
+            {
+              model: urbanization,
+              as: 'urbanization_Data',
+              attributes:{exclude:['country_id','createdAt','updatedAt','deletedAt']}
+            },
+            {
+              model: sex_marriage,
+              as: 'sex_marriage_Data',
+              attributes:{exclude:['id','country_id','createdAt','updatedAt','deletedAt']}
+            },
+            {
+              model: health_data,
+              as: 'health_data',
+              attributes:{exclude:['id','country_id','createdAt','updatedAt','deletedAt']}
+            },
+            {
+              model: education_data,
+              as: 'education_data',
+              attributes:{exclude:['id','country_id','createdAt','updatedAt','deletedAt']}
+            }
+            
+  
+          ]
+  
         }
-
+  
       ]
     });
     if (!result) {
