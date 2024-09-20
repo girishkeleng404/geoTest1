@@ -18,21 +18,21 @@ module.exports = {
         }
       },
       languages: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false,
       },
       major_language_sample: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: true,
 
       },
       notes: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: true,
 
       },
       religions: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false,
       },
 

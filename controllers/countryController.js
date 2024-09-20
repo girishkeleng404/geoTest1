@@ -1,7 +1,8 @@
 const catchAsync = require('../utils/catchError');
-const { user, historical_bg, population, nationality,language_religion,age_structure, dependency_ratio,population_rate, urbanization,sex_marriage,health_data } = require('../models');
+const { user, historical_bg, population, nationality,language_religion,age_structure, dependency_ratio,population_rate, urbanization,sex_marriage,health_data, education_data } = require('../models');
 const { country } = require('../models');
 const AppError = require("../utils/appError");
+ 
  
  
  
@@ -33,7 +34,7 @@ const createCountry = catchAsync(async (req, res, next) => {
     createdBy: userId,
   });
 
-  if (body.background_description || body.total_population || body.nationality || body.languages|| body.age_0_14 || body.total_dependency_ratio || body.population_growth_rate || body.urban_population || body.sex_ratio || body.current_health_expenditure) {
+  if (body.background_description || body.total_population || body.nationality || body.languages|| body.age_0_14 || body.total_dependency_ratio || body.population_growth_rate || body.urban_population || body.sex_ratio || body.current_health_expenditure || body.education_expenditure ) {
 
     if (body.background_description) {
 
@@ -156,7 +157,18 @@ const createCountry = catchAsync(async (req, res, next) => {
         adult_obesity:body.adult_obesity,
         underweight_children:body.underweight_children
       })
-    }
+    };
+    
+    if(body.education_expenditure){
+      await education_data.create({
+        country_id:newCountry.id,
+        education_expenditure:body.education_expenditure,
+        literacy_rate:body.literacy_rate,
+        school_life_expectancy:body.school_life_expectancy
+      })
+    };
+
+
 
   }
 
@@ -203,6 +215,10 @@ const createCountry = catchAsync(async (req, res, next) => {
           {
             model: health_data,
             as: 'health_data'
+          },
+          {
+            model: education_data,
+            as: 'education_data'
           }
 
         ]
@@ -278,7 +294,13 @@ const getAllCountry = catchAsync(async (req, res, next) => {
             model: health_data,
             as: 'health_data',
             attributes:{exclude:['id','country_id','createdAt','updatedAt','deletedAt']}
+          },
+          {
+            model: education_data,
+            as: 'education_data',
+            attributes:{exclude:['id','country_id','createdAt','updatedAt','deletedAt']}
           }
+          
 
         ]
 

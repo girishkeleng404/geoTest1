@@ -31,7 +31,7 @@ module.exports = (sequelize) => {
       }
     },
     languages: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
       validate:{
         notNull:{
@@ -43,17 +43,17 @@ module.exports = (sequelize) => {
       }
     },
     major_language_sample: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: true,
 
     },
     notes: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: true,
 
     },
     religions: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
       validate:{
         notNull:{
