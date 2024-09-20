@@ -139,6 +139,11 @@ module.exports = (sequelize) => {
       foreignKey: 'country_id',
       as: 'sex_marriage_Data'
     });
+
+    population.hasMany(models.health_data,{
+      foreignKey: 'country_id',
+      as: 'health_data'
+    });
     
   };
 

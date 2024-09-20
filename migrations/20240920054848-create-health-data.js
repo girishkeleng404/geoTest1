@@ -57,6 +57,10 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: true
       },
+      underweight_children: {
+        type: Sequelize.ARRAY(Sequelize.TEXT),
+        allowNull: true
+      },
 
       createdAt: {
         allowNull: false,
