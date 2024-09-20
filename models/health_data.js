@@ -65,7 +65,7 @@ module.exports = (sequelize)=>{
       allowNull: true
     },
     adult_obesity: {
-      type: DataTypes.TEXT,
+      type: DataTypes.JSONB,
       allowNull: true
     },
     underweight_children: {

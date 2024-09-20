@@ -22,11 +22,11 @@ module.exports = {
         allowNull: true
       },
       life_expectancy: {
-        type: DataTypes.JSONB, 
+        type: Sequelize.JSONB, 
         allowNull: true
       },
       infant_mortality: {
-        type: DataTypes.JSONB, 
+        type: Sequelize.JSONB, 
         allowNull: true
       },
       maternal_mortality: {
@@ -42,23 +42,23 @@ module.exports = {
         allowNull: true
       },
       drinking_water: {
-        type: DataTypes.JSONB, 
+        type: Sequelize.JSONB, 
         allowNull: true
       },
       sanitation: {
-        type: DataTypes.JSONB, 
+        type: Sequelize.JSONB, 
         allowNull: true
       },
       major_infectious_diseases: {
-        type: DataTypes.JSONB, 
+        type: Sequelize.JSONB, 
         allowNull: true
       },
       adult_obesity: {
-        type: Sequelize.TEXT,
-        allowNull: true
+        type: Sequelize.JSONB,
+        allowNull: true,
       },
       underweight_children: {
-        type: DataTypes.JSONB, 
+        type: Sequelize.JSONB, 
         allowNull: true
       },
 
