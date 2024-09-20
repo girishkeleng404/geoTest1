@@ -1,5 +1,5 @@
 const catchAsync = require('../utils/catchError');
-const { user, historical_bg, population, nationality,language_religion,age_structure, dependency_ratio,population_rate, urbanization,sex_marriage } = require('../models');
+const { user, historical_bg, population, nationality,language_religion,age_structure, dependency_ratio,population_rate, urbanization,sex_marriage,health_data } = require('../models');
 const { country } = require('../models');
 const AppError = require("../utils/appError");
  
@@ -33,7 +33,7 @@ const createCountry = catchAsync(async (req, res, next) => {
     createdBy: userId,
   });
 
-  if (body.background_description || body.total_population || body.nationality || body.languages|| body.age_0_14 || body.total_dependency_ratio || body.population_growth_rate || body.urban_population || body.sex_ratio) {
+  if (body.background_description || body.total_population || body.nationality || body.languages|| body.age_0_14 || body.total_dependency_ratio || body.population_growth_rate || body.urban_population || body.sex_ratio || body.current_health_expenditure) {
 
     if (body.background_description) {
 
@@ -139,6 +139,23 @@ const createCountry = catchAsync(async (req, res, next) => {
         women_married_by_age_18:body.women_married_by_age_18,
         contraceptive_prevalence_rate:body.contraceptive_prevalence_rate
       })
+    };
+
+    if(body.current_health_expenditure){
+      await health_data.create({
+        country_id:newCountry.id,
+        current_health_expenditure:body.current_health_expenditure,
+        life_expectancy:body.life_expectancy,
+        infant_mortality:body.infant_mortality,
+        maternal_mortality:body.maternal_mortality,
+        physician_density:body.physician_density,
+        hospital_bed_density:body.hospital_bed_density,
+        drinking_water:body.drinking_water,
+        sanitation:body.sanitation,
+        major_infectious_diseases:body.major_infectious_diseases,
+        adult_obesity:body.adult_obesity,
+        underweight_children:body.underweight_children
+      })
     }
 
   }
@@ -182,6 +199,10 @@ const createCountry = catchAsync(async (req, res, next) => {
           {
             model: sex_marriage,
             as: 'sex_marriage_Data'
+          },
+          {
+            model: health_data,
+            as: 'health_data'
           }
 
         ]
@@ -251,6 +272,11 @@ const getAllCountry = catchAsync(async (req, res, next) => {
           {
             model: sex_marriage,
             as: 'sex_marriage_Data',
+            attributes:{exclude:['id','country_id','createdAt','updatedAt','deletedAt']}
+          },
+          {
+            model: health_data,
+            as: 'health_data',
             attributes:{exclude:['id','country_id','createdAt','updatedAt','deletedAt']}
           }
 
