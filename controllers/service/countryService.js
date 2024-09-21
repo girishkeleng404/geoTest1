@@ -1,4 +1,5 @@
-const { population, nationality,language_religion,age_structure, dependency_ratio,population_rate, urbanization,sex_marriage,health_data, education_data,substance_use_data,environment } = require('../../models');
+const { population, nationality,language_religion,age_structure, dependency_ratio,population_rate, urbanization,sex_marriage,health_data, education_data,substance_use_data,environment,government } = require('../../models');
+ 
  
 
 
@@ -151,8 +152,23 @@ const environmentService = async(body,countryId)=> {
       pollution_waste_data: body.pollution_waste_data,
       water_resources: body.water_resources
   })
-}}
+}};
+
+
+const governmentService = async(body,countryId)=> {
+  if(body.government_type){
+    await government.create({
+      country_id: countryId,
+      government_type: body.government_type,
+      country_name:body.country_name,
+      capital: body.capital_details,
+      administrative_divisions:body.administrative_divisions,
+      independence:body.independence,
+      national_holiday:body.national_holiday
+    })
+  }
+}
 
 
 
-module.exports ={populationService, environmentService}
+module.exports ={populationService, environmentService,governmentService}

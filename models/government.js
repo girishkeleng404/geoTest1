@@ -49,15 +49,15 @@ module.exports = (sequelize)=>{
       type: DataTypes.JSONB,
       allowNull: true,
     },
-    Administrative_divisions:{
+    administrative_divisions:{
       type: DataTypes.JSONB,
       allowNull: true,
     },
-    Independence:{
+    independence:{
       type: DataTypes.JSONB,
       allowNull: true,
     },
-    National_holiday:{
+    national_holiday:{
       type: DataTypes.JSONB,
       allowNull: true,
     },
