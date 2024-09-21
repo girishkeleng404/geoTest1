@@ -1,4 +1,5 @@
-const { population, nationality,language_religion,age_structure, dependency_ratio,population_rate, urbanization,sex_marriage,health_data, education_data,substance_use_data,environment,government } = require('../../models');
+const { population, nationality,language_religion,age_structure, dependency_ratio,population_rate, urbanization,sex_marriage,health_data, education_data,substance_use_data,environment,government,legal_law_data  } = require('../../models');
+ 
  
  
 
@@ -158,7 +159,7 @@ const environmentService = async(body,countryId)=> {
 
 const governmentService = async(body,countryId)=> {
   if(body.government_type){
-    await government.create({
+  const governmentTableData =  await government.create({
       country_id: countryId,
       government_type: body.government_type,
       country_name:body.country_name,
@@ -167,7 +168,23 @@ const governmentService = async(body,countryId)=> {
       independence:body.independence,
       national_holiday:body.national_holiday
     })
-  }
+ 
+
+  if(body.legal_system){
+   await legal_law_data.create({
+    government_id: governmentTableData.id,
+    legal_system: body.legal_system,
+    constitution: body.constitution,
+    international_law_organization_participation:body.international_law_organization_participation,
+    citizenship:body.citizenship,
+    suffrage:body.suffrage,
+    executive_branch:body.executive_branch,
+    legislative_branch:body.legislative_branch,
+    judicial_branch:body.judicial_branch
+
+   }) 
+   
+  }};
 }
 
 
