@@ -4,8 +4,8 @@ const { DataTypes } = require("sequelize");
 const { sequelize } = require(".");
 
 
-module.exports = (sequelize)=>{
-  const government = sequelize.define('government',{
+module.exports = (sequelize) => {
+  const government = sequelize.define('government', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -31,11 +31,11 @@ module.exports = (sequelize)=>{
     government_type: {
       type: DataTypes.TEXT,
       allowNull: false,
-      validate:{
-        notNull:{
+      validate: {
+        notNull: {
           msg: 'Please enter a valid government type'
         },
-        notEmpty:{
+        notEmpty: {
           'msg': 'Government type cannot be empty'
         }
       }
@@ -49,15 +49,15 @@ module.exports = (sequelize)=>{
       type: DataTypes.JSONB,
       allowNull: true,
     },
-    administrative_divisions:{
+    administrative_divisions: {
       type: DataTypes.JSONB,
       allowNull: true,
     },
-    independence:{
+    independence: {
       type: DataTypes.JSONB,
       allowNull: true,
     },
-    national_holiday:{
+    national_holiday: {
       type: DataTypes.JSONB,
       allowNull: true,
     },
@@ -72,20 +72,29 @@ module.exports = (sequelize)=>{
     deletedAt: {
       type: DataTypes.DATE
     },
-  },{
+  }, {
     paranoid: true,
     freezeTableName: true,
     tableName: 'government'
   });
 
-   government.associate=(models)=>{
-    government.belongsTo(models.country,{
+  government.associate = (models) => {
+
+    government.belongsTo(models.country, {
       foreignKey: 'country_id',
       as: 'country',
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE'
+    });
+
+    government.hasMany(models.legal_law_data, {
+      foreignKey: 'government_id',
+      as: 'legal_law_data',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     })
-   }
+
+  }
 
   return government;
 }

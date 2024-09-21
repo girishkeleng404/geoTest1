@@ -140,7 +140,7 @@ const populationService = async(body,countryId)=> {
 
       }
 }
-
+// -----------------xxxxxxx------------------
 
 const environmentService = async(body,countryId)=> {
   if(body.environment){
@@ -154,6 +154,7 @@ const environmentService = async(body,countryId)=> {
   })
 }};
 
+// ---------------xxxxxxxxxxx--------------------
 
 const governmentService = async(body,countryId)=> {
   if(body.government_type){
