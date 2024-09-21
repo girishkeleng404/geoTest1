@@ -1,4 +1,5 @@
-const { population, nationality,language_religion,age_structure, dependency_ratio,population_rate, urbanization,sex_marriage,health_data, education_data } = require('../../models');
+const { population, nationality,language_religion,age_structure, dependency_ratio,population_rate, urbanization,sex_marriage,health_data, education_data,substance_use_data } = require('../../models');
+ 
 
 
 const populationService = async(body,countryId)=> {
@@ -127,8 +128,16 @@ const populationService = async(body,countryId)=> {
           })
         };
 
+        if(body.alcohol_consumption_p_capita){
+            await substance_use_data.create({
+                population_id: populationData.id,
+                alcohol_consumption_p_capita:body.alcohol_consumption_p_capita,
+                tobacco_use_p_capita:body.tobacco_use_p_capita
+            })
+        }
 
-        
+
+
       }
 }
 

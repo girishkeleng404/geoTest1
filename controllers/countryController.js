@@ -1,5 +1,5 @@
 const catchAsync = require('../utils/catchError');
-const { user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data } = require('../models');
+const { user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data,substance_use_data } = require('../models');
 const { country } = require('../models');
 const AppError = require("../utils/appError");
 const { populationService } = require('./service/countryService');
@@ -88,6 +88,10 @@ const createCountry = catchAsync(async (req, res, next) => {
           {
             model: education_data,
             as: 'education_data'
+          },
+          {
+            model: substance_use_data,
+            as: 'substance_use_data'
           }
 
         ]
@@ -151,22 +155,27 @@ const countryIncludes = [
       {
         model: urbanization,
         as: 'urbanization_Data',
-        attributes: { exclude: ['country_id', 'createdAt', 'updatedAt', 'deletedAt'] }
+        attributes: { exclude: ['population_id', 'createdAt', 'updatedAt', 'deletedAt'] }
       },
       {
         model: sex_marriage,
         as: 'sex_marriage_Data',
-        attributes: { exclude: ['id', 'country_id', 'createdAt', 'updatedAt', 'deletedAt'] }
+        attributes: { exclude: ['id', 'population_id', 'createdAt', 'updatedAt', 'deletedAt'] }
       },
       {
         model: health_data,
         as: 'health_data',
-        attributes: { exclude: ['id', 'country_id', 'createdAt', 'updatedAt', 'deletedAt'] }
+        attributes: { exclude: ['id', 'population_id', 'createdAt', 'updatedAt', 'deletedAt'] }
       },
       {
         model: education_data,
         as: 'education_data',
-        attributes: { exclude: ['id', 'country_id', 'createdAt', 'updatedAt', 'deletedAt'] }
+        attributes: { exclude: ['id', 'population_id', 'createdAt', 'updatedAt', 'deletedAt'] }
+      },
+      {
+        model: substance_use_data,
+        as: 'substance_use_data',
+        attributes: { exclude: ['id', 'population_id', 'createdAt', 'updatedAt', 'deletedAt'] }
       }
     ]
   }
