@@ -1,4 +1,4 @@
-const { population, nationality,language_religion,age_structure, dependency_ratio,population_rate, urbanization,sex_marriage,health_data, education_data,substance_use_data } = require('../../models');
+const { population, nationality,language_religion,age_structure, dependency_ratio,population_rate, urbanization,sex_marriage,health_data, education_data,substance_use_data,environment } = require('../../models');
  
 
 
@@ -137,11 +137,22 @@ const populationService = async(body,countryId)=> {
         }
 
 
-
       }
 }
 
 
+const environmentService = async(body,countryId)=> {
+  if(body.environment){
+    await environment.create({
+      country_id: countryId,
+      environment: body.environment,
+      land_use: body.land_use,
+      natural_resource_revenue_data: body.natural_resource_revenue_data,
+      pollution_waste_data: body.pollution_waste_data,
+      water_resources: body.water_resources
+  })
+}}
 
 
-module.exports ={populationService}
+
+module.exports ={populationService, environmentService}

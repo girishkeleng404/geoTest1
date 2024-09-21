@@ -1,8 +1,9 @@
 const catchAsync = require('../utils/catchError');
-const { user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data,substance_use_data } = require('../models');
+const { user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data,substance_use_data,environment } = require('../models');
 const { country } = require('../models');
 const AppError = require("../utils/appError");
-const { populationService } = require('./service/countryService');
+const { populationService, environmentService } = require('./service/countryService');
+ 
 
 
 
@@ -38,6 +39,7 @@ const createCountry = catchAsync(async (req, res, next) => {
   }
   // population data
   await populationService(body,newCountry.id);
+  await environmentService(body, newCountry.id)
 
 
 
@@ -95,6 +97,10 @@ const createCountry = catchAsync(async (req, res, next) => {
           }
 
         ]
+      },
+      {
+        model: environment,
+        as: 'environment_data'
       }
     ],
   });
@@ -178,6 +184,11 @@ const countryIncludes = [
         attributes: { exclude: ['id', 'population_id', 'createdAt', 'updatedAt', 'deletedAt'] }
       }
     ]
+  },
+  {
+    model: environment,
+    as: 'environment_data',
+    attributes: { exclude: ['id', 'country_id', 'createdAt', 'updatedAt', 'deletedAt'] }
   }
 ];
 
