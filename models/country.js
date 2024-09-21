@@ -122,9 +122,9 @@ module.exports = (sequelize) => {
 
     country.hasMany(models.population, { foreignKey: 'country_id', as: 'populationData', });
 
-    country.hasMany(models.education_data, {
+    country.hasMany(models.environment, {
       foreignKey: 'country_id',
-      as: 'education_data'
+      as: 'environment_data'
     });
 
 
