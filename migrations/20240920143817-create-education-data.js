@@ -13,9 +13,11 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'country',
+          model: 'population',
           key: "id"
-        }
+        },
+          onDelete: 'CASCADE', 
+          onUpdate: 'CASCADE'
       },
       education_expenditure: {
         type: Sequelize.JSONB,

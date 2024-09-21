@@ -106,12 +106,12 @@ module.exports = (sequelize) => {
 
 
     population.hasMany(models.nationality, {
-      foreignKey: 'country_id',
+      foreignKey: 'population_id',
       as: 'nationality'
     });
 
     population.hasMany(models.language_religion, {
-      foreignKey: 'country_id',
+      foreignKey: 'population_id',
       as: 'language_religion'
     });
 
@@ -121,32 +121,32 @@ module.exports = (sequelize) => {
     })
 
     population.hasMany(models.dependency_ratio, {
-      foreignKey: 'country_id',
+      foreignKey: 'population_id',
       as: 'dependency_ratio'
     });
 
     population.hasMany(models.population_rate,{
-      foreignKey: 'country_id',
+      foreignKey: 'population_id',
       as: 'population_rate_Data'
     });
 
     population.hasMany(models.urbanization,{
-      foreignKey: 'country_id',
+      foreignKey: 'population_id',
       as: 'urbanization_Data'
     });
 
     population.hasMany(models.sex_marriage,{
-      foreignKey: 'country_id',
+      foreignKey: 'population_id',
       as: 'sex_marriage_Data'
     });
 
     population.hasMany(models.health_data,{
-      foreignKey: 'country_id',
+      foreignKey: 'population_id',
       as: 'health_data'
     });
 
     population.hasMany(models.education_data,{
-      foreignKey: 'country_id',
+      foreignKey: 'population_id',
       as: 'education_data'
     });
 

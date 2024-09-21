@@ -18,6 +18,14 @@ module.exports = (sequelize) => {
       references: {
         model: 'population',
         key: 'id'
+      },
+      validate:{
+        notNull:{
+          msg: "Please enter a valid population id"
+        },
+        notEmpty:{
+          msg: "population id cannot be empty"
+        }
       }
     },
     total_dependency_ratio: {
