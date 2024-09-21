@@ -1,94 +1,70 @@
-'use strict';
+ 'use strict';
 
 const { DataTypes } = require("sequelize");
 
-
-
 module.exports = (sequelize) => {
-  const age_structures = sequelize.define('age_structure', {
-
+  const age_structure = sequelize.define('age_structure', {
     id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER
     },
-    country_id: {
+    population_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'country',
+        model: 'population',
         key: 'id'
       },
-      validate:{
-        notNull:{
-          msg: "Please enter a valid country id"
+      validate: {
+        notNull: {
+          msg: "Please enter a valid population id"
         },
-        notEmpty:{
-          msg:'Country id cannot be empty'
+        notEmpty: {
+          msg: 'Population id cannot be empty'
         }
       }
     },
     age_0_14: {
       type: DataTypes.TEXT,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: "Please enter a valid age for 0-14"
-        },
-        notEmpty: {
-          msg: "Age cannot be empty  for 0-14"
-        },
-      },
+      allowNull: true,
     },
     age_15_64: {
       type: DataTypes.TEXT,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: "Please enter a valid age for 15-64"
-        },
-        notEmpty: {
-          msg: "Age cannot be empty for 15-64"
-        },
-      },
+      allowNull: true,
     },
     age_65_plus: {
       type: DataTypes.TEXT,
       allowNull: true,
-      
     },
-    
     estimated_year: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.TEXT,
       allowNull: true,
     },
     createdAt: {
       allowNull: false,
-      type: DataTypes.DATE,
+      type: DataTypes.DATE
     },
     updatedAt: {
       allowNull: false,
-      type: DataTypes.DATE,
+      type: DataTypes.DATE
     },
     deletedAt: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATE
     }
-  },
-{
-  parnoid: true,
-  freezeTableName: true,
-  tableName: 'age_structure'
-});
+  }, {
+    paranoid: true,
+    freezeTableName: true,
+    tableName: 'age_structure'
+  });
 
+  age_structure.associate = (models) => {
+    age_structure.belongsTo(models.population, {
+      foreignKey: 'population_id', // Link to population
+      as: 'population' // Alias for easier querying
+    });
+  };
 
-  age_structures.associate = (models)=>{
-    age_structures.belongsTo(models.population,{
-      foreignKey: 'country_id',
-      as: 'population'
-    })
-  }
-
-
-  return age_structures;
+  return age_structure;
 }

@@ -121,6 +121,13 @@ module.exports = (sequelize) => {
     country.hasMany(models.historical_bg, { foreignKey: 'country_id', as: 'history', });
 
     country.hasMany(models.population, { foreignKey: 'country_id', as: 'populationData', });
+
+    country.hasMany(models.education_data, {
+      foreignKey: 'country_id',
+      as: 'education_data'
+    });
+
+
   }
 
 

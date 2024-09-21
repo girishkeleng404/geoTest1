@@ -1,7 +1,7 @@
 'use strict';
 
 const { DataTypes } = require("sequelize");
-const { sequelize } = require(".");
+
 
 
 module.exports = (sequelize) => {
@@ -12,11 +12,11 @@ module.exports = (sequelize) => {
       primaryKey: true,
       type: DataTypes.INTEGER
     },
-    country_id: {
+    population_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'country',
+        model: 'population',
         key: 'id'
       }
     },
@@ -62,7 +62,7 @@ module.exports = (sequelize) => {
 
     dependency_ratio.associate = (models) => {
       dependency_ratio.belongsTo(models.population, {
-        foreignKey: 'country_id',
+        foreignKey: 'population_id',
         as: 'population',
     
       });

@@ -19,6 +19,7 @@ const createCountry = catchAsync(async (req, res, next) => {
   const userId = req.user.id;
   console.log(req.user);
   const userType = req.user.userType;
+   
 
   if (userType !== '0') {
     return next(new AppError('You are not authorized to create a country', 403));
@@ -45,7 +46,7 @@ const createCountry = catchAsync(async (req, res, next) => {
     }
 
     if (body.total_population) {
-      await population.create({
+    const populationData =  await population.create({
         country_id: newCountry.id,
         total_population: body.total_population,
         male_population: body.male_population,
@@ -55,7 +56,7 @@ const createCountry = catchAsync(async (req, res, next) => {
         male_comparison_ranking: body.male_comparison_ranking,
         total_comparison_ranking: body.total_comparison_ranking,
       });
-    }
+    
 
 
     if (body.nationality) {
@@ -81,7 +82,7 @@ const createCountry = catchAsync(async (req, res, next) => {
 
     if(body.age_0_14){
       await age_structure.create({
-        country_id:newCountry.id,
+        population_id: populationData.country_id,
         age_0_14:body.age_0_14,
         age_15_64:body.age_15_64,
         age_65_plus:body.age_65_plus,
@@ -167,6 +168,7 @@ const createCountry = catchAsync(async (req, res, next) => {
         school_life_expectancy:body.school_life_expectancy
       })
     };
+  }
 
 
 

@@ -14,19 +14,19 @@ module.exports = (sequelize) => {
       primaryKey: true,
       type: DataTypes.INTEGER
     },
-    country_id: {
+    population_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'country',
+        model: 'population',
         key: 'id'
       },
       validate:{
         notNull:{
-          msg: "Please enter a valid country id"
+          msg: "Please enter a valid population id"
         },
         notEmpty:{
-          msg:'Country id cannot be empty'
+          msg:'population id cannot be empty'
         }
       }
     },
@@ -87,7 +87,7 @@ module.exports = (sequelize) => {
 
   language_religion.associate = (models)=>{
     language_religion.belongsTo(models.population,{
-      foreignKey: 'country_id',
+      foreignKey: 'population_id',
       as: 'population'
     })
   }

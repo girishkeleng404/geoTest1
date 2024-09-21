@@ -12,11 +12,11 @@ module.exports = (sequelize) => {
       primaryKey: true,
       type: DataTypes.INTEGER
     },
-    country_id: {
+    population_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'country',
+        model: 'population',
         key: 'id'
       }
     },
@@ -68,7 +68,7 @@ module.exports = (sequelize) => {
   })
 
   sex_marriage.associate = (models)=>{
-    sex_marriage.belongsTo(models.population, {foreignKey: 'country_id', as: 'population'})
+    sex_marriage.belongsTo(models.population, {foreignKey: 'population_id', as: 'population'})
   }
 
 

@@ -13,11 +13,11 @@ module.exports =(sequelize)=>{
       primaryKey: true,
       type: DataTypes.INTEGER
     },
-    country_id: {
+    population_id: {
       type: DataTypes.INTEGER,
       allowNull:false,
       references:{
-        model:'country',
+        model:'population',
         key: 'id',
       }
     },
@@ -100,7 +100,7 @@ module.exports =(sequelize)=>{
   
   population_rate.associate =(models)=>{
     population_rate.belongsTo(models.population,{
-      foreignKey: 'country_id',
+      foreignKey: 'population_id',
       as: 'population'
     })
   }

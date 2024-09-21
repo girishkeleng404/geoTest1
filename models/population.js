@@ -116,7 +116,7 @@ module.exports = (sequelize) => {
     });
 
     population.hasMany(models.age_structure, {
-      foreignKey: 'country_id',
+      foreignKey: 'population_id',
       as: 'age_structure'
     })
 
