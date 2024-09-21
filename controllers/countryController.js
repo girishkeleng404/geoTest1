@@ -7,7 +7,6 @@ const { populationService } = require('./service/countryService');
 
 
 
-
 const createCountry = catchAsync(async (req, res, next) => {
   const body = req.body;
   const userId = req.user.id;

@@ -126,6 +126,9 @@ const populationService = async(body,countryId)=> {
             school_life_expectancy:body.school_life_expectancy
           })
         };
+
+
+        
       }
 }
 
