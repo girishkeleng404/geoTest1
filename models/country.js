@@ -127,6 +127,10 @@ module.exports = (sequelize) => {
       as: 'environment_data'
     });
 
+    country.hasMany(models.government, {
+      foreignKey: 'country_id',
+      as: 'government_data'
+    });
 
   }
 

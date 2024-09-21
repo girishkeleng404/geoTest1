@@ -32,7 +32,18 @@ module.exports = {
         type: Sequelize.JSONB,
         allowNull: true,
       },
-
+      Administrative_divisions:{
+        type: Sequelize.JSONB,
+        allowNull: true,
+      },
+      Independence:{
+        type: Sequelize.JSONB,
+        allowNull: true,
+      },
+      National_holiday:{
+        type: Sequelize.JSONB,
+        allowNull: true,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
