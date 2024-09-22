@@ -1,5 +1,5 @@
 const catchAsync = require('../utils/catchError');
-const { user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data,substance_use_data,environment,government,legal_law_data  } = require('../models');
+const { user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data,substance_use_data,environment,government,legal_law_data,government_more  } = require('../models');
 const { country } = require('../models');
 const AppError = require("../utils/appError");
 const { populationService, environmentService, governmentService } = require('./service/countryService');
@@ -111,6 +111,10 @@ const createCountry = catchAsync(async (req, res, next) => {
             {
               model: legal_law_data,
               as: 'legal_law_data'
+            },
+            {
+              model: government_more,
+              as: 'gov_more'
             }
         ]
       }
@@ -211,7 +215,12 @@ const countryIncludes = [
       {
         model: legal_law_data,
         as: 'legal_law_data',
-        attributes: { exclude: ['id', 'country_id', 'createdAt', 'updatedAt', 'deletedAt'] },
+        attributes: { exclude: ['id', 'government_id', 'createdAt', 'updatedAt', 'deletedAt'] },
+      },{
+        model: government_more,
+        as: 'gov_more',
+        attributes: { exclude: ['id', 'government_id', 'createdAt', 'updatedAt', 'deletedAt'] },
+
       }
   ]
   }

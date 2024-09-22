@@ -3,7 +3,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('government_mores', {
-      // add Judicial branch, Political parties, International organization participation,Diplomatic representation,Flag description,National symbol(s),National anthem,National heritage all with type: Sequelize.JSONB
+     
       id: {
         allowNull: false,
         autoIncrement: true,

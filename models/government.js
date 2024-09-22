@@ -92,6 +92,11 @@ module.exports = (sequelize) => {
       as: 'legal_law_data',
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE'
+    });
+
+    government.hasMany(models.government_more,{
+      foreignKey: 'government_id',
+      as: 'gov_more'
     })
 
   }
