@@ -59,20 +59,30 @@ module.exports = (sequelize) => {
   economy.associate = (models) => {
     economy.belongsTo(models.country, {
       foreignKey: 'country_id'
-    })
+    });
 
 
     economy.hasMany(models.gdp_data, {
       foreignKey: 'economy_id',
       as: 'gdp_data'
-    })
+    });
 
 
     economy.hasMany(models.agricultural_and_industrial_data, {
       foreignKey: 'economy_id',
       as: 'agricultural_and_industrial_data'
 
+    });
+    
+
+    economy.hasMany(models.labor_market_data, {
+      foreignKey: 'economy_id',
+      as: 'labor_market_data'
     })
+
+
+
+
   }
 
 
