@@ -1,4 +1,4 @@
-const { population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data, substance_use_data, environment, government, legal_law_data, government_more, economy, gdp_data, agricultural_and_industrial_data, labor_market_data } = require('../../models');
+const { population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data, substance_use_data, environment, government, legal_law_data, government_more, economy, gdp_data, agricultural_and_industrial_data, labor_market_data,household_income_expenditure_data } = require('../../models');
 
 
 
@@ -253,8 +253,18 @@ const economyService = async (body, countryId) => {
 
       })
 
+    }
 
-
+    if(body.lowest_10_percent_income_in_percent){
+      await household_income_expenditure_data.create({
+        economy_id: economyId.id,
+        year:body.household_income_expenditure_year,
+        lowest_10_percent_income_in_percent:body.lowest_10_percent_income_in_percent,
+        highest_10_percent_income_in_percent:body.highest_10_percent_income_in_percent,
+        household_expenditure_food_in_percent:body.household_expenditure_food_in_percent,
+        household_expenditure_alcohol_tobacco_in_percent:body.household_expenditure_alcohol_tobacco_in_percent,
+        remittances:body.remittances
+      })
     }
   }
 }

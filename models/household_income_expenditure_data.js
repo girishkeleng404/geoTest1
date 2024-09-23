@@ -31,27 +31,29 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    lowest_10_percent_income: {
+    lowest_10_percent_income_in_percent: {
       type: DataTypes.FLOAT,
       allowNull: true,
     },
-    highest_10_percent_income: {
+    highest_10_percent_income_in_percent: {
       type: DataTypes.FLOAT,
       allowNull: true,
     },
-    household_expenditure_food: {
+    household_expenditure_food_in_percent: {
       type: DataTypes.FLOAT,
       allowNull: true,
     },
+
+    household_expenditure_alcohol_tobacco_in_percent: {
+      type: DataTypes.FLOAT,
+      allowNull: true,
+    },
+
     remittances: {
       type: DataTypes.JSONB,
     },
 
-    household_expenditure_alcohol_tobacco: {
-      type: DataTypes.FLOAT,
-      allowNull: true,
-    },
-
+    
 
     createdAt: {
       allowNull: false,
@@ -74,7 +76,7 @@ module.exports = (sequelize) => {
   household_income_expenditure_data.associate = (models) => {
     household_income_expenditure_data.belongsTo(models.economy, {
       foreignKey: 'economy_id',
-      as: economy,
+      as: 'economy',
     })
   }
 
