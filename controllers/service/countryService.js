@@ -1,4 +1,5 @@
-const { population, nationality,language_religion,age_structure, dependency_ratio,population_rate, urbanization,sex_marriage,health_data, education_data,substance_use_data,environment,government,legal_law_data,government_more,economy  } = require('../../models');
+const { population, nationality,language_religion,age_structure, dependency_ratio,population_rate, urbanization,sex_marriage,health_data, education_data,substance_use_data,environment,government,legal_law_data,government_more,economy ,gdp_data } = require('../../models');
+ 
  
  
  
@@ -209,12 +210,31 @@ const governmentService = async(body,countryId)=> {
 
 const economyService = async(body,countryId)=> {
   if(body.overview){
-    await economy.create({
+ const economyId =  await economy.create({
       country_id: countryId,
       overview: body.overview,
       year: body.year
     })
-  }
+ 
+
+
+  if(body.gdp_purchasing_power_parity){
+    await gdp_data.create({
+      economy_id: economyId.id,
+      gdp_purchasing_power_parity: body.gdp_purchasing_power_parity,
+      gdp_real_growth_rate: body.gdp_real_growth_rate,
+      gdp_per_capita: body.gdp_per_capita,
+      gdp_official_exchange_rate: body.gdp_official_exchange_rate,
+      infulation_rate: body.infulation_rate,
+      cadit_rating: body.cadit_rating,
+      gdp_composition_by_sector: body.gdp_composition_by_sector,
+      gdp_composition_by_end_use: body.gdp_composition_by_end_use
+
+    })
+
+
+
+  }}
 }
 
 
