@@ -1,4 +1,5 @@
-const { population, nationality,language_religion,age_structure, dependency_ratio,population_rate, urbanization,sex_marriage,health_data, education_data,substance_use_data,environment,government,legal_law_data,government_more  } = require('../../models');
+const { population, nationality,language_religion,age_structure, dependency_ratio,population_rate, urbanization,sex_marriage,health_data, education_data,substance_use_data,environment,government,legal_law_data,government_more,economy  } = require('../../models');
+ 
  
  
  
@@ -190,6 +191,7 @@ const governmentService = async(body,countryId)=> {
   if(body.political_parties){
     await government_more.create({
       government_id: governmentTableData.id,
+      judicial_branch:body.judicial_branch,
       political_parties: body.political_parties,
       international_organization_participation: body.international_organization_participation,
       diplomatic_representation:body.diplomatic_representation,
@@ -200,11 +202,21 @@ const governmentService = async(body,countryId)=> {
     })
   }
 
-
-
 };    
 }
 
 
 
-module.exports ={populationService, environmentService,governmentService}
+const economyService = async(body,countryId)=> {
+  if(body.overview){
+    await economy.create({
+      country_id: countryId,
+      overview: body.overview,
+      year: body.year
+    })
+  }
+}
+
+
+
+module.exports ={populationService, environmentService,governmentService,economyService}

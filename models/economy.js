@@ -56,7 +56,6 @@ module.exports =(sequelize)=>{
 
 
 
-
 economy.associate = (models) => {
   economy.belongsTo(models.country, {
     foreignKey: 'country_id'

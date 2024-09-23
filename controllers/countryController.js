@@ -1,8 +1,8 @@
 const catchAsync = require('../utils/catchError');
-const { user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data,substance_use_data,environment,government,legal_law_data,government_more  } = require('../models');
+const { user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data,substance_use_data,environment,government,legal_law_data,government_more,economy  } = require('../models');
 const { country } = require('../models');
 const AppError = require("../utils/appError");
-const { populationService, environmentService, governmentService } = require('./service/countryService');
+const { populationService, environmentService, governmentService,economyService } = require('./service/countryService');
  
 
 
@@ -41,6 +41,7 @@ const createCountry = catchAsync(async (req, res, next) => {
   await populationService(body,newCountry.id);
   await environmentService(body, newCountry.id);
   await governmentService(body,newCountry.id);
+  await economyService(body,newCountry.id);
 
 
 
@@ -117,6 +118,10 @@ const createCountry = catchAsync(async (req, res, next) => {
               as: 'gov_more'
             }
         ]
+      },
+      {
+        model: economy,
+        as: 'economy_data'
       }
     ],
   });
@@ -223,6 +228,11 @@ const countryIncludes = [
 
       }
   ]
+  },
+  {
+    model: economy,
+    as: 'economy_data',
+    attributes: { exclude: ['id', 'country_id', 'createdAt', 'updatedAt', 'deletedAt'] },
   }
 ];
 
