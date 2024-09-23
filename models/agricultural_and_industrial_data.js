@@ -1,5 +1,6 @@
 'use strict';
 
+const { DataTypes } = require("sequelize");
 const { sequelize } = require(".");
 
 
@@ -18,21 +19,23 @@ module.exports =(sequelize)=>{
         model: 'economy',
         key: 'id'
       },
-    },
-    validate:{
-      notNull:{
-        msg: "Please enter a valid economy id"
+      validate:{
+        notNull:{
+          msg: "Please enter a valid economy id"
+        },
+          notEmpty:{
+            msg: 'economy id cannot be empty'
+          }
       },
-        notEmpty:{
-          msg: 'economy id cannot be empty'
-        }
+
     },
+   
     agricultural_products:{
       type: DataTypes.JSONB,
       allowNull:true,
     },
     industries:{
-      type: DataTypes.JSONB,
+      type: DataTypes.TEXT,
       allowNull:true,
     },
     industrial_production_growth_rate:{

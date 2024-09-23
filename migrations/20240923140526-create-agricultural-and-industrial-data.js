@@ -24,7 +24,7 @@ module.exports = {
         allowNull:true,
       },
       industries:{
-        type: Sequelize.JSONB,
+        type: Sequelize.TEXT,
         allowNull:true,
       },
       industrial_production_growth_rate:{

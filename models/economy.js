@@ -73,7 +73,7 @@ module.exports = (sequelize) => {
       as: 'agricultural_and_industrial_data'
 
     })
-
+  }
 
 
     return economy;

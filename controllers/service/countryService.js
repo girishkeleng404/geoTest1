@@ -1,4 +1,4 @@
-const { population, nationality,language_religion,age_structure, dependency_ratio,population_rate, urbanization,sex_marriage,health_data, education_data,substance_use_data,environment,government,legal_law_data,government_more,economy ,gdp_data } = require('../../models');
+const { population, nationality,language_religion,age_structure, dependency_ratio,population_rate, urbanization,sex_marriage,health_data, education_data,substance_use_data,environment,government,legal_law_data,government_more,economy ,gdp_data,agricultural_and_industrial_data } = require('../../models');
  
  
  
@@ -230,10 +230,18 @@ const economyService = async(body,countryId)=> {
       gdp_composition_by_sector: body.gdp_composition_by_sector,
       gdp_composition_by_end_use: body.gdp_composition_by_end_use
 
-    })
+    });
+
+    if(body.agricultural_products){
+      await agricultural_and_industrial_data.create({
+        economy_id: economyId.id,
+        agricultural_products: body.agricultural_products,
+        industries: body.industries,
+        industrial_production_growth_rate: body.industrial_production_growth_rate
+      })
 
 
-
+    }
   }}
 }
 
