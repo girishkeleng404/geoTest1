@@ -1,12 +1,12 @@
 'use strict';
 
 const { DataTypes } = require("sequelize");
- 
 
 
 
-module.exports =(sequelize)=>{
-  const economy = sequelize.define('economy',{
+
+module.exports = (sequelize) => {
+  const economy = sequelize.define('economy', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -15,27 +15,27 @@ module.exports =(sequelize)=>{
     },
     country_id: {
       type: DataTypes.INTEGER,
-      allowNull:false,
-      references:{
+      allowNull: false,
+      references: {
         model: 'country',
         key: 'id'
       },
-     validate:{
-      notNull:{
-        msg: "Please enter a valid country id"
-      },
-        notEmpty:{
+      validate: {
+        notNull: {
+          msg: "Please enter a valid country id"
+        },
+        notEmpty: {
           msg: 'country id cannot be empty'
         }
-     }
+      }
     },
     overview: {
       type: DataTypes.TEXT
     },
-    year:{
+    year: {
       type: DataTypes.INTEGER
     },
-    
+
     createdAt: {
       allowNull: false,
       type: DataTypes.DATE
@@ -44,33 +44,38 @@ module.exports =(sequelize)=>{
       allowNull: false,
       type: DataTypes.DATE
     },
-    deletedAt:{
+    deletedAt: {
       type: DataTypes.DATE
     }
   },
-{
-  paranoid: true,
-  freezeTableName: true,
-  tableName: 'economy'
-});
-
- 
-
-economy.associate = (models) => {
-  economy.belongsTo(models.country, {
-    foreignKey: 'country_id'
-  })
-
-
-economy.hasMany(models.gdp_data, {
-  foreignKey: 'economy_id',
-  as: 'gdp_data'
-})
-
-}
+    {
+      paranoid: true,
+      freezeTableName: true,
+      tableName: 'economy'
+    });
 
 
 
-return economy;
+  economy.associate = (models) => {
+    economy.belongsTo(models.country, {
+      foreignKey: 'country_id'
+    })
 
-}
+
+    economy.hasMany(models.gdp_data, {
+      foreignKey: 'economy_id',
+      as: 'gdp_data'
+    })
+
+
+    economy.hasMany(models.agricultural_and_industrial_data, {
+      foreignKey: 'economy_id',
+      as: 'agricultural_and_industrial_data'
+
+    })
+
+
+
+    return economy;
+
+  }
