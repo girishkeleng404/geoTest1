@@ -61,7 +61,7 @@ module.exports =(sequelize)=>{
   });
 
    labor_market_data.associate =(models)=>{
-    labor_market_data.belonsTo(models.economy,{
+    labor_market_data.belongsTo(models.economy,{
       foreignKey: 'economy_id',
       as: 'economy'
     })
