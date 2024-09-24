@@ -3,6 +3,7 @@ const { user, historical_bg, population, nationality, language_religion, age_str
 const { country } = require('../models');
 const AppError = require("../utils/appError");
 const { populationService, environmentService, governmentService,economyService } = require('./service/countryService');
+const { raw } = require('express');
  
 
 
@@ -138,7 +139,7 @@ const createCountry = catchAsync(async (req, res, next) => {
           },
           {
             model: household_income_expenditure_data,
-            as: 'household_income_expenditure_data'
+            as: 'household_income_expenditure_data_in_percentage'
           }
           
         ]
@@ -274,10 +275,21 @@ const countryIncludes = [
       },
       {
         model: household_income_expenditure_data,
-        as: 'household_income_expenditure_data',
+        as: 'household_income_expenditure_data_in_percentage',
+        // attributes: [
+        //   'year',
+        //   'lowest_10_percent_income',
+        //   'highest_10_percent_income',
+        //   'household_expenditure_food',
+        //   'household_expenditure_alcohol_tobacco',
+        //   'remittances'
+        // ],
         attributes: { exclude: ['id', 'economy_id', 'createdAt', 'updatedAt', 'deletedAt'] },
 
+
       }
+      
+   
     ]
   }
 ];
@@ -287,8 +299,10 @@ const countryIncludes = [
 const getAllCountry = catchAsync(async (req, res, next) => {
   const result = await country.findAll({
     include: countryIncludes,
-  });
 
+    //  raw: true,
+  });
+//  console.log(result)
   res.status(200).json({
     message: "success",
     data: result

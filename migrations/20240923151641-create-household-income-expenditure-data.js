@@ -23,29 +23,27 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      lowest_10_percent_income_in_percent:{
+      lowest_10_percent_income:{
         type: Sequelize.FLOAT,
         allowNull: true,
       },
-      highest_10_percent_income_in_percent:{
+      highest_10_percent_income:{
         type: Sequelize.FLOAT,
         allowNull: true,
       },
-      household_expenditure_food_in_percent: {
+      household_expenditure_food: {
         type: Sequelize.FLOAT,
         allowNull: true,
       },
 
-       household_expenditure_alcohol_tobacco_in_percent: {
+       household_expenditure_alcohol_tobacco: {
         type: Sequelize.FLOAT,
         allowNull: true,
       },
       remittances:{
         type: Sequelize.JSONB,
+        allowNull: true,
       },
-
-     
-
 
       createdAt: {
         allowNull: false,

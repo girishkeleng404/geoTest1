@@ -82,7 +82,7 @@ module.exports = (sequelize) => {
 
     economy.hasMany(models.household_income_expenditure_data,{
       foreignKey: 'economy_id',
-      as:'household_income_expenditure_data'
+      as:'household_income_expenditure_data_in_percentage'
     })
 
 

@@ -255,16 +255,17 @@ const economyService = async (body, countryId) => {
 
     }
 
-    if(body.lowest_10_percent_income_in_percent){
+    if(body.household_income_expenditure_year){
       await household_income_expenditure_data.create({
         economy_id: economyId.id,
-        year:body.household_income_expenditure_year,
-        lowest_10_percent_income_in_percent:body.lowest_10_percent_income_in_percent,
-        highest_10_percent_income_in_percent:body.highest_10_percent_income_in_percent,
-        household_expenditure_food_in_percent:body.household_expenditure_food_in_percent,
-        household_expenditure_alcohol_tobacco_in_percent:body.household_expenditure_alcohol_tobacco_in_percent,
-        remittances:body.remittances
-      })
+        year: body.household_income_expenditure_year,
+        lowest_10_percent_income: body.lowest_10_percent_income,
+        highest_10_percent_income: body.highest_10_percent_income,
+        household_expenditure_food: body.household_expenditure_food,
+        household_expenditure_alcohol_tobacco: body.household_expenditure_alcohol_tobacco,
+        remittances: body.remittances
+      });
+      
     }
   }
 }
