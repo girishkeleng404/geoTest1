@@ -1,4 +1,4 @@
-const { population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data, substance_use_data, environment, government, legal_law_data, government_more, economy, gdp_data, agricultural_and_industrial_data, labor_market_data, household_inco_expe_data } = require('../../models');
+const {  user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data,substance_use_data,environment,government,legal_law_data,government_more,economy,gdp_data,agricultural_and_industrial_data,labor_market_data,household_inco_expe_data } = require('../../models');
 
 
 
@@ -267,8 +267,141 @@ const economyService = async (body, countryId) => {
     };
 
     }
-  }
+  };
+
+  // --------xxxxxxxxxxxxxxxxx--------------------
 
 
 
-  module.exports = { populationService, environmentService, governmentService, economyService }
+
+  const countryIncludes = [
+    {
+      model: historical_bg,
+      as: 'history',
+      attributes: ['background_description']
+    },
+    {
+      model: population,
+      as: 'populationData',
+      attributes: ['total_population', 'male_population', 'female_population', 'population_estimate_year', 'female_comparison_ranking', 'male_comparison_ranking', 'total_comparison_ranking'],
+      include: [
+        {
+          model: population_rate,
+          as: 'population_rate_Data',
+          attributes: [
+            'population_growth_rate', 'population_growth_rate_rank', 'birth_rate', 'birth_rate_rank',
+            'death_rate', 'death_rate_rank', 'total_fertility_rate', 'total_fertility_rate_rank',
+            'gross_reproduction_rate', 'gross_reproduction_rate_rank', 'obesity_rate', 'obesity_rate_rank',
+            'net_migration_rate', 'net_migration_rate_rank'
+          ]
+        },
+        {
+          model: nationality,
+          as: 'nationality',
+          attributes: ['nationality', 'ethnic_groups', 'population_distribution', 'demographic_profile']
+        },
+        {
+          model: language_religion,
+          as: 'language_religion',
+          attributes: ['languages', 'major_language_sample', 'notes', 'religions']
+        },
+        {
+          model: age_structure,
+          as: 'age_structure',
+          attributes: ['age_0_14', 'age_15_64', 'age_65_plus', 'estimated_year']
+        },
+        {
+          model: dependency_ratio,
+          as: 'dependency_ratio',
+          attributes: ['total_dependency_ratio', 'youth_dependency_ratio', 'elderly_dependency_ratio', 'potential_support_ratio', 'dependency_estimated_year']
+        },
+        {
+          model: urbanization,
+          as: 'urbanization_Data',
+          attributes: { exclude: ['population_id', 'createdAt', 'updatedAt', 'deletedAt'] }
+        },
+        {
+          model: sex_marriage,
+          as: 'sex_marriage_Data',
+          attributes: { exclude: ['id', 'population_id', 'createdAt', 'updatedAt', 'deletedAt'] }
+        },
+        {
+          model: health_data,
+          as: 'health_data',
+          attributes: { exclude: ['id', 'population_id', 'createdAt', 'updatedAt', 'deletedAt'] }
+        },
+        {
+          model: education_data,
+          as: 'education_data',
+          attributes: { exclude: ['id', 'population_id', 'createdAt', 'updatedAt', 'deletedAt'] }
+        },
+        {
+          model: substance_use_data,
+          as: 'substance_use_data',
+          attributes: { exclude: ['id', 'population_id', 'createdAt', 'updatedAt', 'deletedAt'] }
+        }
+      ]
+    },
+    {
+      model: environment,
+      as: 'environment_data',
+      attributes: { exclude: ['id', 'country_id', 'createdAt', 'updatedAt', 'deletedAt'] }
+    },
+    {
+      model: government,
+      as: 'government_data',
+      attributes: { exclude: ['id', 'country_id', 'createdAt', 'updatedAt', 'deletedAt'] },
+  
+      include:[
+        {
+          model: legal_law_data,
+          as: 'legal_law_data',
+          attributes: { exclude: ['id', 'government_id', 'createdAt', 'updatedAt', 'deletedAt'] },
+        },{
+          model: government_more,
+          as: 'gov_more',
+          attributes: { exclude: ['id', 'government_id', 'createdAt', 'updatedAt', 'deletedAt'] },
+  
+        }
+    ]
+    },
+    {
+      model: economy,
+      as: 'economy_data',
+      attributes: { exclude: ['id', 'country_id', 'createdAt', 'updatedAt', 'deletedAt'] },
+  
+      include:[
+        {
+          model: gdp_data,
+          as: 'gdp_data',
+          attributes: { exclude: ['id', 'economy_id', 'createdAt', 'updatedAt', 'deletedAt'] },
+        },
+        {
+          model: agricultural_and_industrial_data,
+          as: 'agricultural_and_industrial_data',
+          attributes: { exclude: ['id', 'economy_id', 'createdAt', 'updatedAt', 'deletedAt'] },
+  
+        },
+        {
+          model: labor_market_data,
+          as: 'labor_market_data',
+          attributes: { exclude: ['id', 'economy_id', 'createdAt', 'updatedAt', 'deletedAt'] },
+  
+        },
+        {
+          model: household_inco_expe_data,
+          as: 'household_inco_expe_data',
+          attributes: { exclude: ['id', 'economy_id', 'createdAt', 'updatedAt', 'deletedAt'] },
+  
+         }
+      
+        
+     
+      ]
+    }
+  ];
+
+
+
+
+  module.exports = { populationService, environmentService, governmentService, economyService, countryIncludes };
