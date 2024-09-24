@@ -1,10 +1,11 @@
 'use strict';
 
 const { DataTypes } = require("sequelize");
+ 
 
 
-module.exports = (sequelize) => {
-  const household_income_expenditure_data = sequelize.define('household_income_expenditure_data', {
+module.exports =(sequelize)=>{
+  const household_inco_expe_data = sequelize.define('household_inco_expe_data', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -18,42 +19,31 @@ module.exports = (sequelize) => {
         model: 'economy',
         key: 'id'
       },
-      validate: {
+     validate: {
         notNull: {
           msg: "Please enter a valid economy id"
         },
         notEmpty: {
           msg: 'economy id cannot be empty'
         }
-      },
     },
+  },
     year: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    lowest_10_percent_income:{
-      type: DataTypes.FLOAT,
+    average_household_expenditures:{
+      type: DataTypes.JSONB,
       allowNull: true,
     },
-    highest_10_percent_income:{
-      type: DataTypes.FLOAT,
-      allowNull: true,
-    },
-    household_expenditure_food: {
-      type: DataTypes.FLOAT,
-      allowNull: true,
-    },
-
-     household_expenditure_alcohol_tobacco: {
-      type: DataTypes.FLOAT,
+    household_income_or_consumption_by_percentage_share:{
+      type: DataTypes.JSONB,
       allowNull: true,
     },
     remittances:{
       type: DataTypes.JSONB,
       allowNull: true,
     },
-
-  
     createdAt: {
       allowNull: false,
       type: DataTypes.DATE
@@ -63,22 +53,22 @@ module.exports = (sequelize) => {
       type: DataTypes.DATE
     },
     deletedAt: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATE
     }
-  }, {
+  },{
     paranoid: true,
     freezeTableName: true,
-    tableName: 'household_income_expenditure_data'
-  })
-
-
-  household_income_expenditure_data.associate = (models) => {
-    household_income_expenditure_data.belongsTo(models.economy, {
+    tableName: 'household_inco_expe_data'
+  });
+ 
+  household_inco_expe_data.associate = (models) => {
+    household_inco_expe_data.belongsTo(models.economy, {
       foreignKey: 'economy_id',
-      as: 'economy',
-    })
+      as: 'economy'
+   
+    });
   }
 
 
-  return household_income_expenditure_data;
+  return household_inco_expe_data;
 }

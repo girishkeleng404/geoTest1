@@ -1,9 +1,9 @@
 const catchAsync = require('../utils/catchError');
-const { user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data,substance_use_data,environment,government,legal_law_data,government_more,economy,gdp_data,agricultural_and_industrial_data,labor_market_data ,household_income_expenditure_data } = require('../models');
+const { user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data,substance_use_data,environment,government,legal_law_data,government_more,economy,gdp_data,agricultural_and_industrial_data,labor_market_data,household_inco_expe_data  } = require('../models');
 const { country } = require('../models');
 const AppError = require("../utils/appError");
 const { populationService, environmentService, governmentService,economyService } = require('./service/countryService');
-const { raw } = require('express');
+
  
 
 
@@ -137,10 +137,10 @@ const createCountry = catchAsync(async (req, res, next) => {
             model: labor_market_data,
             as: 'labor_market_data'
           },
-          {
-            model: household_income_expenditure_data,
-            as: 'household_income_expenditure_data_in_percentage'
-          }
+         {
+          model: household_inco_expe_data,
+          as: 'household_inco_expe_data'
+         }
           
         ]
       }
@@ -274,20 +274,12 @@ const countryIncludes = [
 
       },
       {
-        model: household_income_expenditure_data,
-        as: 'household_income_expenditure_data_in_percentage',
-        // attributes: [
-        //   'year',
-        //   'lowest_10_percent_income',
-        //   'highest_10_percent_income',
-        //   'household_expenditure_food',
-        //   'household_expenditure_alcohol_tobacco',
-        //   'remittances'
-        // ],
+        model: household_inco_expe_data,
+        as: 'household_inco_expe_data',
         attributes: { exclude: ['id', 'economy_id', 'createdAt', 'updatedAt', 'deletedAt'] },
 
-
-      }
+       }
+    
       
    
     ]

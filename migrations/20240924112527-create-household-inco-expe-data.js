@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('household_income_expenditure_data', {
+    await queryInterface.createTable('household_inco_expe_data', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -16,35 +16,25 @@ module.exports = {
           model: 'economy',
           key: 'id'
         },
+        onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
       },
       year: {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      lowest_10_percent_income:{
-        type: Sequelize.FLOAT,
+      average_household_expenditures:{
+        type: Sequelize.JSONB,
         allowNull: true,
       },
-      highest_10_percent_income:{
-        type: Sequelize.FLOAT,
-        allowNull: true,
-      },
-      household_expenditure_food: {
-        type: Sequelize.FLOAT,
-        allowNull: true,
-      },
-
-       household_expenditure_alcohol_tobacco: {
-        type: Sequelize.FLOAT,
+      household_income_or_consumption_by_percentage_share:{
+        type: Sequelize.JSONB,
         allowNull: true,
       },
       remittances:{
         type: Sequelize.JSONB,
         allowNull: true,
       },
-
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -53,12 +43,12 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      deletedAt:{
-        type: Sequelize.DATE,
+      deletedAt: {
+        type: Sequelize.DATE
       }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('household_income_expenditure_data');
+    await queryInterface.dropTable('household_inco_expe_data');
   }
 };
