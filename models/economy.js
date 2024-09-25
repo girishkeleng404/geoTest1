@@ -90,6 +90,10 @@ module.exports = (sequelize) => {
       as: 'public_finance_debt_data'
     })
 
+    economy.hasMany(models.trade_data, {
+      foreignKey: 'economy_id',
+      as: 'trade_data'
+    })
 
   }
 
