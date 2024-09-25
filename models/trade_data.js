@@ -30,11 +30,11 @@ module.exports =(sequelize)=>{
       }
     },
     exports_billion: {
-      type: JSONB,
+      type: DataTypes.JSONB,
       allowNull: true
     },
     imports_billion: {
-      type: JSONB,
+      type: DataTypes.JSONB,
       allowNull: true
     },
     exports_comparison_ranking: {

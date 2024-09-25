@@ -1,7 +1,4 @@
-const {  user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data,substance_use_data,environment,government,legal_law_data,government_more,economy,gdp_data,agricultural_and_industrial_data,labor_market_data,household_inco_expe_data,public_finance_debt_data } = require('../../models');
-
-
-
+const {  user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data,substance_use_data,environment,government,legal_law_data,government_more,economy,gdp_data,agricultural_and_industrial_data,labor_market_data,household_inco_expe_data,public_finance_debt_data,trade_data } = require('../../models');
 
 
 
@@ -276,9 +273,26 @@ const economyService = async (body, countryId) => {
         taxes_percentage_gdp: body.taxes_percentage_gdp,
         taxes_comparison_ranking: body.taxes_comparison_ranking
       })
+    };
+
+    if(body.exports_billion || body.imports_billion){
+      await trade_data.create({
+        economy_id: economyId.id,
+        exports_billion: body.exports_billion,
+        imports_billion: body.imports_billion,
+        exports_comparison_ranking: body.exports_comparison_ranking,
+        imports_comparison_ranking: body.imports_comparison_ranking,
+        top_export_partners: body.top_export_partners,
+        top_import_partners: body.top_import_partners,
+        top_export_commodities: body.top_export_commodities,
+        top_import_commodities: body.top_import_commodities,
+        current_account_balance_billion: body.current_account_balance_billion,
+        reserves_of_foreign_exchange_gold_billion: body.reserves_of_foreign_exchange_gold_billion
+      })
+
     }
 
-    
+
 
     }
   };
@@ -414,6 +428,11 @@ const economyService = async (body, countryId) => {
             as: 'public_finance_debt_data',
             attributes: { exclude: ['id', 'economy_id', 'createdAt', 'updatedAt', 'deletedAt'] },
     
+          },
+          {
+            model: trade_data,
+            as: 'trade_data',
+            attributes: { exclude: ['id', 'economy_id', 'createdAt', 'updatedAt', 'deletedAt'] },
           }
       
         

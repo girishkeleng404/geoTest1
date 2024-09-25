@@ -23,11 +23,11 @@ module.exports = {
         }
       },
       exports_billion: {
-        type: JSONB,
+        type: Sequelize.JSONB,
         allowNull: true
       },
       imports_billion: {
-        type: JSONB,
+        type: Sequelize.JSONB,
         allowNull: true
       },
       exports_comparison_ranking: {
