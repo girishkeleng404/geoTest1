@@ -1,6 +1,7 @@
 'use strict';
 
-const { sequelize } = require(".");
+const { DataTypes } = require("sequelize");
+
 
 
 module.exports =(sequelize)=>{
@@ -50,13 +51,13 @@ module.exports =(sequelize)=>{
   },{
     paranoid: true,
     freezeTableName: true,
-    tableName: 'exchange_rate_external_debt_data'
+    tableName:'exchange_rate_external_debt_data'
   });
 
   exchange_rate_external_debt_data.associate =(models)=>{
-    exchange_rate_external_debt_data.belongsTo(models.economy,{
+    exchange_rate_external_debt_data.belongsTo(models.economy, {
       foreignKey: 'economy_id'
-    })
+    });
   }
 
   return exchange_rate_external_debt_data;

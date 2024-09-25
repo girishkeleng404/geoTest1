@@ -95,10 +95,11 @@ module.exports = (sequelize) => {
       as: 'trade_data'
     });
 
-    economy.hasMany(models.exchange_rate_external_debt_data,{
-      foreignKey: 'economy_id',
-      as: 'exchange_rate_external_debt_data'
-    })
+   economy.hasMany(models.exchange_rate_external_debt_data,{
+    foreignKey: 'economy_id',
+    as:'exchange_rate_external_debt_data'
+   })
+    
 
   }
 

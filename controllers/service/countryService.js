@@ -1,4 +1,4 @@
-const {  user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data,substance_use_data,environment,government,legal_law_data,government_more,economy,gdp_data,agricultural_and_industrial_data,labor_market_data,household_inco_expe_data,public_finance_debt_data,trade_data } = require('../../models');
+const {  user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data,substance_use_data,environment,government,legal_law_data,government_more,economy,gdp_data,agricultural_and_industrial_data,labor_market_data,household_inco_expe_data,public_finance_debt_data,trade_data,exchange_rate_external_debt_data } = require('../../models');
 
 
 
@@ -290,6 +290,14 @@ const economyService = async (body, countryId) => {
         reserves_of_foreign_exchange_gold_billion: body.reserves_of_foreign_exchange_gold_billion
       })
 
+    };
+
+    if(body.external_debt_billion || body.exchange_rate_inr_usd){
+      await exchange_rate_external_debt_data.create({
+        economy_id: economyId.id,
+        external_debt_billion:body.external_debt_billion,
+        exchange_rate_inr_usd:body.exchange_rate_inr_usd 
+      })
     }
 
 
@@ -399,6 +407,7 @@ const economyService = async (body, countryId) => {
       attributes: { exclude: ['id', 'country_id', 'createdAt', 'updatedAt', 'deletedAt'] },
   
       include:[
+      
         {
           model: gdp_data,
           as: 'gdp_data',
@@ -433,10 +442,17 @@ const economyService = async (body, countryId) => {
             model: trade_data,
             as: 'trade_data',
             attributes: { exclude: ['id', 'economy_id', 'createdAt', 'updatedAt', 'deletedAt'] },
-          }
+          },
+          {
+            model: exchange_rate_external_debt_data,
+            as: 'exchange_rate_external_debt_data',
+            attributes: ['external_debt_billion', 'exchange_rate_inr_usd'],
+            
+          },
+          
+         
       
         
-     
       ]
     }
   ];
