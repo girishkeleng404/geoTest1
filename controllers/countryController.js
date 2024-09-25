@@ -1,5 +1,5 @@
 const catchAsync = require('../utils/catchError');
-const { user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data,substance_use_data,environment,government,legal_law_data,government_more,economy,gdp_data,agricultural_and_industrial_data,labor_market_data,household_inco_expe_data  } = require('../models');
+const { user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data,substance_use_data,environment,government,legal_law_data,government_more,economy,gdp_data,agricultural_and_industrial_data,labor_market_data,household_inco_expe_data,public_finance_debt_data  } = require('../models');
 const { country } = require('../models');
 const AppError = require("../utils/appError");
 const { populationService, environmentService, governmentService,economyService,countryIncludes } = require('./service/countryService');
@@ -140,7 +140,13 @@ const createCountry = catchAsync(async (req, res, next) => {
          {
           model: household_inco_expe_data,
           as: 'household_inco_expe_data'
-         }
+         },
+
+         {
+          model: public_finance_debt_data,
+          as: 'public_finance_debt_data',
+          
+        }
           
         ]
       }

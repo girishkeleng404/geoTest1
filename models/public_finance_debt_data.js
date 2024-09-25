@@ -1,7 +1,7 @@
 'use strict';
 
 const { DataTypes } = require("sequelize");
-const { sequelize } = require(".");
+
 
 
 module.exports =(sequelize)=>{
@@ -15,7 +15,7 @@ module.exports =(sequelize)=>{
     economy_id: {
       type: DataTypes.INTEGER,
       allowNull:false,
-      references:{
+      references: {
         model: 'economy',
         key: 'id'
       },
@@ -71,7 +71,8 @@ module.exports =(sequelize)=>{
 
   public_finance_debt_data.associate=(models)=>{
     public_finance_debt_data.belongsTo(models.economy,{
-      foreignKey: 'econmoy_id'
+      foreignKey: 'economy_id',
+      as: 'economy'
     })
   }
 
