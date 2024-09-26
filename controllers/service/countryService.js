@@ -1,4 +1,4 @@
-const {  user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data,substance_use_data,environment,government,legal_law_data,government_more,economy,gdp_data,agricultural_and_industrial_data,labor_market_data,household_inco_expe_data,public_finance_debt_data,trade_data } = require('../../models');
+const {  user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data,substance_use_data,environment,government,legal_law_data,government_more,economy,gdp_data,agricultural_and_industrial_data,labor_market_data,household_inco_expe_data,public_finance_debt_data,trade_data,debt_ext_exchange_rate }= require('../../models');
 
 
 
@@ -292,6 +292,13 @@ const economyService = async (body, countryId) => {
 
     };
 
+    if(body.debt_external_billion_usd){
+      await debt_ext_exchange_rate.create({
+        economy_id: economyId.id,
+        debt_external_billion_usd: body.debt_external_billion_usd,
+        exchange_rate: body.exchange_rate
+      })
+    }
 
 
 
@@ -438,7 +445,11 @@ const economyService = async (body, countryId) => {
             attributes: { exclude: ['id', 'economy_id', 'createdAt', 'updatedAt', 'deletedAt'] },
           },
          
-          
+          {
+            model: debt_ext_exchange_rate,
+          as: 'debt_ext_exchange_rate',
+            attributes: { exclude: ['id', 'economy_id', 'createdAt', 'updatedAt', 'deletedAt'] },
+          }
          
       
         

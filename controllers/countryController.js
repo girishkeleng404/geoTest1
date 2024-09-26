@@ -1,10 +1,10 @@
 const catchAsync = require('../utils/catchError');
-const { user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data,substance_use_data,environment,government,legal_law_data,government_more,economy,gdp_data,agricultural_and_industrial_data,labor_market_data,household_inco_expe_data,public_finance_debt_data, trade_data } = require('../models');
+const { user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data, substance_use_data, environment, government, legal_law_data, government_more, economy, gdp_data, agricultural_and_industrial_data, labor_market_data, household_inco_expe_data, public_finance_debt_data, trade_data,debt_ext_exchange_rate } = require('../models');
 const { country } = require('../models');
 const AppError = require("../utils/appError");
-const { populationService, environmentService, governmentService,economyService,countryIncludes } = require('./service/countryService');
+const { populationService, environmentService, governmentService, economyService, countryIncludes } = require('./service/countryService');
 
- 
+
 
 
 
@@ -39,10 +39,10 @@ const createCountry = catchAsync(async (req, res, next) => {
     })
   }
   // Insert data
-  await populationService(body,newCountry.id);
+  await populationService(body, newCountry.id);
   await environmentService(body, newCountry.id);
-  await governmentService(body,newCountry.id);
-  await economyService(body,newCountry.id);
+  await governmentService(body, newCountry.id);
+  await economyService(body, newCountry.id);
 
 
 
@@ -109,22 +109,22 @@ const createCountry = catchAsync(async (req, res, next) => {
         model: government,
         as: 'government_data',
 
-        include:[
-            {
-              model: legal_law_data,
-              as: 'legal_law_data'
-            },
-            {
-              model: government_more,
-              as: 'gov_more'
-            }
+        include: [
+          {
+            model: legal_law_data,
+            as: 'legal_law_data'
+          },
+          {
+            model: government_more,
+            as: 'gov_more'
+          }
         ]
       },
       {
         model: economy,
         as: 'economy_data',
 
-        include:[
+        include: [
           {
             model: gdp_data,
             as: 'gdp_data'
@@ -137,22 +137,25 @@ const createCountry = catchAsync(async (req, res, next) => {
             model: labor_market_data,
             as: 'labor_market_data'
           },
-         {
-          model: household_inco_expe_data,
-          as: 'household_inco_expe_data'
-         },
+          {
+            model: household_inco_expe_data,
+            as: 'household_inco_expe_data'
+          },
 
-         {
-          model: public_finance_debt_data,
-          as: 'public_finance_debt_data',
-          
-        },
-        {
-          model: trade_data,
-          as: 'trade_data'
-        },
-       
-          
+          {
+            model: public_finance_debt_data,
+            as: 'public_finance_debt_data',
+
+          },
+          {
+            model: trade_data,
+            as: 'trade_data'
+          },
+          {
+            model: debt_ext_exchange_rate,
+            as: 'debt_ext_exchange_rate',
+
+          }
         ]
       }
     ],
@@ -180,7 +183,7 @@ const getAllCountry = catchAsync(async (req, res, next) => {
 
     //  raw: true,
   });
-//  console.log(result)
+  //  console.log(result)
   res.status(200).json({
     message: "success",
     data: result
