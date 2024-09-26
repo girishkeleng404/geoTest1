@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('exchange_rate_external_debt_data', {
+    await queryInterface.createTable('debt_ext_exchange_rates', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -12,20 +12,21 @@ module.exports = {
       economy_id: {
         type: Sequelize.INTEGER,
         allowNull:false,
-        references:{
+        references: {
           model: 'economy',
           key: 'id'
         },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
-      external_debt_billion:{
+      debt_external_billion_usd: {
         type: Sequelize.JSONB,
-        allowNull: true,
+        allowNull:true,
       },
-      exchange_rate_inr_usd:{
+      exchange_rate: {
         type: Sequelize.JSONB,
-        allowNull: true,
+        allowNull:true,
       },
-      
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -34,12 +35,12 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      deletedAt:{
-        type: Sequelize.DATE,
+      deletedAt: {
+        type: Sequelize.DATE
       }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('exchange_rate_external_debt_data');
+    await queryInterface.dropTable('debt_ext_exchange_rates');
   }
 };
