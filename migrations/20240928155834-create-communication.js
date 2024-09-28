@@ -26,7 +26,7 @@ module.exports = {
       telephone_subscription_per_100:{
         type: Sequelize.FLOAT,
         allowNull: true,
-      },
+      },                                    
       mobile_subscription_in_millions:{
         type: Sequelize.FLOAT,
         allowNull: true,

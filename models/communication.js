@@ -75,7 +75,7 @@ module.exports =(sequelize)=>{
       },
       updatedAt: {
         allowNull: false,
-        type: DataTypes.DATE
+        type: DataTypes.DATE,
       },
       deletedAt:{
         type: DataTypes.DATE,

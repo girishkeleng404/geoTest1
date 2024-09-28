@@ -1,4 +1,4 @@
-const {  user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data,substance_use_data,environment,government,legal_law_data,government_more,economy,gdp_data,agricultural_and_industrial_data,labor_market_data,household_inco_expe_data,public_finance_debt_data,trade_data,debt_ext_exchange_rate, energy }= require('../../models');
+const {  user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data,substance_use_data,environment,government,legal_law_data,government_more,economy,gdp_data,agricultural_and_industrial_data,labor_market_data,household_inco_expe_data,public_finance_debt_data,trade_data,debt_ext_exchange_rate, energy, communication }= require('../../models');
 
 
 
@@ -322,6 +322,26 @@ const energyService = async(body, countryId)=>{
 
          });
     }
+};
+
+
+
+const communicationService = async(body, countryId)=>{
+  if(body.telephone_subscription_in_millions){
+    await communication.create({
+      country_id: countryId,
+      telephone_subscription_in_millions: body.telephone_subscription_in_millions,
+      telephone_subscription_per_100: body.telephone_subscription_per_100,
+      mobile_subscription_in_millions: body.mobile_subscription_in_millions,
+      mobile_subscription_per_100: body.mobile_subscription_per_100,
+      mobile_subscription_ranking: body.mobile_subscription_ranking,
+      telecommunication_system: body.telecommunication_system,
+      broadcast_media: body.broadcast_media,
+      internet_country_code: body.internet_country_code,
+      internet_users_in_millions: body.internet_users_in_millions,
+      internet_users_percentage: body.internet_users_percentage
+    })
+  }
 }
 
 
