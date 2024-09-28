@@ -494,10 +494,15 @@ const communicationService = async(body, countryId)=>{
       model: energy,
       as: 'energy_data',
       attributes: { exclude: ['id', 'country_id', 'createdAt', 'updatedAt', 'deletedAt'] },
+    },
+    {
+      model: communication,
+      as: 'communication_data',
+      attributes: { exclude: ['id', 'country_id', 'createdAt', 'updatedAt', 'deletedAt'] },  
     }
   ];
 
 
 
 
-  module.exports = { populationService, environmentService, governmentService, economyService, countryIncludes,energyService };
+  module.exports = { populationService, environmentService, governmentService, economyService, countryIncludes,energyService , communicationService};
