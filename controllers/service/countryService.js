@@ -1,4 +1,4 @@
-const {  user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data,substance_use_data,environment,government,legal_law_data,government_more,economy,gdp_data,agricultural_and_industrial_data,labor_market_data,household_inco_expe_data,public_finance_debt_data,trade_data,debt_ext_exchange_rate }= require('../../models');
+const {  user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data,substance_use_data,environment,government,legal_law_data,government_more,economy,gdp_data,agricultural_and_industrial_data,labor_market_data,household_inco_expe_data,public_finance_debt_data,trade_data,debt_ext_exchange_rate, energy }= require('../../models');
 
 
 
@@ -300,15 +300,29 @@ const economyService = async (body, countryId) => {
       })
     }
 
-
-
-
-    }
+  }
   };
 
   // --------xxxxxxxxxxxxxxxxx--------------------
 
+const energyService = async(body, countryId)=>{
 
+    if(body.electricity_access || body.electricity_generation_sources || body.nuclear_energy ){
+      await energy.create({
+        country_id: countryId,
+        energy_consumption_per_capita_in_million: body.energy_consumption_per_capita_in_million,
+        electricity_access: body.electricity_access,
+        electricity: body.electricity,
+        electricity_generation_sources: body.electricity_generation_sources,
+        nuclear_energy: body.nuclear_energy,
+        coal: body.coal,
+        petroleum: body.petroleum,
+        natural_gas: body.natural_gas,
+        carbon_dioxide_emission: body.carbon_dioxide_emission
+
+         });
+    }
+}
 
 
   const countryIncludes = [
@@ -454,10 +468,16 @@ const economyService = async (body, countryId) => {
       
         
       ]
+    },
+
+    {
+      model: energy,
+      as: 'energy_data',
+      attributes: { exclude: ['id', 'country_id', 'createdAt', 'updatedAt', 'deletedAt'] },
     }
   ];
 
 
 
 
-  module.exports = { populationService, environmentService, governmentService, economyService, countryIncludes };
+  module.exports = { populationService, environmentService, governmentService, economyService, countryIncludes,energyService };

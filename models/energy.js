@@ -18,6 +18,14 @@ module.exports =(sequelize)=>{
         references:{
           model:'country',
           key: 'id',
+        },
+        validate:{
+          notNull:{
+            msg: 'Please select a country'
+          },
+          notEmpty:{
+            msg: 'Please select a country'
+          }
         }
 
 
@@ -30,11 +38,12 @@ module.exports =(sequelize)=>{
         type: DataTypes.JSONB,
         allowNull:true,
       },
-      Electricity:{
+      electricity:{
         type:DataTypes.JSONB,
         allowNull:false,
       },
       electricity_generation_sources:{
+        type: DataTypes.JSONB,
         allowNull:true,
       },
       nuclear_energy:{
@@ -68,5 +77,20 @@ module.exports =(sequelize)=>{
       deletedAt:{
         type:DataTypes.DATE,
       }
-  })
+  },{
+    paranoid:true,
+    freezeTableName:true,
+    tableName:'energy',
+  });
+
+
+  energy.associate=(models)=>{
+    energy.belongsTo(models.country,{
+      foreignKey: 'country_id',
+    
+    })
+  }
+
+
+  return energy;
 }
