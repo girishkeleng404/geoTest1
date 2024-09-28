@@ -140,6 +140,12 @@ module.exports = (sequelize) => {
     country.hasMany(models.energy,{
       foreignKey: 'country_id',
       as: 'energy_data',
+    });
+
+
+    country.hasMany(models.communication,{
+      foreignKey: 'country_id',
+      as: 'communication_data',
     })
 
   }
