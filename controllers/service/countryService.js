@@ -341,6 +341,7 @@ const communicationService = async(body, countryId)=>{
       internet_country_code: body.internet_country_code,
       internet_users_in_millions: body.internet_users_in_millions,
       internet_users_percentage: body.internet_users_percentage,
+      internet_users_ranking:body.internet_users_ranking,
       broadband_subscription_in_millions:body.broadband_subscription_in_millions
     })
   }
