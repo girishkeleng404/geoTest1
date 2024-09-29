@@ -16,8 +16,7 @@ module.exports = {
           model: 'country',
           key: 'id',
         },
-        onDelete:CASCADE,
-        onUpdate:CASCADE,
+       
       },
       telephone_subscription_in_millions:{
         type: Sequelize.FLOAT,
@@ -40,7 +39,7 @@ module.exports = {
         allowNull: true,
       },
       telecommunication_system:{
-        type: Sequelize.ARRAY(Sequelize.STRING),
+        type: Sequelize.JSONB,
         allowNull: true,
       },
       broadcast_media:{
