@@ -146,6 +146,11 @@ module.exports = (sequelize) => {
     country.hasMany(models.communication,{
       foreignKey: 'country_id',
       as: 'communication_data',
+    });
+
+    country.hasMany(models.transportation,{
+      foreignKey: 'country_id',
+      as: 'transportation_data'
     })
 
   }
