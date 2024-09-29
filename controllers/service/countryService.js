@@ -349,11 +349,16 @@ const communicationService = async(body, countryId)=>{
 
 // -------------------xxxxxx-------------------
 
-const transportation = async(body,countryId)=>{
-  if(body.pipeline || body.railway){
+const transportationService = async(body,countryId)=>{
+  if(body.pipelines || body.railway_total_length_km){
     await transportation.create({
       country_id: countryId,
-
+      pipelines: body.pipelines,
+      railway_total_length_km: body.railway_total_length_km,
+       railway_comparison_ranking: body.railway_comparison_ranking,
+       roadway_length_total_km: body.roadway_length_total_km,
+       roadway_comparison_ranking: body.roadway_comparison_ranking,
+              
     })
   }
 }
@@ -519,10 +524,15 @@ const transportation = async(body,countryId)=>{
       model: communication,
       as: 'communication_data',
       attributes: { exclude: ['id', 'country_id', 'createdAt', 'updatedAt', 'deletedAt'] },  
+    },
+    {
+      model: transportation,
+      as: 'transportation_data',
+      attributes: { exclude: ['id', 'country_id', 'createdAt', 'updatedAt', 'deletedAt'] },  
     }
   ];
 
 
 
 
-  module.exports = { populationService, environmentService, governmentService, economyService, countryIncludes,energyService , communicationService};
+  module.exports = { populationService, environmentService, governmentService, economyService, countryIncludes,energyService , communicationService, transportationService};

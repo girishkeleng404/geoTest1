@@ -1,8 +1,8 @@
 const catchAsync = require('../utils/catchError');
-const { user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data, substance_use_data, environment, government, legal_law_data, government_more, economy, gdp_data, agricultural_and_industrial_data, labor_market_data, household_inco_expe_data, public_finance_debt_data, trade_data, debt_ext_exchange_rate, energy, communication } = require('../models');
+const { user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data, substance_use_data, environment, government, legal_law_data, government_more, economy, gdp_data, agricultural_and_industrial_data, labor_market_data, household_inco_expe_data, public_finance_debt_data, trade_data, debt_ext_exchange_rate, energy, communication, transportation } = require('../models');
 const { country } = require('../models');
 const AppError = require("../utils/appError");
-const { populationService, environmentService, governmentService, economyService, countryIncludes, energyService, communicationService } = require('./service/countryService');
+const { populationService, environmentService, governmentService, economyService, countryIncludes, energyService, communicationService, transportationService } = require('./service/countryService');
 
 
 
@@ -45,6 +45,8 @@ const createCountry = catchAsync(async (req, res, next) => {
   await economyService(body, newCountry.id);
   await energyService(body,newCountry.id);
   await communicationService(body,newCountry.id);
+  await transportationService(body, newCountry.id);
+
 
   const countryWithBackground = await country.findOne({
     where: { id: newCountry.id },
@@ -165,6 +167,10 @@ const createCountry = catchAsync(async (req, res, next) => {
       {
         model: communication,
         as: 'communication_data',
+      },
+      {
+        model: transportation,
+        as: 'transportation_data'
       }
     ],
   });
