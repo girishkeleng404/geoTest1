@@ -156,6 +156,12 @@ module.exports = (sequelize) => {
     country.hasMany(models.military,{
       foreignKey: 'country_id',
       as: 'military_data'
+    });
+
+
+    country.hasMany(models.space,{
+      foreignKey: 'country_id',
+      as: 'space_data'
     })
   }
 
