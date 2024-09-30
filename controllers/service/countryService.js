@@ -1,4 +1,4 @@
-const {  user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data,substance_use_data,environment,government,legal_law_data,government_more,economy,gdp_data,agricultural_and_industrial_data,labor_market_data,household_inco_expe_data,public_finance_debt_data,trade_data,debt_ext_exchange_rate, energy, communication, transportation}= require('../../models');
+const {  user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data,substance_use_data,environment,government,legal_law_data,government_more,economy,gdp_data,agricultural_and_industrial_data,labor_market_data,household_inco_expe_data,public_finance_debt_data,trade_data,debt_ext_exchange_rate, energy, communication, transportation, military}= require('../../models');
 
 
 
@@ -363,7 +363,22 @@ const transportationService = async(body,countryId)=>{
   }
 }
 
+// --------------------xxxxxxxxxxx--------------------
 
+const militaryService = async(body, countryId)=>{
+  if(body.military_overview){
+    await military.create({
+      country_id: countryId,
+      military_overview: body.military_overview,
+      military_branches: body.military_branches,
+      military_expenditure: body.military_expenditure,
+      military_security_service_personnel_strength: body.military_security_service_personnel_strength,
+      military_equipment_inventories_and_acquisitions: body.military_equipment_inventories_and_acquisitions,
+      military_service_age_and_obligation: body.military_service_age_and_obligation,
+      military_deployment: body.military_deployment
+    })
+  }
+}
 
 
 
@@ -529,10 +544,15 @@ const transportationService = async(body,countryId)=>{
       model: transportation,
       as: 'transportation_data',
       attributes: { exclude: ['id', 'country_id', 'createdAt', 'updatedAt', 'deletedAt'] },  
+    },
+    {
+      model: military,
+      as: 'military_data',
+      attributes: { exclude: ['id', 'country_id', 'createdAt', 'updatedAt', 'deletedAt'] },
     }
   ];
 
 
 
 
-  module.exports = { populationService, environmentService, governmentService, economyService, countryIncludes,energyService , communicationService, transportationService};
+  module.exports = { populationService, environmentService, governmentService, economyService, countryIncludes,energyService , communicationService, transportationService, militaryService};

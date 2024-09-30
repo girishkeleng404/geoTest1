@@ -153,6 +153,10 @@ module.exports = (sequelize) => {
       as: 'transportation_data'
     })
 
+    country.hasMany(models.military,{
+      foreignKey: 'country_id',
+      as: 'military_data'
+    })
   }
 
 
