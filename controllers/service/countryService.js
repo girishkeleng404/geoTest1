@@ -1,4 +1,4 @@
-const {  user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data,substance_use_data,environment,government,legal_law_data,government_more,economy,gdp_data,agricultural_and_industrial_data,labor_market_data,household_inco_expe_data,public_finance_debt_data,trade_data,debt_ext_exchange_rate, energy, communication, transportation, military}= require('../../models');
+const { user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data, substance_use_data, environment, government, legal_law_data, government_more, economy, gdp_data, agricultural_and_industrial_data, labor_market_data, household_inco_expe_data, public_finance_debt_data, trade_data, debt_ext_exchange_rate, energy, communication, transportation, military } = require('../../models');
 
 
 
@@ -263,7 +263,7 @@ const economyService = async (body, countryId) => {
 
     };
 
-    if(body.public_finance_debt_data_year){
+    if (body.public_finance_debt_data_year) {
       await public_finance_debt_data.create({
         economy_id: economyId.id,
         year: body.public_finance_debt_data_year,
@@ -275,7 +275,7 @@ const economyService = async (body, countryId) => {
       })
     };
 
-    if(body.exports_billion || body.imports_billion){
+    if (body.exports_billion || body.imports_billion) {
       await trade_data.create({
         economy_id: economyId.id,
         exports_billion: body.exports_billion,
@@ -292,7 +292,7 @@ const economyService = async (body, countryId) => {
 
     };
 
-    if(body.debt_external_billion_usd){
+    if (body.debt_external_billion_usd) {
       await debt_ext_exchange_rate.create({
         economy_id: economyId.id,
         debt_external_billion_usd: body.debt_external_billion_usd,
@@ -301,34 +301,34 @@ const economyService = async (body, countryId) => {
     }
 
   }
-  };
+};
 
-  // --------xxxxxxxxxxxxxxxxx--------------------
+// --------xxxxxxxxxxxxxxxxx--------------------
 
-const energyService = async(body, countryId)=>{
+const energyService = async (body, countryId) => {
 
-    if(body.electricity_access || body.electricity_generation_sources || body.nuclear_energy ){
-      await energy.create({
-        country_id: countryId,
-        energy_consumption_per_capita_in_million: body.energy_consumption_per_capita_in_million,
-        electricity_access: body.electricity_access,
-        electricity: body.electricity,
-        electricity_generation_sources: body.electricity_generation_sources,
-        nuclear_energy: body.nuclear_energy,
-        coal: body.coal,
-        petroleum: body.petroleum,
-        natural_gas: body.natural_gas,
-        carbon_dioxide_emission: body.carbon_dioxide_emission
+  if (body.electricity_access || body.electricity_generation_sources || body.nuclear_energy) {
+    await energy.create({
+      country_id: countryId,
+      energy_consumption_per_capita_in_million: body.energy_consumption_per_capita_in_million,
+      electricity_access: body.electricity_access,
+      electricity: body.electricity,
+      electricity_generation_sources: body.electricity_generation_sources,
+      nuclear_energy: body.nuclear_energy,
+      coal: body.coal,
+      petroleum: body.petroleum,
+      natural_gas: body.natural_gas,
+      carbon_dioxide_emission: body.carbon_dioxide_emission
 
-         });
-    }
+    });
+  }
 };
 
 // -----------xxxxxxxxxx--------------
 
 
-const communicationService = async(body, countryId)=>{
-  if(body.telephone_subscription_in_millions){
+const communicationService = async (body, countryId) => {
+  if (body.telephone_subscription_in_millions) {
     await communication.create({
       country_id: countryId,
       telephone_subscription_in_millions: body.telephone_subscription_in_millions,
@@ -341,37 +341,37 @@ const communicationService = async(body, countryId)=>{
       internet_country_code: body.internet_country_code,
       internet_users_in_millions: body.internet_users_in_millions,
       internet_users_percentage: body.internet_users_percentage,
-      internet_users_ranking:body.internet_users_ranking,
-      broadband_subscription_in_millions:body.broadband_subscription_in_millions
+      internet_users_ranking: body.internet_users_ranking,
+      broadband_subscription_in_millions: body.broadband_subscription_in_millions
     })
   }
 };
 
 // -------------------xxxxxx-------------------
 
-const transportationService = async(body,countryId)=>{
-  if(body.pipelines || body.railway_total_length_km){
+const transportationService = async (body, countryId) => {
+  if (body.pipelines || body.railway_total_length_km) {
     await transportation.create({
       country_id: countryId,
       pipelines: body.pipelines,
       railway_total_length_km: body.railway_total_length_km,
-       railway_comparison_ranking: body.railway_comparison_ranking,
-       roadway_length_total_km: body.roadway_length_total_km,
-       roadway_comparison_ranking: body.roadway_comparison_ranking,
-              
+      railway_comparison_ranking: body.railway_comparison_ranking,
+      roadway_length_total_km: body.roadway_length_total_km,
+      roadway_comparison_ranking: body.roadway_comparison_ranking,
+
     })
   }
 }
 
 // --------------------xxxxxxxxxxx--------------------
 
-const militaryService = async(body, countryId)=>{
-  if(body.military_overview){
+const militaryService = async (body, countryId) => {
+  if (body.military_overview) {
     await military.create({
       country_id: countryId,
       military_overview: body.military_overview,
       military_branches: body.military_branches,
-      military_expenditure: body.military_expenditure,
+      military_expenditure_of_GDP_percentage: body.military_expenditure_of_GDP_percentage,
       military_security_service_personnel_strength: body.military_security_service_personnel_strength,
       military_equipment_inventories_and_acquisitions: body.military_equipment_inventories_and_acquisitions,
       military_service_age_and_obligation: body.military_service_age_and_obligation,
@@ -385,174 +385,174 @@ const militaryService = async(body, countryId)=>{
 
 // ----------------------xxxxxxxxx-------------------------
 
-  const countryIncludes = [
-    {
-      model: historical_bg,
-      as: 'history',
-      attributes: ['background_description']
-    },
-    {
-      model: population,
-      as: 'populationData',
-      attributes: ['total_population', 'male_population', 'female_population', 'population_estimate_year', 'female_comparison_ranking', 'male_comparison_ranking', 'total_comparison_ranking'],
-      include: [
-        {
-          model: population_rate,
-          as: 'population_rate_Data',
-          attributes: [
-            'population_growth_rate', 'population_growth_rate_rank', 'birth_rate', 'birth_rate_rank',
-            'death_rate', 'death_rate_rank', 'total_fertility_rate', 'total_fertility_rate_rank',
-            'gross_reproduction_rate', 'gross_reproduction_rate_rank', 'obesity_rate', 'obesity_rate_rank',
-            'net_migration_rate', 'net_migration_rate_rank'
-          ]
-        },
-        {
-          model: nationality,
-          as: 'nationality',
-          attributes: ['nationality', 'ethnic_groups', 'population_distribution', 'demographic_profile']
-        },
-        {
-          model: language_religion,
-          as: 'language_religion',
-          attributes: ['languages', 'major_language_sample', 'notes', 'religions']
-        },
-        {
-          model: age_structure,
-          as: 'age_structure',
-          attributes: ['age_0_14', 'age_15_64', 'age_65_plus', 'estimated_year']
-        },
-        {
-          model: dependency_ratio,
-          as: 'dependency_ratio',
-          attributes: ['total_dependency_ratio', 'youth_dependency_ratio', 'elderly_dependency_ratio', 'potential_support_ratio', 'dependency_estimated_year']
-        },
-        {
-          model: urbanization,
-          as: 'urbanization_Data',
-          attributes: { exclude: ['population_id', 'createdAt', 'updatedAt', 'deletedAt'] }
-        },
-        {
-          model: sex_marriage,
-          as: 'sex_marriage_Data',
-          attributes: { exclude: ['id', 'population_id', 'createdAt', 'updatedAt', 'deletedAt'] }
-        },
-        {
-          model: health_data,
-          as: 'health_data',
-          attributes: { exclude: ['id', 'population_id', 'createdAt', 'updatedAt', 'deletedAt'] }
-        },
-        {
-          model: education_data,
-          as: 'education_data',
-          attributes: { exclude: ['id', 'population_id', 'createdAt', 'updatedAt', 'deletedAt'] }
-        },
-        {
-          model: substance_use_data,
-          as: 'substance_use_data',
-          attributes: { exclude: ['id', 'population_id', 'createdAt', 'updatedAt', 'deletedAt'] }
-        }
-      ]
-    },
-    {
-      model: environment,
-      as: 'environment_data',
-      attributes: { exclude: ['id', 'country_id', 'createdAt', 'updatedAt', 'deletedAt'] }
-    },
-    {
-      model: government,
-      as: 'government_data',
-      attributes: { exclude: ['id', 'country_id', 'createdAt', 'updatedAt', 'deletedAt'] },
-  
-      include:[
-        {
-          model: legal_law_data,
-          as: 'legal_law_data',
-          attributes: { exclude: ['id', 'government_id', 'createdAt', 'updatedAt', 'deletedAt'] },
-        },{
-          model: government_more,
-          as: 'gov_more',
-          attributes: { exclude: ['id', 'government_id', 'createdAt', 'updatedAt', 'deletedAt'] },
-  
-        }
+const countryIncludes = [
+  {
+    model: historical_bg,
+    as: 'history',
+    attributes: ['background_description']
+  },
+  {
+    model: population,
+    as: 'populationData',
+    attributes: ['total_population', 'male_population', 'female_population', 'population_estimate_year', 'female_comparison_ranking', 'male_comparison_ranking', 'total_comparison_ranking'],
+    include: [
+      {
+        model: population_rate,
+        as: 'population_rate_Data',
+        attributes: [
+          'population_growth_rate', 'population_growth_rate_rank', 'birth_rate', 'birth_rate_rank',
+          'death_rate', 'death_rate_rank', 'total_fertility_rate', 'total_fertility_rate_rank',
+          'gross_reproduction_rate', 'gross_reproduction_rate_rank', 'obesity_rate', 'obesity_rate_rank',
+          'net_migration_rate', 'net_migration_rate_rank'
+        ]
+      },
+      {
+        model: nationality,
+        as: 'nationality',
+        attributes: ['nationality', 'ethnic_groups', 'population_distribution', 'demographic_profile']
+      },
+      {
+        model: language_religion,
+        as: 'language_religion',
+        attributes: ['languages', 'major_language_sample', 'notes', 'religions']
+      },
+      {
+        model: age_structure,
+        as: 'age_structure',
+        attributes: ['age_0_14', 'age_15_64', 'age_65_plus', 'estimated_year']
+      },
+      {
+        model: dependency_ratio,
+        as: 'dependency_ratio',
+        attributes: ['total_dependency_ratio', 'youth_dependency_ratio', 'elderly_dependency_ratio', 'potential_support_ratio', 'dependency_estimated_year']
+      },
+      {
+        model: urbanization,
+        as: 'urbanization_Data',
+        attributes: { exclude: ['population_id', 'createdAt', 'updatedAt', 'deletedAt'] }
+      },
+      {
+        model: sex_marriage,
+        as: 'sex_marriage_Data',
+        attributes: { exclude: ['id', 'population_id', 'createdAt', 'updatedAt', 'deletedAt'] }
+      },
+      {
+        model: health_data,
+        as: 'health_data',
+        attributes: { exclude: ['id', 'population_id', 'createdAt', 'updatedAt', 'deletedAt'] }
+      },
+      {
+        model: education_data,
+        as: 'education_data',
+        attributes: { exclude: ['id', 'population_id', 'createdAt', 'updatedAt', 'deletedAt'] }
+      },
+      {
+        model: substance_use_data,
+        as: 'substance_use_data',
+        attributes: { exclude: ['id', 'population_id', 'createdAt', 'updatedAt', 'deletedAt'] }
+      }
     ]
-    },
-    {
-      model: economy,
-      as: 'economy_data',
-      attributes: { exclude: ['id', 'country_id', 'createdAt', 'updatedAt', 'deletedAt'] },
-  
-      include:[
-      
-        {
-          model: gdp_data,
-          as: 'gdp_data',
-          attributes: { exclude: ['id', 'economy_id', 'createdAt', 'updatedAt', 'deletedAt'] },
-        },
-        {
-          model: agricultural_and_industrial_data,
-          as: 'agricultural_and_industrial_data',
-          attributes: { exclude: ['id', 'economy_id', 'createdAt', 'updatedAt', 'deletedAt'] },
-  
-        },
-        {
-          model: labor_market_data,
-          as: 'labor_market_data',
-          attributes: { exclude: ['id', 'economy_id', 'createdAt', 'updatedAt', 'deletedAt'] },
-  
-        },
-        {
-          model: household_inco_expe_data,
-          as: 'household_inco_expe_data',
-          attributes: { exclude: ['id', 'economy_id', 'createdAt', 'updatedAt', 'deletedAt'] },
-  
-         },
+  },
+  {
+    model: environment,
+    as: 'environment_data',
+    attributes: { exclude: ['id', 'country_id', 'createdAt', 'updatedAt', 'deletedAt'] }
+  },
+  {
+    model: government,
+    as: 'government_data',
+    attributes: { exclude: ['id', 'country_id', 'createdAt', 'updatedAt', 'deletedAt'] },
 
-          {
-            model: public_finance_debt_data,
-            as: 'public_finance_debt_data',
-            attributes: { exclude: ['id', 'economy_id', 'createdAt', 'updatedAt', 'deletedAt'] },
-    
-          },
-          {
-            model: trade_data,
-            as: 'trade_data',
-            attributes: { exclude: ['id', 'economy_id', 'createdAt', 'updatedAt', 'deletedAt'] },
-          },
-         
-          {
-            model: debt_ext_exchange_rate,
-          as: 'debt_ext_exchange_rate',
-            attributes: { exclude: ['id', 'economy_id', 'createdAt', 'updatedAt', 'deletedAt'] },
-          }
-         
-      
-        
-      ]
-    },
+    include: [
+      {
+        model: legal_law_data,
+        as: 'legal_law_data',
+        attributes: { exclude: ['id', 'government_id', 'createdAt', 'updatedAt', 'deletedAt'] },
+      }, {
+        model: government_more,
+        as: 'gov_more',
+        attributes: { exclude: ['id', 'government_id', 'createdAt', 'updatedAt', 'deletedAt'] },
 
-    {
-      model: energy,
-      as: 'energy_data',
-      attributes: { exclude: ['id', 'country_id', 'createdAt', 'updatedAt', 'deletedAt'] },
-    },
-    {
-      model: communication,
-      as: 'communication_data',
-      attributes: { exclude: ['id', 'country_id', 'createdAt', 'updatedAt', 'deletedAt'] },  
-    },
-    {
-      model: transportation,
-      as: 'transportation_data',
-      attributes: { exclude: ['id', 'country_id', 'createdAt', 'updatedAt', 'deletedAt'] },  
-    },
-    {
-      model: military,
-      as: 'military_data',
-      attributes: { exclude: ['id', 'country_id', 'createdAt', 'updatedAt', 'deletedAt'] },
-    }
-  ];
+      }
+    ]
+  },
+  {
+    model: economy,
+    as: 'economy_data',
+    attributes: { exclude: ['id', 'country_id', 'createdAt', 'updatedAt', 'deletedAt'] },
+
+    include: [
+
+      {
+        model: gdp_data,
+        as: 'gdp_data',
+        attributes: { exclude: ['id', 'economy_id', 'createdAt', 'updatedAt', 'deletedAt'] },
+      },
+      {
+        model: agricultural_and_industrial_data,
+        as: 'agricultural_and_industrial_data',
+        attributes: { exclude: ['id', 'economy_id', 'createdAt', 'updatedAt', 'deletedAt'] },
+
+      },
+      {
+        model: labor_market_data,
+        as: 'labor_market_data',
+        attributes: { exclude: ['id', 'economy_id', 'createdAt', 'updatedAt', 'deletedAt'] },
+
+      },
+      {
+        model: household_inco_expe_data,
+        as: 'household_inco_expe_data',
+        attributes: { exclude: ['id', 'economy_id', 'createdAt', 'updatedAt', 'deletedAt'] },
+
+      },
+
+      {
+        model: public_finance_debt_data,
+        as: 'public_finance_debt_data',
+        attributes: { exclude: ['id', 'economy_id', 'createdAt', 'updatedAt', 'deletedAt'] },
+
+      },
+      {
+        model: trade_data,
+        as: 'trade_data',
+        attributes: { exclude: ['id', 'economy_id', 'createdAt', 'updatedAt', 'deletedAt'] },
+      },
+
+      {
+        model: debt_ext_exchange_rate,
+        as: 'debt_ext_exchange_rate',
+        attributes: { exclude: ['id', 'economy_id', 'createdAt', 'updatedAt', 'deletedAt'] },
+      }
 
 
 
+    ]
+  },
 
-  module.exports = { populationService, environmentService, governmentService, economyService, countryIncludes,energyService , communicationService, transportationService, militaryService};
+  {
+    model: energy,
+    as: 'energy_data',
+    attributes: { exclude: ['id', 'country_id', 'createdAt', 'updatedAt', 'deletedAt'] },
+  },
+  {
+    model: communication,
+    as: 'communication_data',
+    attributes: { exclude: ['id', 'country_id', 'createdAt', 'updatedAt', 'deletedAt'] },
+  },
+  {
+    model: transportation,
+    as: 'transportation_data',
+    attributes: { exclude: ['id', 'country_id', 'createdAt', 'updatedAt', 'deletedAt'] },
+  },
+  {
+    model: military,
+    as: 'military_data',
+    attributes: { exclude: ['id', 'country_id', 'createdAt', 'updatedAt', 'deletedAt'] },
+  }
+];
+
+
+
+
+module.exports = { populationService, environmentService, governmentService, economyService, countryIncludes, energyService, communicationService, transportationService, militaryService };

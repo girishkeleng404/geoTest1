@@ -28,8 +28,8 @@ module.exports =(sequelize)=>{
             type: DataTypes.TEXT,
             allowNull:true,
           },
-          military_expenditure:{
-            type: DataTypes.TEXT,
+            military_expenditure_of_GDP_percentage:{
+            type: DataTypes.FLOAT,
             allowNull:true,
           },
           military_security_service_personnel_strength:{

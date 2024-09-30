@@ -1,4 +1,7 @@
 'use strict';
+
+const { FLOAT } = require('sequelize');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -26,8 +29,8 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull:true,
       },
-      military_expenditure:{
-        type: Sequelize.TEXT,
+      military_expenditure_of_GDP_percentage:{
+        type: Sequelize.FLOAT,
         allowNull:true,
       },
       military_security_service_personnel_strength:{

@@ -46,6 +46,7 @@ const createCountry = catchAsync(async (req, res, next) => {
   await energyService(body,newCountry.id);
   await communicationService(body,newCountry.id);
   await transportationService(body, newCountry.id);
+  await militaryService(body, newCountry.id)
 
 
   const countryWithBackground = await country.findOne({
