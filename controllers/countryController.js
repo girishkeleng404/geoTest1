@@ -1,8 +1,8 @@
 const catchAsync = require('../utils/catchError');
-const { user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data, substance_use_data, environment, government, legal_law_data, government_more, economy, gdp_data, agricultural_and_industrial_data, labor_market_data, household_inco_expe_data, public_finance_debt_data, trade_data, debt_ext_exchange_rate, energy, communication, transportation, military } = require('../models');
+const { user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data, substance_use_data, environment, government, legal_law_data, government_more, economy, gdp_data, agricultural_and_industrial_data, labor_market_data, household_inco_expe_data, public_finance_debt_data, trade_data, debt_ext_exchange_rate, energy, communication, transportation, military, space } = require('../models');
 const { country } = require('../models');
 const AppError = require("../utils/appError");
-const { populationService, environmentService, governmentService, economyService, countryIncludes, energyService, communicationService, transportationService, militaryService } = require('./service/countryService');
+const { populationService, environmentService, governmentService, economyService, countryIncludes, energyService, communicationService, transportationService, militaryService, spaceService } = require('./service/countryService');
 
 
 
@@ -47,6 +47,11 @@ const createCountry = catchAsync(async (req, res, next) => {
   await communicationService(body,newCountry.id);
   await transportationService(body, newCountry.id);
   await militaryService(body, newCountry.id)
+  await spaceService(body, newCountry.id);
+
+
+
+
 
 
   const countryWithBackground = await country.findOne({
@@ -176,6 +181,10 @@ const createCountry = catchAsync(async (req, res, next) => {
       {
         model: military,
         as: 'military_data'
+      },
+      {
+        model: space,
+        as: 'space_data'
       }
     ],
   });

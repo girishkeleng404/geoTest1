@@ -572,4 +572,4 @@ const countryIncludes = [
 
 
 
-module.exports = { populationService, environmentService, governmentService, economyService, countryIncludes, energyService, communicationService, transportationService, militaryService };
+module.exports = { populationService, environmentService, governmentService, economyService, countryIncludes, energyService, communicationService, transportationService, militaryService, spaceService };
