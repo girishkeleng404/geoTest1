@@ -43,8 +43,8 @@ const createCountry = catchAsync(async (req, res, next) => {
   await environmentService(body, newCountry.id);
   await governmentService(body, newCountry.id);
   await economyService(body, newCountry.id);
-  await energyService(body,newCountry.id);
-  await communicationService(body,newCountry.id);
+  await energyService(body, newCountry.id);
+  await communicationService(body, newCountry.id);
   await transportationService(body, newCountry.id);
   await militaryService(body, newCountry.id)
   await spaceService(body, newCountry.id);

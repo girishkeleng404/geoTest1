@@ -361,7 +361,7 @@ const transportationService = async (body, countryId) => {
 
     })
   }
-}
+};
 
 // --------------------xxxxxxxxxxx--------------------
 
@@ -382,15 +382,15 @@ const militaryService = async (body, countryId) => {
 
 // ------------------xxxxxx--------------------
 
-const spaceService = async(body, countryId)=>{
-  if(body.space_program_overview){
+const spaceService = async (body, countryId) => {
+  if (body.space_program_overview) {
     await space.create({
       country_id: countryId,
       space_program_overview: body.space_program_overview,
       space_agencies: body.space_agencies,
       space_launch_site: body.space_launch_site
     })
-  } 
+  }
 }
 
 
@@ -565,7 +565,7 @@ const countryIncludes = [
   {
     model: space,
     as: 'space_data',
-    attributes: { exclude: ['id', 'country_id', 'createdAt', 'updatedAt', 'deletedAt'] }, 
+    attributes: { exclude: ['id', 'country_id', 'createdAt', 'updatedAt', 'deletedAt'] },
   }
 ];
 
