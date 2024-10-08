@@ -1,5 +1,7 @@
 'use strict';
 
+const { DataTypes } = require("sequelize");
+
 module.exports=(sequelize)=>{
   const terrorism = sequelize.define('terrorism',{
           id: {
@@ -53,7 +55,7 @@ module.exports=(sequelize)=>{
 
   terrorism.associate=(models)=>{
     terrorism.belongsTo(models.country,{
-      foreignKey: 'country_id'
+      foreignKey: 'country_id',
     })
   }
 
