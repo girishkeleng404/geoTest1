@@ -167,7 +167,15 @@ module.exports = (sequelize) => {
     country.hasMany(models.terrorism,{
       foreignKey: 'country_id',
       as: 'terrorism_data'
-    })
+    });
+
+    country.hasMany(models.transnational_issues,{
+      foreignKey: 'country_id',
+      as: ' transnational_issues_data'
+
+    });
+
+
 
   }
 
