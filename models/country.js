@@ -171,7 +171,7 @@ module.exports = (sequelize) => {
 
     country.hasMany(models.transnational_issues,{
       foreignKey: 'country_id',
-      as: ' transnational_issues_data'
+      as: 'transnational_issues_data'
 
     });
 

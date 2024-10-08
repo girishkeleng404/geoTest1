@@ -48,7 +48,7 @@ module.exports =(sequelize)=>{
   transnational_issues.associate=(models)=>{
     transnational_issues.belongsTo(models.country,{
       foreignKey:'country_id',
-      onDelete:'CASCADE'
+    
     })
   }
 
