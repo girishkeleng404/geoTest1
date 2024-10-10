@@ -3,6 +3,7 @@ const { user, historical_bg, population, nationality, language_religion, age_str
 const { country } = require('../models');
 const AppError = require("../utils/appError");
 const { populationService, environmentService, governmentService, economyService, countryIncludes, energyService, communicationService, transportationService, militaryService, spaceService, terrorismService, transnational_issuesService } = require('./service/countryService');
+const { where } = require('sequelize');
 
 
 
@@ -260,4 +261,23 @@ const getByQuery = catchAsync(async (req, res, next) => {
 });
 
 
-module.exports = { createCountry, getAllCountry, getByQuery };
+const deleteISO = catchAsync(async (req, res, next) => {
+  const { iso_code } = req.query;
+
+  if (iso_code) {
+    const result = await country.findOne({ where: { iso_code: iso_code } })
+  };
+
+  if (!result) {
+    return next(new AppError('No project found with this id', 400));
+  }
+  await result.distroy();
+
+  return res.json({
+    status: 'success',
+    message: 'Country has been deleted'
+  })
+})
+
+
+module.exports = { createCountry, getAllCountry, getByQuery, deleteISO };
