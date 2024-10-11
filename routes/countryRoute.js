@@ -6,7 +6,7 @@ const router = express.Router();
 router.route('/')
 .post(authentication, createCountry)
 .get(authentication, getByQuery)
-.delete(authentication,deleteISO)
+
  
 
 
@@ -14,7 +14,8 @@ router.route('/getAll')
 .get(authentication,getAllCountry);
 
 
- 
+
+router.route('/delete').delete(authentication,deleteISO);
 
  
 

@@ -264,14 +264,16 @@ const getByQuery = catchAsync(async (req, res, next) => {
 const deleteISO = catchAsync(async (req, res, next) => {
   const { iso_code } = req.query;
 
-  if (iso_code) {
-    const result = await country.findOne({ where: { iso_code: iso_code } })
+  if (!iso_code) {
+  return next(new AppError('no iso_code is provided',400));
   };
+
+  const result = await country.findOne({ where: {iso_code } })
 
   if (!result) {
     return next(new AppError('No project found with this id', 400));
   }
-  await result.distroy();
+  await result.destroy();
 
   return res.json({
     status: 'success',
