@@ -260,6 +260,7 @@ const getByQuery = catchAsync(async (req, res, next) => {
   });
 });
 
+// ----------------xxxxxxxxxxxxxxxxx------------------
 
 const deleteISO = catchAsync(async (req, res, next) => {
   const { iso_code } = req.query;
@@ -281,5 +282,33 @@ const deleteISO = catchAsync(async (req, res, next) => {
   })
 })
 
+// ----------------xxxxxxxxxxxxxxxx------------------
 
-module.exports = { createCountry, getAllCountry, getByQuery, deleteISO };
+
+const updateCountry = catchAsync(async(req,res,next)=>{
+  const {iso_code} = req.query;
+
+  if(!iso_code){
+    return next(new AppError('no iso_code is provided',400));
+  };
+
+  const result = await country.findOne({where:{iso_code}});
+
+  if(!result){
+    return next(new AppError('No project found with this id', 400));
+  }
+  
+  const updatedCountry = await result.update(req.body);
+
+  return res.json({
+    status:'success',
+    data:{
+      country: updatedCountry,
+    }
+  });
+
+
+})
+
+
+module.exports = { createCountry, getAllCountry, getByQuery, deleteISO, updateCountry };

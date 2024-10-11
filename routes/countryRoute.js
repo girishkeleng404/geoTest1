@@ -1,5 +1,5 @@
 const express = require('express');
-const {createCountry, getAllCountry,  getByQuery, deleteISO} = require('../controllers/countryController');
+const {createCountry, getAllCountry,  getByQuery, deleteISO, updateCountry} = require('../controllers/countryController');
 const {authentication} = require('../controllers/authController');
 const router = express.Router();
 
@@ -16,6 +16,8 @@ router.route('/getAll')
 
 
 router.route('/delete').delete(authentication,deleteISO);
+
+router.route('/update').patch(authentication, updateCountry);
 
  
 
