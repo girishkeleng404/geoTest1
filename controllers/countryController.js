@@ -1,5 +1,5 @@
 const catchAsync = require('../utils/catchError');
-const { user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data, substance_use_data, environment, government, legal_law_data, government_more, economy, gdp_data, agricultural_and_industrial_data, labor_market_data, household_inco_expe_data, public_finance_debt_data, trade_data, debt_ext_exchange_rate, energy, communication, transportation, military, space, terrorism, transnational_issues } = require('../models');
+const { user, historical_bg, population, nationality, language_religion, age_structure, dependency_ratio, population_rate, urbanization, sex_marriage, health_data, education_data, substance_use_data, environment, government, legal_law_data, government_more, economy, gdp_data, agricultural_and_industrial_data, labor_market_data, household_inco_expe_data, public_finance_debt_data, trade_data, debt_ext_exchange_rate, energy, communication, transportation, military, space, terrorism, transnational_issues, sequelize } = require('../models');
 const { country } = require('../models');
 const AppError = require("../utils/appError");
 const { populationService, environmentService, governmentService, economyService, countryIncludes, energyService, communicationService, transportationService, militaryService, spaceService, terrorismService, transnational_issuesService } = require('./service/countryService');
@@ -266,10 +266,10 @@ const deleteISO = catchAsync(async (req, res, next) => {
   const { iso_code } = req.query;
 
   if (!iso_code) {
-  return next(new AppError('no iso_code is provided',400));
+    return next(new AppError('no iso_code is provided', 400));
   };
 
-  const result = await country.findOne({ where: {iso_code } })
+  const result = await country.findOne({ where: { iso_code } })
 
   if (!result) {
     return next(new AppError('No project found with this id', 400));
@@ -285,30 +285,116 @@ const deleteISO = catchAsync(async (req, res, next) => {
 // ----------------xxxxxxxxxxxxxxxx------------------
 
 
-const updateCountry = catchAsync(async(req,res,next)=>{
-  const {iso_code} = req.query;
 
-  if(!iso_code){
-    return next(new AppError('no iso_code is provided',400));
-  };
+const buildAssociationsInclude = (model, depth = 2) => {
+  if (depth === 0) return [];
 
-  const result = await country.findOne({where:{iso_code}});
+  return Object.keys(model.associations).map((association) => {
+    const associatedModel = model.associations[association].target;
+    const alias = model.associations[association].as;
 
-  if(!result){
-    return next(new AppError('No project found with this id', 400));
-  }
-  
-  const updatedCountry = await result.update(req.body);
-
-  return res.json({
-    status:'success',
-    data:{
-      country: updatedCountry,
-    }
+    return {
+      model: associatedModel,
+      as: alias,
+      include: Object.keys(associatedModel.associations).length > 0
+        ? buildAssociationsInclude(associatedModel, depth - 1)
+        : [],
+    };
   });
+};
+
+const updateAssociatedRecords = async (associatedModel, associatedRecords, data, transaction) => {
+  if (Array.isArray(associatedRecords)) {
+    for (const record of associatedRecords) {
+      const associatedInstance = await associatedModel.findOne({
+        where: { id: record.id }, // Ensure each record has a unique identifier
+        transaction,
+      });
+
+      if (associatedInstance) {
+        await associatedInstance.update(data, { transaction });
+
+        // Handle nested associations if needed
+        for (const nestedKey in data) {
+          if (associatedInstance[nestedKey] && Array.isArray(associatedInstance[nestedKey])) {
+            await updateAssociatedRecords(associatedInstance[nestedKey].model, associatedInstance[nestedKey], data[nestedKey], transaction);
+          }
+        }
+      }
+    }
+  }
+};
 
 
-})
+
+const updateCountry = catchAsync(async (req, res, next) => {
+  const { iso_code } = req.query;
+
+  if (!iso_code) {
+    return next(new AppError('No iso_code is provided', 400));
+  }
+
+  const transaction = await sequelize.transaction();
+
+  try {
+    const includeAssociations = buildAssociationsInclude(country, 2);
+
+    const result = await country.findOne({
+      where: { iso_code },
+      include: includeAssociations,
+      transaction,
+    });
+
+    if (!result) {
+      await transaction.rollback();
+      return next(new AppError('No country found with this ISO code', 404));
+    }
+
+    // Update only the fields present in req.body
+    await result.update(req.body, { transaction });
+
+    // Optionally, update associated models if specified
+    for (const key in req.body) {
+      const association = country.associations[key];
+
+      if (association) {
+        const associatedModel = association.target; // Get the associated model
+
+        if (result[key]) {
+          await updateAssociatedRecords(associatedModel, result[key], req.body[key], transaction);
+        }
+      }
+    }
+
+    await transaction.commit();
+
+    // Customize the response to exclude unwanted associated data
+    const updatedCountryData = {
+      id: result.id,
+      name: result.name,
+      iso_code: result.iso_code,
+      capital: result.capital,
+      countryImage: result.countryImage,
+      coastline_km: result.coastline_km,
+      climate: result.climate,
+      createdBy: result.createdBy,
+      createdAt: result.createdAt,
+      updatedAt: result.updatedAt,
+      background_description: result.background_description,
+    };
+
+    return res.status(200).json({
+      status: 'success',
+      data: {
+        country: updatedCountryData,
+        message: 'Country and associated data updated successfully',
+      },
+    });
+  } catch (error) {
+    await transaction.rollback();
+    return next(new AppError(`Failed to update country and associated data: ${error.message}`, 500));
+  }
+});
 
 
 module.exports = { createCountry, getAllCountry, getByQuery, deleteISO, updateCountry };
