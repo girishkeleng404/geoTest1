@@ -286,115 +286,44 @@ const deleteISO = catchAsync(async (req, res, next) => {
 
 
 
-const buildAssociationsInclude = (model, depth = 2) => {
-  if (depth === 0) return [];
-
-  return Object.keys(model.associations).map((association) => {
-    const associatedModel = model.associations[association].target;
-    const alias = model.associations[association].as;
-
-    return {
-      model: associatedModel,
-      as: alias,
-      include: Object.keys(associatedModel.associations).length > 0
-        ? buildAssociationsInclude(associatedModel, depth - 1)
-        : [],
-    };
-  });
-};
-
-const updateAssociatedRecords = async (associatedModel, associatedRecords, data, transaction) => {
-  if (Array.isArray(associatedRecords)) {
-    for (const record of associatedRecords) {
-      const associatedInstance = await associatedModel.findOne({
-        where: { id: record.id }, // Ensure each record has a unique identifier
-        transaction,
-      });
-
-      if (associatedInstance) {
-        await associatedInstance.update(data, { transaction });
-
-        // Handle nested associations if needed
-        for (const nestedKey in data) {
-          if (associatedInstance[nestedKey] && Array.isArray(associatedInstance[nestedKey])) {
-            await updateAssociatedRecords(associatedInstance[nestedKey].model, associatedInstance[nestedKey], data[nestedKey], transaction);
-          }
-        }
-      }
-    }
-  }
-};
-
-
-
 const updateCountry = catchAsync(async (req, res, next) => {
-  const { iso_code } = req.query;
+    const { iso_code } = req.query; // Get the iso_code from request parameters
+    const body = req.body; // Get the body of the request
 
-  if (!iso_code) {
-    return next(new AppError('No iso_code is provided', 400));
-  }
-
-  const transaction = await sequelize.transaction();
-
-  try {
-    const includeAssociations = buildAssociationsInclude(country, 2);
-
-    const result = await country.findOne({
-      where: { iso_code },
-      include: includeAssociations,
-      transaction,
-    });
+    const result = await country.findOne({ where: { iso_code }, include:countryIncludes });
+    console.log(result)
 
     if (!result) {
-      await transaction.rollback();
-      return next(new AppError('No country found with this ISO code', 404));
+        return next(new AppError('No country found with this iso_code', 404));
     }
 
-    // Update only the fields present in req.body
-    await result.update(req.body, { transaction });
+    // Hardcoded field updates
+    // result.name = body.name || result.name;
+    // result.capital = body.capital || result.capital;
+    // result.coastline_km = body.coastline_km || result.coastline_km;
+    // result.climate = body.climate || result.climate;
+    // result.countryImage = body.countryImage || result.countryImage;
+    
+    // Add any other fields that you want to explicitly update
 
-    // Optionally, update associated models if specified
-    for (const key in req.body) {
-      const association = country.associations[key];
-
-      if (association) {
-        const associatedModel = association.target; // Get the associated model
-
-        if (result[key]) {
-          await updateAssociatedRecords(associatedModel, result[key], req.body[key], transaction);
+      Object.keys(body).forEach((key) => {
+        if (body[key] !== undefined) {
+            result[key] = body[key];
         }
-      }
-    }
-
-    await transaction.commit();
-
-    // Customize the response to exclude unwanted associated data
-    const updatedCountryData = {
-      id: result.id,
-      name: result.name,
-      iso_code: result.iso_code,
-      capital: result.capital,
-      countryImage: result.countryImage,
-      coastline_km: result.coastline_km,
-      climate: result.climate,
-      createdBy: result.createdBy,
-      createdAt: result.createdAt,
-      updatedAt: result.updatedAt,
-      background_description: result.background_description,
-    };
-
-    return res.status(200).json({
-      status: 'success',
-      data: {
-        country: updatedCountryData,
-        message: 'Country and associated data updated successfully',
-      },
     });
-  } catch (error) {
-    await transaction.rollback();
-    return next(new AppError(`Failed to update country and associated data: ${error.message}`, 500));
-  }
+    
+
+    try {
+        const updatedResult = await result.save();
+        return res.status(200).json({
+            status: "success",
+            data: updatedResult,
+        });
+    } catch (error) {
+        return next(new AppError(`Failed to update country: ${error.message}`, 500));
+    }
 });
+
 
 
 module.exports = { createCountry, getAllCountry, getByQuery, deleteISO, updateCountry };
