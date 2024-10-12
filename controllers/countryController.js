@@ -287,41 +287,65 @@ const deleteISO = catchAsync(async (req, res, next) => {
 
 
 const updateCountry = catchAsync(async (req, res, next) => {
-    const { iso_code } = req.query; // Get the iso_code from request parameters
-    const body = req.body; // Get the body of the request
+  const { iso_code } = req.query; // Get the iso_code from request parameters
+  const body = req.body; // Get the body of the request
 
-    const result = await country.findOne({ where: { iso_code }, include:countryIncludes });
-    console.log(result)
+  const result = await country.findOne({ where: { iso_code }, include: countryIncludes });
+  console.log(result)
 
-    if (!result) {
-        return next(new AppError('No country found with this iso_code', 404));
+  if (!result) {
+    return next(new AppError('No country found with this iso_code', 404));
+  }
+
+
+  Object.keys(body).forEach((key) => {
+    if (body[key] !== undefined && result[key] !== undefined) {
+      result[key] = body[key];
     }
+  });
 
-    // Hardcoded field updates
-    // result.name = body.name || result.name;
-    // result.capital = body.capital || result.capital;
-    // result.coastline_km = body.coastline_km || result.coastline_km;
-    // result.climate = body.climate || result.climate;
-    // result.countryImage = body.countryImage || result.countryImage;
-    
-    // Add any other fields that you want to explicitly update
-
-      Object.keys(body).forEach((key) => {
-        if (body[key] !== undefined) {
-            result[key] = body[key];
-        }
-    });
-    
-
-    try {
-        const updatedResult = await result.save();
-        return res.status(200).json({
-            status: "success",
-            data: updatedResult,
+const updateAssociations = async (modelName, data) => {
+  if (result[modelName] && data) {
+    await Promise.all(data.map(async (item, index) => {
+      const entry = result[modelName][index];
+      if (entry) {
+        Object.keys(item).forEach((field) => {
+          if (item[field] !== undefined) {
+            entry[field] = item[field];
+          }
         });
-    } catch (error) {
-        return next(new AppError(`Failed to update country: ${error.message}`, 500));
-    }
+        await entry.save();
+      } else {
+        // Handle the case where no matching entry exists, perhaps create new data
+        // await result[modelName].create(item);
+      }
+    }));
+  }
+};
+
+console.log('Result History:', result.history);
+console.log('Body History:', body.background_description);
+
+
+  // await Promise.all([
+  //   updateAssociations('history', body.history),
+  //   updateAssociations('populationData', body.populationData),
+  //   // updateAssociations('environment_data', body.environment_data),
+  //   // updateAssociations('government_data', body.government_data),
+   
+  // ]);
+
+  result.history.data = body.background_description;
+
+  try {
+    const updatedResult = await result.save();
+    return res.status(200).json({
+      status: "success",
+      data: updatedResult,
+    });
+  } catch (error) {
+    return next(new AppError(`Failed to update country: ${error.message}`, 500));
+  }
 });
 
 
