@@ -335,7 +335,7 @@ console.log('Body History:', body.background_description);
    
   // ]);
 
-  result.history.data = body.background_description;
+  result.history = body.background_description;
 
   try {
     const updatedResult = await result.save();
