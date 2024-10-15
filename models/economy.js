@@ -58,50 +58,67 @@ module.exports = (sequelize) => {
 
   economy.associate = (models) => {
     economy.belongsTo(models.country, {
-      foreignKey: 'country_id'
+      foreignKey: 'country_id',
+      as: 'country',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     });
 
 
     economy.hasMany(models.gdp_data, {
       foreignKey: 'economy_id',
-      as: 'gdp_data'
+      as: 'gdp_data',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     });
 
 
     economy.hasMany(models.agricultural_and_industrial_data, {
       foreignKey: 'economy_id',
-      as: 'agricultural_and_industrial_data'
+      as: 'agricultural_and_industrial_data',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
 
     });
-    
+
 
     economy.hasMany(models.labor_market_data, {
       foreignKey: 'economy_id',
-      as: 'labor_market_data'
+      as: 'labor_market_data',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     })
 
     economy.hasMany(models.household_inco_expe_data, {
       foreignKey: 'economy_id',
-      as: 'household_inco_expe_data'
+      as: 'household_inco_expe_data',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     })
-    
-    economy.hasMany(models.public_finance_debt_data,{
+
+    economy.hasMany(models.public_finance_debt_data, {
       foreignKey: 'economy_id',
-      as: 'public_finance_debt_data'
+      as: 'public_finance_debt_data',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     })
 
     economy.hasMany(models.trade_data, {
       foreignKey: 'economy_id',
-      as: 'trade_data'
+      as: 'trade_data',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     });
 
     economy.hasMany(models.debt_ext_exchange_rate, {
       foreignKey: 'economy_id',
-      as: 'debt_ext_exchange_rate'
+      as: 'debt_ext_exchange_rate',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     })
   }
 
 
-    return economy;
+  return economy;
 
-  }
+}

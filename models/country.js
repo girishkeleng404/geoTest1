@@ -116,62 +116,86 @@ module.exports = (sequelize) => {
 
 
   country.associate = (models) => {
-    country.belongsTo(models.user, { foreignKey: 'createdBy', });
+    country.belongsTo(models.user, {
+      foreignKey: 'createdBy',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
+    });
 
-    country.hasMany(models.historical_bg, { foreignKey: 'country_id', as: 'history', });
+    country.hasMany(models.historical_bg, { foreignKey: 'country_id', as: 'history', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
-    country.hasMany(models.population, { foreignKey: 'country_id', as: 'populationData', });
+    country.hasMany(models.population, { foreignKey: 'country_id', as: 'populationData', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
     country.hasMany(models.environment, {
       foreignKey: 'country_id',
-      as: 'environment_data'
+      as: 'environment_data',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     });
 
     country.hasMany(models.government, {
       foreignKey: 'country_id',
-      as: 'government_data'
+      as: 'government_data',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     });
 
     country.hasMany(models.economy, {
       foreignKey: 'country_id',
-      as: 'economy_data'
+      as: 'economy_data',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     });
 
-    country.hasMany(models.energy,{
+    country.hasMany(models.energy, {
       foreignKey: 'country_id',
       as: 'energy_data',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     });
 
 
-    country.hasMany(models.communication,{
+    country.hasMany(models.communication, {
       foreignKey: 'country_id',
       as: 'communication_data',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     });
 
-    country.hasMany(models.transportation,{
+    country.hasMany(models.transportation, {
       foreignKey: 'country_id',
-      as: 'transportation_data'
+      as: 'transportation_data',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     })
 
-    country.hasMany(models.military,{
+    country.hasMany(models.military, {
       foreignKey: 'country_id',
-      as: 'military_data'
+      as: 'military_data',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     });
 
 
-    country.hasMany(models.space,{
+    country.hasMany(models.space, {
       foreignKey: 'country_id',
-      as: 'space_data'
+      as: 'space_data',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     });
 
-    country.hasMany(models.terrorism,{
+    country.hasMany(models.terrorism, {
       foreignKey: 'country_id',
-      as: 'terrorism_data'
+      as: 'terrorism_data',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     });
 
-    country.hasMany(models.transnational_issues,{
+    country.hasMany(models.transnational_issues, {
       foreignKey: 'country_id',
-      as: 'transnational_issues_data'
+      as: 'transnational_issues_data',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
 
     });
 

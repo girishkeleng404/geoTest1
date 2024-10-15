@@ -76,7 +76,7 @@ module.exports = (sequelize) => {
   })
 
   sex_marriage.associate = (models)=>{
-    sex_marriage.belongsTo(models.population, {foreignKey: 'population_id', as: 'population'})
+    sex_marriage.belongsTo(models.population, {foreignKey: 'population_id', as: 'population',   onDelete: 'CASCADE', onUpdate: 'CASCADE' })
   }
 
 

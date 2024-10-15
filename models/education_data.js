@@ -60,7 +60,9 @@ module.exports = (sequelize) => {
   education_data.associate = (models) => {
     education_data.belongsTo(models.population, {
       foreignKey: 'population_id',
-      as: 'population'
+      as: 'population',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     })
   }
 

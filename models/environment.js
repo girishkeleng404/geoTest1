@@ -19,8 +19,14 @@ module.exports = (sequelize) => {
         model: 'country',
         key: 'id',
       },
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE'
+      validate:{
+        notNull:{
+          msg: 'Please select a country'
+        },
+        notEmpty:{
+          msg: 'Please select a country'
+        }
+      }
     },
     environment: {
       type: DataTypes.JSONB,

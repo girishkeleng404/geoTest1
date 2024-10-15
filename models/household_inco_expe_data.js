@@ -1,10 +1,10 @@
 'use strict';
 
 const { DataTypes } = require("sequelize");
- 
 
 
-module.exports =(sequelize)=>{
+
+module.exports = (sequelize) => {
   const household_inco_expe_data = sequelize.define('household_inco_expe_data', {
     id: {
       allowNull: false,
@@ -19,28 +19,28 @@ module.exports =(sequelize)=>{
         model: 'economy',
         key: 'id'
       },
-     validate: {
+      validate: {
         notNull: {
           msg: "Please enter a valid economy id"
         },
         notEmpty: {
           msg: 'economy id cannot be empty'
         }
+      },
     },
-  },
     year: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    average_household_expenditures:{
+    average_household_expenditures: {
       type: DataTypes.JSONB,
       allowNull: true,
     },
-    household_income_or_consumption_by_percentage_share:{
+    household_income_or_consumption_by_percentage_share: {
       type: DataTypes.JSONB,
       allowNull: true,
     },
-    remittances:{
+    remittances: {
       type: DataTypes.JSONB,
       allowNull: true,
     },
@@ -55,17 +55,19 @@ module.exports =(sequelize)=>{
     deletedAt: {
       type: DataTypes.DATE
     }
-  },{
+  }, {
     paranoid: true,
     freezeTableName: true,
     tableName: 'household_inco_expe_data'
   });
- 
+
   household_inco_expe_data.associate = (models) => {
     household_inco_expe_data.belongsTo(models.economy, {
       foreignKey: 'economy_id',
-      as: 'economy'
-   
+      as: 'economy',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
+
     });
   }
 

@@ -3,8 +3,8 @@
 const { DataTypes } = require("sequelize");
 
 
-module.exports = (sequelize)=>{
-  const gdp_data = sequelize.define('gdp_data',{
+module.exports = (sequelize) => {
+  const gdp_data = sequelize.define('gdp_data', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -18,48 +18,48 @@ module.exports = (sequelize)=>{
         model: 'economy',
         key: 'id'
       },
-      validate:{
-        notNull:{
+      validate: {
+        notNull: {
           msg: "Please enter a valid economy id"
         },
-        notEmpty:{
+        notEmpty: {
           msg: 'economy id cannot be empty'
         }
       }
     },
-    gdp_purchasing_power_parity:{
+    gdp_purchasing_power_parity: {
       type: DataTypes.JSONB,
-      allowNull:true,
+      allowNull: true,
     },
-    gdp_real_growth_rate:{
+    gdp_real_growth_rate: {
       type: DataTypes.JSONB,
-      allowNull:true,
+      allowNull: true,
     },
-    gdp_per_capita:{
+    gdp_per_capita: {
       type: DataTypes.JSONB,
-      allowNull:true,
+      allowNull: true,
     },
-    gdp_official_exchange_rate:{
+    gdp_official_exchange_rate: {
       type: DataTypes.JSONB,
-      allowNull:true,
+      allowNull: true,
     },
-    infulation_rate:{
+    infulation_rate: {
       type: DataTypes.JSONB,
-      allowNull:true,
+      allowNull: true,
     },
-    cadit_rating:{
+    cadit_rating: {
       type: DataTypes.JSONB,
-      allowNull:true,
+      allowNull: true,
     },
-    gdp_composition_by_sector:{
+    gdp_composition_by_sector: {
       type: DataTypes.JSONB,
-      allowNull:true,
+      allowNull: true,
     },
-    gdp_composition_by_end_use:{
+    gdp_composition_by_end_use: {
       type: DataTypes.JSONB,
-      allowNull:true,
+      allowNull: true,
     },
-    
+
     createdAt: {
       allowNull: false,
       type: DataTypes.DATE
@@ -68,10 +68,10 @@ module.exports = (sequelize)=>{
       allowNull: false,
       type: DataTypes.DATE
     },
-    deletedAt:{
+    deletedAt: {
       type: DataTypes.DATE
     }
-  },{
+  }, {
     paranoid: true,
     freezeTableName: true,
     tableName: 'gdp_data'
@@ -80,7 +80,10 @@ module.exports = (sequelize)=>{
 
   gdp_data.associate = (models) => {
     gdp_data.belongsTo(models.economy, {
-      foreignKey: 'economy_id'
+      foreignKey: 'economy_id',
+      as: 'economy',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     })
   }
 

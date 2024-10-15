@@ -1,7 +1,7 @@
 'use strict';
 
 const { DataTypes } = require("sequelize");
-const { sequelize } = require(".");
+
 
 
 module.exports = (sequelize) => {
@@ -94,9 +94,12 @@ module.exports = (sequelize) => {
       onUpdate: 'CASCADE'
     });
 
-    government.hasMany(models.government_more,{
+    government.hasMany(models.government_more, {
       foreignKey: 'government_id',
-      as: 'gov_more'
+      as: 'gov_more',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
+
     })
 
   }

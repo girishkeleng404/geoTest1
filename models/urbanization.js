@@ -1,10 +1,9 @@
 'use strict';
 
 const { DataTypes } = require("sequelize");
-const { sequelize } = require(".");
 
 
-module.exports = (sequelize)=>{
+module.exports = (sequelize) => {
   const urbanization = sequelize.define('urbanization', {
     id: {
       allowNull: false,
@@ -14,41 +13,41 @@ module.exports = (sequelize)=>{
     },
     population_id: {
       type: DataTypes.INTEGER,
-      allowNull:false,
-      references:{
+      allowNull: false,
+      references: {
         model: 'population',
         key: 'id',
       },
-      validate:{
-        notNull:{
+      validate: {
+        notNull: {
           msg: "Please enter a valid population id"
         },
-        notEmpty:{
+        notEmpty: {
           msg: "population id cannot be empty"
         }
       }
     },
     urban_population: {
       type: DataTypes.TEXT,
-      allowNull:false,
-      validate:{
-        notNull:{
+      allowNull: false,
+      validate: {
+        notNull: {
           msg: "Please enter a valid urban population"
         },
-        notEmpty:{
+        notEmpty: {
           msg: "Urban population cannot be empty"
         }
       }
     },
-   rate_of_urbanization: {
+    rate_of_urbanization: {
       type: DataTypes.TEXT,
-      allowNull:true,
+      allowNull: true,
     },
     major_urban_areas_population: {
       type: DataTypes.TEXT,
-      allowNull:true,
+      allowNull: true,
     },
-    
+
     createdAt: {
       allowNull: false,
       type: DataTypes.DATE
@@ -57,20 +56,22 @@ module.exports = (sequelize)=>{
       allowNull: false,
       type: DataTypes.DATE
     },
-    deletedAt:{
+    deletedAt: {
       type: DataTypes.DATE
     }
-  },{
-    paranoid:true,
-    freezeTableName:true,
-    tableName:'urbanization'
-  
+  }, {
+    paranoid: true,
+    freezeTableName: true,
+    tableName: 'urbanization'
+
   })
 
-  urbanization.associate = (models)=>{
-    urbanization.belongsTo(models.population,{
+  urbanization.associate = (models) => {
+    urbanization.belongsTo(models.population, {
       foreignKey: 'population_id',
-      as: 'population'
+      as: 'population',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     })
   }
 

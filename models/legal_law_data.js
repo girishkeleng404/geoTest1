@@ -1,11 +1,11 @@
 'use strict';
 
 const { DataTypes } = require("sequelize");
- 
 
 
-module.exports =(sequelize)=>{
-  const legal_law_data = sequelize.define('legal_law_data',{
+
+module.exports = (sequelize) => {
+  const legal_law_data = sequelize.define('legal_law_data', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -14,17 +14,17 @@ module.exports =(sequelize)=>{
     },
     government_id: {
       type: DataTypes.INTEGER,
-      allowNull:false,
-      references:{
+      allowNull: false,
+      references: {
         model: 'government',
         key: 'id'
       },
-      validate:{
-        notNull:{
+      validate: {
+        notNull: {
           msg: "government_id cannot be null"
         },
-        notEmpty:{
-          msg:"Please enter a valid government_id"
+        notEmpty: {
+          msg: "Please enter a valid government_id"
         }
       }
     },
@@ -32,35 +32,35 @@ module.exports =(sequelize)=>{
       type: DataTypes.JSONB,
       allowNull: true
     },
-    constitution:{
+    constitution: {
       type: DataTypes.JSONB,
       allowNull: true
     },
-    international_law_organization_participation:{
+    international_law_organization_participation: {
       type: DataTypes.TEXT,
       allowNull: true
     },
-    citizenship:{
+    citizenship: {
       type: DataTypes.JSONB,
       allowNull: true
     },
-    suffrage:{
+    suffrage: {
       type: DataTypes.TEXT,
       allowNull: true
     },
-    executive_branch:{
+    executive_branch: {
       type: DataTypes.JSONB,
       allowNull: true
     },
-    legislative_branch:{
+    legislative_branch: {
       type: DataTypes.JSONB,
       allowNull: true
     },
-    judicial_branch:{
+    judicial_branch: {
       type: DataTypes.JSONB,
       allowNull: true
     },
-    
+
     createdAt: {
       allowNull: false,
       type: DataTypes.DATE
@@ -69,19 +69,21 @@ module.exports =(sequelize)=>{
       allowNull: false,
       type: DataTypes.DATE
     },
-    deletedAt:{
+    deletedAt: {
       type: DataTypes.DATE
     }
-  },{
+  }, {
     paranoid: true,
     freezeTableName: true,
     tableName: 'legal_law_data'
   });
 
-  legal_law_data.asociate=(models)=>{
-    legal_law_data.belongsTo(models.government,{
+  legal_law_data.asociate = (models) => {
+    legal_law_data.belongsTo(models.government, {
       foreignKey: 'government_id',
-      as: 'government'
+      as: 'government',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     })
   }
 

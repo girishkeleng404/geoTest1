@@ -19,11 +19,11 @@ module.exports = (sequelize) => {
         model: 'population',
         key: 'id'
       },
-      validate:{
-        notNull:{
+      validate: {
+        notNull: {
           msg: "Please enter a valid population id"
         },
-        notEmpty:{
+        notEmpty: {
           msg: "population id cannot be empty"
         }
       }
@@ -68,13 +68,14 @@ module.exports = (sequelize) => {
     });
 
 
-    dependency_ratio.associate = (models) => {
-      dependency_ratio.belongsTo(models.population, {
-        foreignKey: 'population_id',
-        as: 'population',
-    
-      });
-    };
+  dependency_ratio.associate = (models) => {
+    dependency_ratio.belongsTo(models.population, {
+      foreignKey: 'population_id',
+      as: 'population',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
+    });
+  };
 
   return dependency_ratio;
 }

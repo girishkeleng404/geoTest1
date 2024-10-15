@@ -4,8 +4,8 @@ const { DataTypes } = require("sequelize");
 
 
 
-module.exports =(sequelize)=>{
-  const public_finance_debt_data = sequelize.define('public_finance_debt_data',{
+module.exports = (sequelize) => {
+  const public_finance_debt_data = sequelize.define('public_finance_debt_data', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -14,16 +14,16 @@ module.exports =(sequelize)=>{
     },
     economy_id: {
       type: DataTypes.INTEGER,
-      allowNull:false,
+      allowNull: false,
       references: {
         model: 'economy',
         key: 'id'
       },
-      validate:{
-        notNull:{
+      validate: {
+        notNull: {
           msg: 'economy_id cannot be null'
         },
-        notEmpty:{
+        notEmpty: {
           msg: 'please enter a valid economy_id'
         }
       }
@@ -59,20 +59,22 @@ module.exports =(sequelize)=>{
     updatedAt: {
       allowNull: false,
       type: DataTypes.DATE
-    }, 
-    deletedAt:{
+    },
+    deletedAt: {
       type: DataTypes.DATE,
     }
-  },{
+  }, {
     paranoid: true,
     freezeTableName: true,
     tableName: 'public_finance_debt_data'
   });
 
-  public_finance_debt_data.associate=(models)=>{
-    public_finance_debt_data.belongsTo(models.economy,{
+  public_finance_debt_data.associate = (models) => {
+    public_finance_debt_data.belongsTo(models.economy, {
       foreignKey: 'economy_id',
-      as: 'economy'
+      as: 'economy',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     })
   }
 

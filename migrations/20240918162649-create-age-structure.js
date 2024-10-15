@@ -16,8 +16,8 @@ module.exports = {
           model: 'population',
           key: 'id'
         },
-        onDelete: 'CASCADE', 
-          onUpdate: 'CASCADE'
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
 
       age_0_14: {

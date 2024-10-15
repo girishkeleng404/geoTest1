@@ -4,9 +4,9 @@ const { DataTypes } = require("sequelize");
 
 
 
-module.exports =(sequelize)=>{
-  const trade_data = sequelize.define('trade_data',{
-    
+module.exports = (sequelize) => {
+  const trade_data = sequelize.define('trade_data', {
+
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -15,16 +15,16 @@ module.exports =(sequelize)=>{
     },
     economy_id: {
       type: DataTypes.INTEGER,
-      allowNull:false,
-      references:{
+      allowNull: false,
+      references: {
         model: 'economy',
         key: 'id'
       },
-      validate:{
-        notNull:{
+      validate: {
+        notNull: {
           msg: 'economy_id cannot be null'
         },
-        notEmpty:{
+        notEmpty: {
           msg: 'please enter a valid economy_id'
         }
       }
@@ -69,7 +69,7 @@ module.exports =(sequelize)=>{
       type: DataTypes.FLOAT,
       allowNull: true
     },
-    
+
     createdAt: {
       allowNull: false,
       type: DataTypes.DATE
@@ -78,19 +78,22 @@ module.exports =(sequelize)=>{
       allowNull: false,
       type: DataTypes.DATE
     },
-    deletedAt:{
+    deletedAt: {
       type: DataTypes.DATE,
     }
-  },{
+  }, {
     paranoid: true,
     freezeTableName: true,
     tableName: 'trade_data'
   });
-  
+
 
   trade_data.associate = (models) => {
     trade_data.belongsTo(models.economy, {
-      foreignKey: 'economy_id'
+      foreignKey: 'economy_id',
+      as: 'economy',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     });
   }
 

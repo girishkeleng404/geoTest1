@@ -4,8 +4,8 @@ const { DataTypes } = require("sequelize");
 const { sequelize } = require(".");
 
 
-module.exports =(sequelize)=>{
-  const agricultural_and_industrial_data = sequelize.define('agricultural_and_industrial_data',{
+module.exports = (sequelize) => {
+  const agricultural_and_industrial_data = sequelize.define('agricultural_and_industrial_data', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -14,33 +14,33 @@ module.exports =(sequelize)=>{
     },
     economy_id: {
       type: DataTypes.INTEGER,
-      allowNull:false,
-      references:{
+      allowNull: false,
+      references: {
         model: 'economy',
         key: 'id'
       },
-      validate:{
-        notNull:{
+      validate: {
+        notNull: {
           msg: "Please enter a valid economy id"
         },
-          notEmpty:{
-            msg: 'economy id cannot be empty'
-          }
+        notEmpty: {
+          msg: 'economy id cannot be empty'
+        }
       },
 
     },
-   
-    agricultural_products:{
+
+    agricultural_products: {
       type: DataTypes.JSONB,
-      allowNull:true,
+      allowNull: true,
     },
-    industries:{
+    industries: {
       type: DataTypes.TEXT,
-      allowNull:true,
+      allowNull: true,
     },
-    industrial_production_growth_rate:{
+    industrial_production_growth_rate: {
       type: DataTypes.JSONB,
-      allowNull:true,
+      allowNull: true,
     },
     createdAt: {
       allowNull: false,
@@ -50,22 +50,24 @@ module.exports =(sequelize)=>{
       allowNull: false,
       type: DataTypes.DATE
     },
-    deletedAt:{
+    deletedAt: {
       type: DataTypes.DATE
     }
-  },{
+  }, {
     paramoid: true,
     freezeTableName: true,
     tableName: 'agricultural_and_industrial_data'
   })
 
 
- agricultural_and_industrial_data.associate = (models) => {
+  agricultural_and_industrial_data.associate = (models) => {
     agricultural_and_industrial_data.belongsTo(models.economy, {
       foreignKey: 'economy_id',
-      as: 'economy'
+      as: 'economy',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     });
- }
+  }
 
   return agricultural_and_industrial_data;
 }

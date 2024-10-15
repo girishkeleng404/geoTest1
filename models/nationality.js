@@ -1,8 +1,8 @@
 'use strict';
 
 const { DataTypes } = require("sequelize");
-const { sequelize } = require(".");
- 
+
+
 
 
 
@@ -74,12 +74,14 @@ module.exports = (sequelize) => {
       tableName: 'nationality'
     });
 
-    nationality.associate =(models)=>{
-      nationality.belongsTo(models.population,{
-        foreignKey:'population_id',
-        as: 'population'
-      })
-    }
+  nationality.associate = (models) => {
+    nationality.belongsTo(models.population, {
+      foreignKey: 'population_id',
+      as: 'population',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
+    })
+  }
 
   return nationality;
 }

@@ -2,53 +2,63 @@
 
 const { DataTypes } = require("sequelize");
 
-module.exports =(sequelize)=>{
+module.exports = (sequelize) => {
   const transnational_issues = sequelize.define('transnational_issues', {
-          id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: DataTypes.INTEGER
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER
+    },
+    country_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'country',
+        key: 'id'
       },
-      country_id: {
-        type: DataTypes.INTEGER,
-        allowNull:false,
-        references: {
-          model: 'country',
-          key: 'id'
+      validate: {
+        notNull: {
+          msg: 'Please select a country'
+        },
+        notEmpty: {
+          msg: 'Please select a country'
         }
-      },
-      refugees_IDPs:{
-        type: DataTypes.JSONB,
-        allowNull:true,
-      },
-      illicit_drugs:{
-        type: DataTypes.TEXT,
-        allowNull: true,
-      },
-      
-      createdAt: {
-        allowNull: false,
-        type: DataTypes.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: DataTypes.DATE
-      },
-      deletedAt:{
-        type:DataTypes.DATE,
       }
-  },{
-    paranoid:true,
-    freezeTableName:true,
+    },
+    refugees_IDPs: {
+      type: DataTypes.JSONB,
+      allowNull: true,
+    },
+    illicit_drugs: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+
+    createdAt: {
+      allowNull: false,
+      type: DataTypes.DATE
+    },
+    updatedAt: {
+      allowNull: false,
+      type: DataTypes.DATE
+    },
+    deletedAt: {
+      type: DataTypes.DATE,
+    }
+  }, {
+    paranoid: true,
+    freezeTableName: true,
     tableName: 'transnational_issues'
   })
 
 
-  transnational_issues.associate=(models)=>{
-    transnational_issues.belongsTo(models.country,{
-      foreignKey:'country_id',
-    
+  transnational_issues.associate = (models) => {
+    transnational_issues.belongsTo(models.country, {
+      foreignKey: 'country_id',
+      as: 'country',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     })
   }
 

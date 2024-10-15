@@ -14,40 +14,42 @@ module.exports = {
       },
       country_id: {
         type: Sequelize.INTEGER,
-        allowNull:false,
-        references:{
+        allowNull: false,
+        references: {
           model: 'country',
           key: 'id',
-        }
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
 
       },
-      military_overview:{
+      military_overview: {
         type: Sequelize.TEXT,
-        allowNull:true,
+        allowNull: true,
       },
       military_branches: {
         type: Sequelize.TEXT,
-        allowNull:true,
+        allowNull: true,
       },
-      military_expenditure_of_GDP_percentage:{
+      military_expenditure_of_GDP_percentage: {
         type: Sequelize.FLOAT,
-        allowNull:true,
+        allowNull: true,
       },
-      military_security_service_personnel_strength:{
+      military_security_service_personnel_strength: {
         type: Sequelize.TEXT,
-        allowNull:true,
+        allowNull: true,
       },
-      military_equipment_inventories_and_acquisitions:{
+      military_equipment_inventories_and_acquisitions: {
         type: Sequelize.TEXT,
-        allowNull:true,
+        allowNull: true,
       },
       military_service_age_and_obligation: {
         type: Sequelize.TEXT,
-        allowNull:true,
+        allowNull: true,
       },
-      military_deployment:{
+      military_deployment: {
         type: Sequelize.TEXT,
-        allowNull:true,
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,
@@ -57,7 +59,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      deletedAt:{
+      deletedAt: {
         type: Sequelize.DATE,
       }
     });

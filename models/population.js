@@ -1,7 +1,7 @@
 'use strict';
 
 const { DataTypes } = require("sequelize");
-const { sequelize } = require(".");
+
 
 
 module.exports = (sequelize) => {
@@ -102,64 +102,86 @@ module.exports = (sequelize) => {
     population.belongsTo(models.country, {
       foreignKey: 'country_id',
       as: 'country',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     });
 
 
     population.hasMany(models.nationality, {
       foreignKey: 'population_id',
-      as: 'nationality'
+      as: 'nationality',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     });
 
     population.hasMany(models.language_religion, {
       foreignKey: 'population_id',
-      as: 'language_religion'
+      as: 'language_religion',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     });
 
     population.hasMany(models.age_structure, {
       foreignKey: 'population_id',
-      as: 'age_structure'
+      as: 'age_structure',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     })
 
     population.hasMany(models.dependency_ratio, {
       foreignKey: 'population_id',
-      as: 'dependency_ratio'
+      as: 'dependency_ratio',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     });
 
-    population.hasMany(models.population_rate,{
+    population.hasMany(models.population_rate, {
       foreignKey: 'population_id',
-      as: 'population_rate_Data'
+      as: 'population_rate_Data',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     });
 
-    population.hasMany(models.urbanization,{
+    population.hasMany(models.urbanization, {
       foreignKey: 'population_id',
-      as: 'urbanization_Data'
+      as: 'urbanization_Data',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     });
 
-    population.hasMany(models.sex_marriage,{
+    population.hasMany(models.sex_marriage, {
       foreignKey: 'population_id',
-      as: 'sex_marriage_Data'
+      as: 'sex_marriage_Data',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     });
 
-    population.hasMany(models.health_data,{
+    population.hasMany(models.health_data, {
       foreignKey: 'population_id',
-      as: 'health_data'
+      as: 'health_data',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     });
 
-    population.hasMany(models.education_data,{
+    population.hasMany(models.education_data, {
       foreignKey: 'population_id',
-      as: 'education_data'
+      as: 'education_data',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     });
-    
-    population.hasMany(models.substance_use_data,{
+
+    population.hasMany(models.substance_use_data, {
       foreignKey: 'population_id',
-      as: 'substance_use_data'
+      as: 'substance_use_data',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     });
 
 
-    
+
   };
 
-      
+
 
 
   return population;

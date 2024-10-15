@@ -21,23 +21,23 @@ module.exports = (sequelize) => {
         model: 'population',
         key: 'id'
       },
-      validate:{
-        notNull:{
+      validate: {
+        notNull: {
           msg: "Please enter a valid population id"
         },
-        notEmpty:{
-          msg:'population id cannot be empty'
+        notEmpty: {
+          msg: 'population id cannot be empty'
         }
       }
     },
     languages: {
       type: DataTypes.TEXT,
       allowNull: false,
-      validate:{
-        notNull:{
-          msg:"Please enter a valid language"
+      validate: {
+        notNull: {
+          msg: "Please enter a valid language"
         },
-        notEmpty:{
+        notEmpty: {
           msg: 'The language cannot be empty'
         }
       }
@@ -55,11 +55,11 @@ module.exports = (sequelize) => {
     religions: {
       type: DataTypes.TEXT,
       allowNull: false,
-      validate:{
-        notNull:{
-          msg:"Please enter a valid religion"
+      validate: {
+        notNull: {
+          msg: "Please enter a valid religion"
         },
-        notEmpty:{
+        notEmpty: {
           msg: 'The religion cannot be empty'
         }
       }
@@ -85,10 +85,12 @@ module.exports = (sequelize) => {
   )
 
 
-  language_religion.associate = (models)=>{
-    language_religion.belongsTo(models.population,{
+  language_religion.associate = (models) => {
+    language_religion.belongsTo(models.population, {
       foreignKey: 'population_id',
-      as: 'population'
+      as: 'population',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     })
   }
 

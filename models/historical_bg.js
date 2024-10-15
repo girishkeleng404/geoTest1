@@ -1,7 +1,7 @@
 'use strict';
 
 const { DataTypes, Model } = require("sequelize");
-const { sequelize, country } = require("../config/databaseConfig");
+
 
 
 module.exports = (sequelize) => {
@@ -16,7 +16,7 @@ module.exports = (sequelize) => {
     },
     country_id: {
       type: DataTypes.INTEGER,
-      allowNull:false,
+      allowNull: false,
       references: {
         model: 'country',
         key: 'id',
@@ -24,12 +24,12 @@ module.exports = (sequelize) => {
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
 
-      validate:{
-        notNull:{
+      validate: {
+        notNull: {
           msg: "Please enter a valid country id"
         },
-        notEmpty:{
-          msg:'Country id cannot be empty'
+        notEmpty: {
+          msg: 'Country id cannot be empty'
         }
       }
 
@@ -37,11 +37,11 @@ module.exports = (sequelize) => {
     background_description: {
       type: DataTypes.TEXT,
       allowNull: false,
-      validate:{
-        notNull:{
-          msg:"Please enter a valid description"
+      validate: {
+        notNull: {
+          msg: "Please enter a valid description"
         },
-        notEmpty:{
+        notEmpty: {
           msg: 'The description cannot be empty'
         }
       }
@@ -57,22 +57,24 @@ module.exports = (sequelize) => {
     deletedAt: {
       type: DataTypes.DATE,
     },
- 
-  },{
+
+  }, {
     paranoid: true,
     freezeTableName: true,
-    tableName:'historical_bg'
+    tableName: 'historical_bg'
   })
 
 
 
-  historical_bg.associate = (models)=>{
-    historical_bg.belongsTo(models.country,{
-    foreignKey: 'country_id',
-    as: 'country', // alias for querying
-   })
+  historical_bg.associate = (models) => {
+    historical_bg.belongsTo(models.country, {
+      foreignKey: 'country_id',
+      as: 'country', // alias for querying
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
+    })
   }
-   
- return historical_bg;
+
+  return historical_bg;
 
 }

@@ -1,10 +1,10 @@
 'use strict';
 
 const { DataTypes } = require("sequelize");
-const { sequelize } = require(".");
 
 
-module.exports = (sequelize)=>{
+
+module.exports = (sequelize) => {
   const health_data = sequelize.define('health_data', {
     id: {
       allowNull: false,
@@ -33,11 +33,11 @@ module.exports = (sequelize)=>{
       allowNull: true
     },
     life_expectancy: {
-      type: DataTypes.JSONB, 
+      type: DataTypes.JSONB,
       allowNull: true
     },
     infant_mortality: {
-      type: DataTypes.JSONB, 
+      type: DataTypes.JSONB,
       allowNull: true
     },
     maternal_mortality: {
@@ -53,15 +53,15 @@ module.exports = (sequelize)=>{
       allowNull: true
     },
     drinking_water: {
-      type: DataTypes.JSONB, 
+      type: DataTypes.JSONB,
       allowNull: true
     },
     sanitation: {
-      type: DataTypes.JSONB, 
+      type: DataTypes.JSONB,
       allowNull: true
     },
     major_infectious_diseases: {
-      type: DataTypes.JSONB, 
+      type: DataTypes.JSONB,
       allowNull: true
     },
     adult_obesity: {
@@ -69,7 +69,7 @@ module.exports = (sequelize)=>{
       allowNull: true
     },
     underweight_children: {
-      type: DataTypes.JSONB, 
+      type: DataTypes.JSONB,
       allowNull: true
     },
 
@@ -84,17 +84,19 @@ module.exports = (sequelize)=>{
     deletedAt: {
       type: DataTypes.DATE,
     }
-  },{
+  }, {
     paranoid: true,
     freezeTableName: true,
     tableName: 'health_data',
   })
 
 
-  health_data.associate = (models)=>{
-    health_data.belongsTo(models.population,{
+  health_data.associate = (models) => {
+    health_data.belongsTo(models.population, {
       foreignKey: 'population_id',
-      as: 'population'
+      as: 'population',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     })
   }
 

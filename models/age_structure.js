@@ -1,4 +1,4 @@
- 'use strict';
+'use strict';
 
 const { DataTypes } = require("sequelize");
 
@@ -62,7 +62,9 @@ module.exports = (sequelize) => {
   age_structure.associate = (models) => {
     age_structure.belongsTo(models.population, {
       foreignKey: 'population_id', // Link to population
-      as: 'population' // Alias for easier querying
+      as: 'population', // Alias for easier querying
+      onDelete: 'CASCADE', // Enable cascade delete
+      onUpdate: 'CASCADE' // Optional: Cascade on update
     });
   };
 

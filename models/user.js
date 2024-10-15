@@ -113,7 +113,7 @@ module.exports = (sequelize, DataTypes)=> {
 
 
    user.associate = (models)=>{
-    user.hasMany(models.country,{foreignKey:'createdBy'})
+    user.hasMany(models.country,{foreignKey:'createdBy',   onDelete: 'CASCADE', onUpdate: 'CASCADE' })
    }
     
    return user;

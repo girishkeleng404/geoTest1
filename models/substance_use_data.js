@@ -1,7 +1,7 @@
 'use strict';
 
 const { DataTypes } = require("sequelize");
-const { sequelize } = require(".");
+
 
 
 module.exports = (sequelize) => {
@@ -19,11 +19,11 @@ module.exports = (sequelize) => {
         model: 'population',
         key: 'id'
       },
-      validate:{
-        notNull:{
+      validate: {
+        notNull: {
           msg: "Please enter a valid population id"
         },
-        notEmpty:{
+        notEmpty: {
           msg: "population id cannot be empty"
         }
       }
@@ -53,12 +53,14 @@ module.exports = (sequelize) => {
     tableName: 'substance_use_data'
   });
 
-substance_use_data.associate=(models)=>{
-  substance_use_data.belongsTo(models.population,{
-    foreignKey:'population_id',
-    as:'population'
-  })
-}
+  substance_use_data.associate = (models) => {
+    substance_use_data.belongsTo(models.population, {
+      foreignKey: 'population_id',
+      as: 'population',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
+    })
+  }
 
   return substance_use_data;
 }

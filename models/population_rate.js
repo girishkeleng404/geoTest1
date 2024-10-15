@@ -1,10 +1,10 @@
 'use strict';
 
 const { DataTypes } = require("sequelize");
-const { sequelize } = require(".");
 
 
-module.exports =(sequelize)=>{
+
+module.exports = (sequelize) => {
   const population_rate = sequelize.define('population_rate', {
 
     id: {
@@ -15,16 +15,16 @@ module.exports =(sequelize)=>{
     },
     population_id: {
       type: DataTypes.INTEGER,
-      allowNull:false,
-      references:{
-        model:'population',
+      allowNull: false,
+      references: {
+        model: 'population',
         key: 'id',
       },
-      validate:{
-        notNull:{
+      validate: {
+        notNull: {
           msg: "Please enter a valid population id"
         },
-        notEmpty:{
+        notEmpty: {
           msg: "population id cannot be empty"
         }
       }
@@ -54,7 +54,7 @@ module.exports =(sequelize)=>{
       allowNull: true,
     },
 
-   total_fertility_rate: {
+    total_fertility_rate: {
       type: DataTypes.TEXT,
       allowNull: true,
     },
@@ -96,20 +96,22 @@ module.exports =(sequelize)=>{
       allowNull: false,
       type: DataTypes.DATE
     },
-    deletedAt:{
+    deletedAt: {
       type: DataTypes.DATE
     }
-  },{
+  }, {
     paranoid: true,
     freezeTableName: true,
     tableName: 'population_rate'
   });
 
-  
-  population_rate.associate =(models)=>{
-    population_rate.belongsTo(models.population,{
+
+  population_rate.associate = (models) => {
+    population_rate.belongsTo(models.population, {
       foreignKey: 'population_id',
-      as: 'population'
+      as: 'population',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     })
   }
 
