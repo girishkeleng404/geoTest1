@@ -11,34 +11,34 @@ module.exports = {
       },
       population_id: {
         type: Sequelize.INTEGER,
-        allowNull:false,
-        references:{
+        allowNull: false,
+        references: {
           model: 'population',
           key: 'id'
         },
-          onDelete: 'CASCADE', 
-          onUpdate: 'CASCADE'
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
       total_dependency_ratio: {
         type: Sequelize.FLOAT,
-        allowNull:false,
+        allowNull: false,
 
       },
       youth_dependency_ratio: {
         type: Sequelize.FLOAT,
-        allowNull:true,
+        allowNull: true,
       },
       elderly_dependency_ratio: {
         type: Sequelize.FLOAT,
-        allowNull:true,
+        allowNull: true,
       },
       potential_support_ratio: {
         type: Sequelize.FLOAT,
-        allowNull:true,
+        allowNull: true,
       },
-      dependency_estimated_year:{
+      dependency_estimated_year: {
         type: Sequelize.INTEGER,
-        allowNull:true,
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,

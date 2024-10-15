@@ -15,7 +15,9 @@ module.exports = {
         references: {
           model: 'country',
           key: 'id',
-        }
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
 
 
       },

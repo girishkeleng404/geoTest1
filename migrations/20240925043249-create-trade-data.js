@@ -7,7 +7,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('trade_data', {
 
-    
+
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -16,11 +16,13 @@ module.exports = {
       },
       economy_id: {
         type: Sequelize.INTEGER,
-        allowNull:false,
-        references:{
+        allowNull: false,
+        references: {
           model: 'economy',
           key: 'id'
-        }
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
       exports_billion: {
         type: Sequelize.JSONB,
@@ -62,7 +64,7 @@ module.exports = {
         type: Sequelize.FLOAT,
         allowNull: true
       },
-      
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -71,7 +73,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      deletedAt:{
+      deletedAt: {
         type: Sequelize.DATE,
       }
     });

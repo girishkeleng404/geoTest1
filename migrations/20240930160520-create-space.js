@@ -11,26 +11,28 @@ module.exports = {
       },
       country_id: {
         type: Sequelize.INTEGER,
-        allowNull:false,
-        references:{
+        allowNull: false,
+        references: {
           model: 'country',
           key: 'id'
-        }
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
 
-      space_program_overview:{
+      space_program_overview: {
         type: Sequelize.TEXT,
-        allowNull:true,
+        allowNull: true,
       },
-      space_agencies:{
-        type:Sequelize.TEXT,
-        allowNull:true,
+      space_agencies: {
+        type: Sequelize.TEXT,
+        allowNull: true,
       },
-      space_launch_site:{
-        type:Sequelize.TEXT,
-        allowNull:true,
+      space_launch_site: {
+        type: Sequelize.TEXT,
+        allowNull: true,
       },
-      
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -39,8 +41,8 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      deletedAt:{
-        type:Sequelize.DATE,
+      deletedAt: {
+        type: Sequelize.DATE,
       }
     });
   },

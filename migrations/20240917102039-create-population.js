@@ -12,10 +12,12 @@ module.exports = {
       country_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references:{
+        references: {
           model: 'country',
           key: 'id'
         },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
       total_population: {
         type: Sequelize.BIGINT,
@@ -33,17 +35,17 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      female_comparison_ranking:{
+      female_comparison_ranking: {
         type: Sequelize.INTEGER,
         allowNull: true,
       },
-      male_comparison_ranking:{
-        type:Sequelize.INTEGER,
-        allowNull:true,
+      male_comparison_ranking: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
       },
-      total_comparison_ranking:{
-        type:Sequelize.INTEGER,
-        allowNull:false,
+      total_comparison_ranking: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,

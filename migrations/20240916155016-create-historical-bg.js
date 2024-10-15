@@ -9,16 +9,18 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      country_id:{
-        type:Sequelize.INTEGER,
-        allowNull:false,
-        references:{
+      country_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
           model: 'country',
           key: 'id',
-        }
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
       background_description: {
-        allowNull:false,
+        allowNull: false,
         type: Sequelize.TEXT
       },
       createdAt: {

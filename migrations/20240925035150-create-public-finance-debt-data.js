@@ -4,7 +4,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('public_finance_debt_data', {
 
-      
+
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -13,11 +13,13 @@ module.exports = {
       },
       economy_id: {
         type: Sequelize.INTEGER,
-        allowNull:false,
+        allowNull: false,
         references: {
           model: 'economy',
           key: 'id'
         },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
       year: {
         type: Sequelize.INTEGER,
@@ -50,8 +52,8 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      }, 
-      deletedAt:{
+      },
+      deletedAt: {
         type: Sequelize.DATE,
       }
     });

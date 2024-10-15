@@ -11,60 +11,62 @@ module.exports = {
       },
       country_id: {
         type: Sequelize.INTEGER,
-        allowNull:false,
-        references:{
+        allowNull: false,
+        references: {
           model: 'country',
           key: 'id',
         },
-       
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+
       },
-      telephone_subscription_in_millions:{
+      telephone_subscription_in_millions: {
         type: Sequelize.FLOAT,
         allowNull: true,
       },
-      telephone_subscription_per_100:{
-        type: Sequelize.FLOAT,
-        allowNull: true,
-      },                                    
-      mobile_subscription_in_millions:{
+      telephone_subscription_per_100: {
         type: Sequelize.FLOAT,
         allowNull: true,
       },
-      mobile_subscription_per_100:{
+      mobile_subscription_in_millions: {
         type: Sequelize.FLOAT,
         allowNull: true,
       },
-      mobile_subscription_ranking:{
+      mobile_subscription_per_100: {
+        type: Sequelize.FLOAT,
+        allowNull: true,
+      },
+      mobile_subscription_ranking: {
         type: Sequelize.INTEGER,
         allowNull: true,
       },
-      telecommunication_system:{
+      telecommunication_system: {
         type: Sequelize.JSONB,
         allowNull: true,
       },
-      broadcast_media:{
+      broadcast_media: {
         type: Sequelize.TEXT,
-        allowNull:true,
+        allowNull: true,
       },
-      internet_country_code:{
+      internet_country_code: {
         type: Sequelize.STRING,
-        allowNull:true,
+        allowNull: true,
       },
-      internet_users_in_millions:{
+      internet_users_in_millions: {
         type: Sequelize.FLOAT,
-        allowNull:true,
+        allowNull: true,
       },
-      internet_users_percentage:{
+      internet_users_percentage: {
         type: Sequelize.FLOAT,
-        allowNull:true,
+        allowNull: true,
       },
-      internet_users_ranking:{
+      internet_users_ranking: {
         type: Sequelize.INTEGER,
-        allowNull:true,
+        allowNull: true,
       },
-      broadband_subscription_in_millions:{
+      broadband_subscription_in_millions: {
         type: Sequelize.STRING,
-        allowNull:true,
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,
@@ -74,9 +76,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      deletedAt:{
+      deletedAt: {
         type: Sequelize.DATE,
-        allowNull:true,
+        allowNull: true,
       }
     });
   },

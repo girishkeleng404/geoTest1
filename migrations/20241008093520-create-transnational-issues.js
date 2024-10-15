@@ -11,21 +11,23 @@ module.exports = {
       },
       country_id: {
         type: Sequelize.INTEGER,
-        allowNull:false,
+        allowNull: false,
         references: {
           model: 'country',
           key: 'id'
-        }
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
-      refugees_IDPs:{
+      refugees_IDPs: {
         type: Sequelize.JSONB,
-        allowNull:true,
+        allowNull: true,
       },
-      illicit_drugs:{
+      illicit_drugs: {
         type: Sequelize.TEXT,
         allowNull: true,
       },
-      
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -34,8 +36,8 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      deletedAt:{
-        type:Sequelize.DATE,
+      deletedAt: {
+        type: Sequelize.DATE,
       }
     });
   },

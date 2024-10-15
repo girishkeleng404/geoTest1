@@ -11,20 +11,21 @@ module.exports = {
       },
       country_id: {
         type: Sequelize.INTEGER,
-        allowNull:false,
-        references:{
+        allowNull: false,
+        references: {
           model: 'country',
           key: 'id',
         },
-        
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
-      terrorist_groups:{
+      terrorist_groups: {
         type: Sequelize.TEXT,
-        allowNull:true,
+        allowNull: true,
       },
-      notes:{
+      notes: {
         type: Sequelize.TEXT,
-        allowNull:true,
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,
@@ -34,9 +35,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      deletedAt:{
+      deletedAt: {
         type: Sequelize.DATE,
-        
+
       }
     });
   },
