@@ -18,6 +18,7 @@ module.exports = (sequelize) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
       validate: {
         notNull: {
           msg: 'Please enter a valid name'
@@ -30,6 +31,7 @@ module.exports = (sequelize) => {
     iso_code: {
       type: DataTypes.STRING(2),
       allowNull: false,
+      unique: true,
       validate: {
         notNull: {
           msg: 'Please enter a valid iso code'
@@ -202,6 +204,10 @@ module.exports = (sequelize) => {
 
 
   }
+
+
+
+
 
 
   return country;
