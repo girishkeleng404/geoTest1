@@ -327,14 +327,13 @@ console.log('Result History:', result.history);
 console.log('Body History:', body.background_description);
 
 
-  // await Promise.all([
-  //   updateAssociations('history', body.history),
-  //   updateAssociations('populationData', body.populationData),
-  //   // updateAssociations('environment_data', body.environment_data),
-  //   // updateAssociations('government_data', body.government_data),
+  await Promise.all([
+    updateAssociations('history', body.history),
+    updateAssociations('populationData', body.populationData)
+    // updateAssociations('environment_data', body.environment_data),
+    // updateAssociations('government_data', body.government_data),
    
-  // ]);
-
+  ]);
   result.history = body.background_description;
 
   try {
