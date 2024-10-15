@@ -291,67 +291,110 @@ await result.destroy({ force: true });
 
 
 
-const updateCountry = catchAsync(async (req, res, next) => {
-  const { iso_code } = req.query; // Get the iso_code from request parameters
-  const body = req.body; // Get the body of the request
+// const updateCountry = catchAsync(async (req, res, next) => {
+//   const { iso_code } = req.query; // Get the iso_code from request parameters
+//   const body = req.body; // Get the body of the request
 
-  const result = await country.findOne({ where: { iso_code }, include: countryIncludes });
-  console.log(result)
+//   const result = await country.findOne({ where: { iso_code }, include: countryIncludes });
+//   console.log(result)
 
-  if (!result) {
-    return next(new AppError('No country found with this iso_code', 404));
-  }
-
-
-  Object.keys(body).forEach((key) => {
-    if (body[key] !== undefined && result[key] !== undefined) {
-      result[key] = body[key];
-    }
-  });
-
-const updateAssociations = async (modelName, data) => {
-  if (result[modelName] && data) {
-    await Promise.all(data.map(async (item, index) => {
-      const entry = result[modelName][index];
-      if (entry) {
-        Object.keys(item).forEach((field) => {
-          if (item[field] !== undefined) {
-            entry[field] = item[field];
-          }
-        });
-        await entry.save();
-      } else {
-        // Handle the case where no matching entry exists, perhaps create new data
-        // await result[modelName].create(item);
-      }
-    }));
-  }
-};
-
-console.log('Result History:', result.history);
-console.log('Body History:', body.background_description);
+//   if (!result) {
+//     return next(new AppError('No country found with this iso_code', 404));
+//   }
 
 
-  await Promise.all([
-    updateAssociations('history', body.history),
-    updateAssociations('populationData', body.populationData)
-    // updateAssociations('environment_data', body.environment_data),
-    // updateAssociations('government_data', body.government_data),
+//   Object.keys(body).forEach((key) => {
+//     if (body[key] !== undefined && result[key] !== undefined) {
+//       result[key] = body[key];
+//     }
+//   });
+
+// const updateAssociations = async (modelName, data) => {
+//   if (result[modelName] && data) {
+//     await Promise.all(data.map(async (item, index) => {
+//       const entry = result[modelName][index];
+//       if (entry) {
+//         Object.keys(item).forEach((field) => {
+//           if (item[field] !== undefined) {
+//             entry[field] = item[field];
+//           }
+//         });
+//         await entry.save();
+//       } else {
+//         // Handle the case where no matching entry exists, perhaps create new data
+//         // await result[modelName].create(item);
+//       }
+//     }));
+//   }
+// };
+
+// console.log('Result History:', result.history);
+// console.log('Body History:', body.background_description);
+
+
+//   await Promise.all([
+//     updateAssociations('history', body.history),
+//     updateAssociations('populationData', body.populationData)
+//     // updateAssociations('environment_data', body.environment_data),
+//     // updateAssociations('government_data', body.government_data),
    
-  ]);
-  result.history = body.background_description;
+//   ]);
+//   result.history = body.background_description;
+
+//   try {
+//     const updatedResult = await result.save();
+//     return res.status(200).json({
+//       status: "success",
+//       data: updatedResult,
+//     });
+//   } catch (error) {
+//     return next(new AppError(`Failed to update country: ${error.message}`, 500));
+//   }
+// });
+
+
+
+
+const updateCountry = async (req, res, next) => {
+  const { iso_code } = req.query;
+  const countryData = req.body;
+
+  const transaction = await sequelize.transaction();
 
   try {
-    const updatedResult = await result.save();
-    return res.status(200).json({
-      status: "success",
-      data: updatedResult,
-    });
+    // Similar update logic with all update operations wrapped in the transaction
+    const countryInstance = await country.findOne({ where: { iso_code }, include: countryIncludes, transaction });
+    
+    // Update country and associated tables here, using the transaction
+    await countryInstance.update(countryData, { transaction });
+ 
+    //  if (countryData.background_description) {
+    //   await countryInstance.historical_bg.update({
+    //     background_description: countryData.background_description,
+    //   }, { transaction });
+    // }
+
+    console.log('Country Data:', countryData);
+     // Check if historical background exists and update it
+    if (countryData.background_description || countryInstance.historical_bg) {
+      await countryInstance.historical_bg.update({
+        background_description: countryData.background_description,
+      }, { transaction });
+    } 
+
+
+    // Commit the transaction if all operations succeed
+    await transaction.commit();
+
+    return res.status(200).json({ message: 'Country updated successfully' });
   } catch (error) {
-    return next(new AppError(`Failed to update country: ${error.message}`, 500));
+    // Rollback transaction on failure
+    await transaction.rollback();
+    next(error);
   }
-});
 
 
+};
 
-module.exports = { createCountry, getAllCountry, getByQuery, deleteISO, updateCountry };
+
+module.exports = { createCountry, getAllCountry, getByQuery, deleteISO, updateCountry};
