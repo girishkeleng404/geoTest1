@@ -12,10 +12,12 @@ module.exports = {
       name: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true,
       },
       iso_code: {
         type:Sequelize.STRING(2),
         allowNull: false,
+        unique: true,
       },
       capital: {
         type: Sequelize.STRING,

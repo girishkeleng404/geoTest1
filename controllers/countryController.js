@@ -262,6 +262,36 @@ const getByQuery = catchAsync(async (req, res, next) => {
 
 // ----------------xxxxxxxxxxxxxxxxx------------------
 
+
+// Helper function to recursively soft delete associations and nested associations
+async function recursiveSoftDelete(instance) {
+  const associations = Object.keys(instance.constructor.associations);
+
+  for (const association of associations) {
+    // Fetch associated records
+    const relatedInstances = await instance[`get${association.charAt(0).toUpperCase() + association.slice(1)}`]();
+
+    if (relatedInstances && Array.isArray(relatedInstances)) {
+      for (const relatedInstance of relatedInstances) {
+        // Soft delete each related instance
+        await relatedInstance.destroy(); // Soft delete at this level
+        
+        // Recursively delete nested associations
+        await recursiveSoftDelete(relatedInstance); 
+      }
+    } else if (relatedInstances) {
+      // If it's a single associated object instead of an array
+      await relatedInstances.destroy(); // Soft delete
+      await recursiveSoftDelete(relatedInstances); // Recursively delete nested associations
+    }
+  }
+}
+
+// In your country model
+ 
+
+
+
 const deleteISO = catchAsync(async (req, res, next) => {
   const { iso_code } = req.query;
 
@@ -274,7 +304,11 @@ const deleteISO = catchAsync(async (req, res, next) => {
   if (!result) {
     return next(new AppError('No project found with this id', 400));
   }
-  await result.destroy();
+//  await result.destroy({ force: true });
+
+country.beforeDestroy(async (countryInstance) => {
+  await recursiveSoftDelete(countryInstance);
+});
 
   return res.json({
     status: 'success',
