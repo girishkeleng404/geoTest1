@@ -334,6 +334,23 @@ const deleteISO = catchAsync(async (req, res, next) => {
 
 // };
 
+const updateNestedAssociations = async (instance, data, transaction) => {
+  for (const nestedKey in data) {
+    if (!instance[nestedKey] || typeof instance[nestedKey] !== 'object') continue;
+    if (Array.isArray(instance[nestedKey])) {
+      for (let i = 0; i < instance[nestedKey].length; i++) {
+        const nestedInstance = instance[nestedKey][i];
+        const nestedData = data[nestedKey][i];
+        if (nestedInstance && nestedData) {
+          await nestedInstance.update(nestedData, { transaction });
+        }
+      }
+    } else {
+      await instance[nestedKey].update(data[nestedKey], { transaction });
+    }
+  }
+};
+
 
 const updateCountry = async (req, res, next) => {
   const { iso_code } = req.query;
@@ -345,80 +362,44 @@ const updateCountry = async (req, res, next) => {
     // Fetch the country instance along with all associated tables
     const countryInstance = await country.findOne({
       where: { iso_code },
-      include:
-        countryIncludes
-      ,
+      include: countryIncludes,
       transaction,
     });
-    console.log('Country instance with associations:', JSON.stringify(countryInstance, null, 2));
 
     if (!countryInstance) {
       throw new Error(`Country with ISO code ${iso_code} not found`);
     }
-    // console.log(countryInstance)
+
     // Update the country table itself
     await countryInstance.update(countryData, { transaction });
 
-
-    // Iterate over associated tables and update if data is present
-    // for (const key in countryData) {
-    //   const associatedData = countryData[key]; // Data for this association
-    //      console.log(key);
-    //   if (countryInstance[key] && typeof countryInstance[key] === 'object') {
-    //     if (Array.isArray(countryInstance[key])) {
-    //       // If it's an array (hasMany association), update each entry
-    //       for (let i = 0; i < countryInstance[key].length; i++) {
-    //         const associatedInstance = countryInstance[key][i];
-
-    //         if (associatedInstance && associatedData[i]) {
-    //           // Update each associated instance if corresponding data exists
-    //           console.log(associatedInstance instanceof Sequelize.Model);
-
-    //           await associatedInstance.update(associatedData[i], { transaction });
-    //         }
-    //       }
-    //     } else if (associatedData) {
-    //       // Single instance (hasOne or belongsTo association)
-    //       if (countryInstance[key]) {
-    //         // Check if the associated instance exists before updating
-    //         await countryInstance[key].update(associatedData, { transaction });
-    //       }
-    //     }
-    //   }
-    // }
+    // Iterate over associated tables and update them
     for (const key in countryData) {
-      const associatedData = countryData[key]; // Data for this association
+      const associatedData = countryData[key]; 
 
-      // Ensure this key exists as an association in the country instance
       if (!countryInstance[key] || typeof countryInstance[key] !== 'object') {
-        // This key is not an association, skip it
+        console.log(`${key} is not a valid association`);
         continue;
       }
 
-      // Handle hasMany associations (arrays)
       if (Array.isArray(countryInstance[key])) {
         for (let i = 0; i < countryInstance[key].length; i++) {
           const associatedInstance = countryInstance[key][i];
-          if (associatedInstance && associatedData[i]) {
-            console.log(associatedInstance instanceof Sequelize.Model);
-            await associatedInstance.update(associatedData[i], { transaction });
+          const nestedData = associatedData[i];
+          if (associatedInstance && nestedData) {
+            await updateNestedAssociations(associatedInstance, nestedData, transaction);
           }
         }
       } else if (associatedData) {
-        // Handle hasOne or belongsTo associations
         await countryInstance[key].update(associatedData, { transaction });
       }
     }
 
-    // Commit the transaction if everything is successful
-    console.log('Committing transaction');
+    // Commit the transaction
     await transaction.commit();
-    console.log('Transaction committed successfully');
-
 
     return res.status(200).json({ message: 'Country and related data updated successfully' });
   } catch (error) {
-    // Rollback transaction on failure
     await transaction.rollback();
     next(error);
   }
