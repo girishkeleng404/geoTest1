@@ -2,6 +2,7 @@ const express = require("express");
 const env = require("dotenv");
 const authRoute = require("./routes/authRoute");
 const countryRoute = require("./routes/countryRoute");
+const getCountriesByPopulation = require("./routes/countryFilterRoute/populationFiltRoute.js");
 const globleErrorHandler = require("./controllers/errorController");
 
 const app = express();
@@ -19,6 +20,8 @@ app.get("/", async (req, res) => {
 app.use("/api/v1/auth", authRoute);
 
 app.use("/api/v1/country", countryRoute);
+
+app.use("/api/v1/filter", getCountriesByPopulation);
 
 const { sequelize } = require("./models");
 sequelize
