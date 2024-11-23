@@ -9,10 +9,11 @@ const getCountriesByPopulation = catchAsync(async (req, res, next) => {
     minPopulation,
     maxPopulation,
     limit = 10,
+    top,
     sortOrder = "desc",
+    offset = 0, // Use offset for skipping results
   } = req.query;
 
-  const tp = 1409128297;
   const populationFilter = {};
   if (minPopulation) populationFilter[Op.gte] = minPopulation.toString();
   if (maxPopulation) populationFilter[Op.lte] = maxPopulation.toString();
@@ -20,10 +21,23 @@ const getCountriesByPopulation = catchAsync(async (req, res, next) => {
   console.log(minPopulation, maxPopulation, limit, sortOrder);
   try {
     const countries = await country.findAll({
+      attributes: {
+        exclude: [
+          "createdBy",
+          "population_id",
+          "createdAt",
+          "updatedAt",
+          "deletedAt",
+        ],
+      },
       include: [
         {
           model: population,
           as: "populationData",
+
+          attributes: {
+            exclude: ["id", "createdAt", "updatedAt", "deletedAt"],
+          },
           where: {
             total_population: populationFilter,
           },
@@ -37,20 +51,11 @@ const getCountriesByPopulation = catchAsync(async (req, res, next) => {
           sortOrder.toUpperCase(),
         ],
       ],
-      limit: parseInt(limit, 10),
+      limit: parseInt(top || limit, 10),
+      offset: parseInt(offset, 10), // Apply offset for range queries
     });
 
     res.json(countries);
-
-    /* const popuRes = await population.findAll({
-      where: {
-        total_population: {
-          [Op.lte]: tp.toString(), // or another operator like Op.lte for less than
-        },
-      },
-    });
-
-    res.json(popuRes); */
   } catch (error) {
     console.error("Error retrieving countries:", error);
     res.status(500).json({ error: "Faild to retrieve countries" });
